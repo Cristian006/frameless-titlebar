@@ -1,0 +1,42 @@
+.menuButton {
+  min-width: 0;
+  position: relative;
+}
+
+.menuButton > button {
+  -webkit-appearance: none;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  border-radius: 0;
+  text-align: left;
+  margin: 0;
+  padding: 0 10px;
+  border: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.menuButton > button:active {
+  box-shadow: none;
+}
+
+.menuButton > button:focus {
+  background-color: #2f363d;
+  outline-offset: -4px;
+  border-color: black;
+  box-shadow: none;
+}
+
+.menuButton > button:focus .progress {
+  background: #444d56;
+}
+
+.menuButton > button:focus:not(.focus-ring) .progress {
+  background: #2f363d;
+}
+
+.menuButton > button:focus:not(.focus-ring) {
+  outline: none;
+  background-color: transparent;
+}

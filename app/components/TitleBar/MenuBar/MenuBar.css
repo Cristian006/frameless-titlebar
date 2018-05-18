@@ -1,0 +1,19 @@
+.menuBar {
+  display: flex;
+  -webkit-app-region: no-drag;
+  max-width: calc(100% - 163px);
+  overflow: hidden;
+}
+
+.menuBar .menuButton > button {
+  padding: 0 10px;
+  border: 0;
+}
+
+.menuBar .menuButton:not(.open) > .menuButton > button {
+  color: #959da5;
+}
+
+.menuBar .menuButton:not(.open) > .menuButton > button:focus {
+  color: #fff;
+}
