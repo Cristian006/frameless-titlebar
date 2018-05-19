@@ -10,19 +10,19 @@ const template = [
         enabled: false,
       },
       {
-        label: 'Sub',
+        label: 'Sub Menu',
         submenu: [
           {
-            label: 'random1',
+            label: 'Random 1',
           },
           {
-            label: 'random2',
+            label: 'Random 2',
           },
           {
-            label: 'randomSub',
+            label: 'Random 3',
             submenu: [
               {
-                label: 'random-sub'
+                label: 'Random 4'
               }
             ]
           }
@@ -35,6 +35,9 @@ const template = [
       {
         label: 'Arguments',
         click: (item, win, e) => console.log(item, win, e),
+      },
+      {
+        label: 'Really Long Sub Menu Title that should be truncated',
       },
       { type: 'separator' },
       {

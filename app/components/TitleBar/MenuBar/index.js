@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   display: flex;
   -webkit-app-region: no-drag;
   max-width: calc(100% - 163px);
-  color: ${props => props.lightTextColor};
+  color: ${props => props.color};
 `;
 
 export default class MenuBar extends Component {
@@ -119,14 +119,14 @@ export default class MenuBar extends Component {
 
   render() {
     const {
-      lightTextColor
+      defaultTextColor
     } = this.props;
 
     return (
       <Wrapper
         role="menubar"
         aria-label="App MenuBar"
-        lightTextColor={lightTextColor}
+        color={defaultTextColor}
       >
         {
           this.generateMenu(this.state.menu)
@@ -138,12 +138,14 @@ export default class MenuBar extends Component {
 
 MenuBar.propTypes = {
   menu: PropTypes.array,
-  lightTextColor: PropTypes.string,
-  hoverHighlightColor: PropTypes.string,
+  defaultTextColor: PropTypes.string,
+  hoverTextColor: PropTypes.string,
+  hoverBackgroundColor: PropTypes.string,
 };
 
 MenuBar.defaultProps = {
   menu: [],
-  lightTextColor: '#6a737d',
-  hoverHighlightColor: '#BDBDBD',
+  defaultTextColor: '#6a737d',
+  hoverTextColor: '#BDBDBD',
+  hoverBackgroundColor: '#BDBDBD',
 };

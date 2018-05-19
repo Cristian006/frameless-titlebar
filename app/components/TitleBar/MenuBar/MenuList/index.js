@@ -17,27 +17,21 @@ const FoldOut = styled.div`
   background: transparent;
   pointer-events: none;
   position: absolute;
-  height: 100%;
   margin-left: ${props => props.rect.left}px;
   max-width: calc(100% - ${props => props.rect.left}px);
-  overflow: hidden;
   top: 0;
-  background: #fff;
   color: #24292e;
 `;
 
-
 const MenuFoldOut = styled.div`
-
+  background: #fff;
+  padding-top: 5px;
+  padding-bottom: 5px;
 `;
 
 const MenuPane = styled.div`
-  background: #fff;
   pointer-events: all;
-`;
-
-const List = styled.div`
-
+  width: 240px;
 `;
 
 const Overlay = styled.div`
@@ -53,17 +47,6 @@ const Overlay = styled.div`
 `;
 
 export default class MenuList extends Component {
-  getRowHeight = ({ index }) => {
-    const menuListItem = this.props.menu[index];
-    if (menuListItem.visiable === false) {
-      return 0;
-    }
-    if (menuListItem.type === 'separator') {
-      return 10;
-    }
-    return 30;
-  };
-
   generateMenu = (menu = []) => {
     return menu.map((menuItem, i) => {
       if (menuItem.submenu) {
@@ -79,8 +62,11 @@ export default class MenuList extends Component {
       return (
         <MenuItem
           key={`${i}${menuItem.label}`}
+          type={menuItem.type}
           label={menuItem.label}
           onClick={menuItem.click}
+          enabled={menuItem.enabled}
+          visiable={menuItem.visiable}
         />
       );
     });
@@ -98,9 +84,7 @@ export default class MenuList extends Component {
         <FoldOut rect={rect}>
           <MenuFoldOut>
             <MenuPane>
-              <List>
-                {this.generateMenu(menu)}
-              </List>
+              {this.generateMenu(menu)}
             </MenuPane>
           </MenuFoldOut>
         </FoldOut>

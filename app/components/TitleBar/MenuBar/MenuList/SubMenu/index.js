@@ -3,18 +3,25 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import MenuItem from '../MenuItem';
 
-const MenuItemWrapper = styled(MenuItem)`
-  min-width: 0;
-  position: relative;
-`;
-
 const SubMenuWrapper = styled.div`
-  top: 0;
+  position: absolute;
+  top: -5px;
   left: 100%;
-  margin-top: -1px;
+  max-width: 240px;
+  width: 100%;
+  background-color: white;
+  padding: 5px 0px;
+  border-left: 1px solid #eee;
 `;
 
 export default class SubMenu extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hovering: false,
+    };
+  }
+
   generateMenu = (menu = []) => {
     return menu.map((menuItem, i) => {
       if (menuItem.submenu) {
@@ -39,24 +46,39 @@ export default class SubMenu extends Component {
 
   render() {
     const {
-      open,
-      closed,
       menu,
       label
     } = this.props;
 
     return (
-      <MenuItemWrapper label={label} showArrow>
-        <SubMenuWrapper>
-          {
-            this.generateMenu(menu)
-          }
-        </SubMenuWrapper>
-      </MenuItemWrapper>
+      <MenuItem
+        onMouseEnter={() => {
+          this.setState({
+            hovering: true,
+          });
+        }}
+        onMouseLeave={() => {
+          this.setState({
+            hovering: false,
+          });
+        }}
+        label={label}
+        showArrow
+      >
+        {
+          (this.state.hovering) &&
+            <SubMenuWrapper>
+              {
+                this.generateMenu(menu)
+              }
+            </SubMenuWrapper>
+        }
+      </MenuItem>
     );
   }
 }
 
 SubMenu.propTypes = {
   menu: PropTypes.array,
+  label: PropTypes.string,
 };

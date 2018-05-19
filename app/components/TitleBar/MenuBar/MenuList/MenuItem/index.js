@@ -3,14 +3,21 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
-  max-height: 30px;
-  max-width: 240px;
-  height: 100%;
-  width: 100%;
   min-width: 0;
-  opacity: ${props => props.disabled ? '0.3' : '1'};
+  opacity: ${props => props.enabled ? '1' : '0.3'};
+  font-size: 12px;
+  padding: 0 10px;
+  height: 30px;
+  color: #24292e;
+  cursor: default;
+  &:hover {
+    color: ${props => props.enabled ? '#fff' : '#24292e'};
+    border-color: ${props => props.enabled ? '#0366d6' : ''};
+    background-color: ${props => props.enabled ? '#0372ef' : ''};
+  }
 `;
 
 const Label = styled.span`
@@ -25,24 +32,49 @@ const Label = styled.span`
 const SubMenuArrow = styled.div`
   flex-shrink: 0;
   opacity: 0.7;
-  height: 12px;
-  margin-right: 10px;
+  height: 24px;
+  color: inherit;
+  & svg {
+    fill: currentColor;
+  }
+`;
+
+const Seperator = styled.hr`
+  display: block;
+  width: 100%;
+  border: none;
+  height: 1px;
+  border-bottom: 1px solid #e1e4e8;
 `;
 
 export default class MenuItem extends Component {
   render() {
     const {
-      label,
+      onMouseEnter,
+      onMouseLeave,
       onClick,
+      label,
       children,
-      disabled,
+      enabled,
+      visiable,
+      type,
       checked,
       showArrow,
     } = this.props;
 
+    if (visiable === false) {
+      return null;
+    }
+
+    if (type && (type.toLowerCase() === 'separator')) {
+      return <Seperator />;
+    }
+
     return (
       <Wrapper
-        disabled={disabled}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        enabled={enabled}
         onClick={onClick}
       >
         <Label
@@ -53,11 +85,11 @@ export default class MenuItem extends Component {
         {
           showArrow &&
           <SubMenuArrow>
-            <svg version="1.1" x="0px" y="0px" width="24px"
-              height="24px">
-              <g id="Bounding_Boxes">
-                <path fill="none" d="M0,0h24v24H0V0z"/>
-              </g>
+            <svg
+              version="1.1"
+              width="24px"
+              height="24px"
+            >
               <g id="Rounded">
                 <path d="M9.29,6.71L9.29,6.71c-0.39,0.39-0.39,1.02,0,1.41L13.17,12l-3.88,3.88c-0.39,0.39-0.39,1.02,0,1.41l0,0
                   c0.39,0.39,1.02,0.39,1.41,0l4.59-4.59c0.39-0.39,0.39-1.02,0-1.41l-4.59-4.59C10.32,6.32,9.68,6.32,9.29,6.71z"/>
@@ -65,12 +97,17 @@ export default class MenuItem extends Component {
             </svg>
           </SubMenuArrow>
         }
-        {children}
+        {showArrow && children}
       </Wrapper>
     );
   }
 }
 
 MenuItem.propTypes = {
-  label: PropTypes.string,
+  label: PropTypes.string.isRequired,
+  enabled: PropTypes.bool,
+};
+
+MenuItem.defaultProps = {
+  enabled: true,
 };
