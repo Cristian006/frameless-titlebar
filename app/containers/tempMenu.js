@@ -1,6 +1,7 @@
 import { shell, remote } from 'electron';
 
 const { openExternal } = shell;
+
 const template = [
   {
     label: 'App',
@@ -23,6 +24,12 @@ const template = [
             submenu: [
               {
                 label: 'Random 4'
+              },
+              {
+                label: 'Random 5'
+              },
+              {
+                label: 'Random 6'
               }
             ]
           }
@@ -43,7 +50,7 @@ const template = [
       {
         label: 'Open Dev Tools',
         click: (item, win, e) => {
-          win.openDevTools()
+          remote.getCurrentWindow().openDevTools();
         },
       },
       {
@@ -55,7 +62,7 @@ const template = [
       {
         label: 'Quit',
         click: () => {
-          window.close()
+          window.close();
         },
       },
     ],

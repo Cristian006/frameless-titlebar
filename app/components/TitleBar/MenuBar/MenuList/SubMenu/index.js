@@ -6,12 +6,15 @@ import MenuItem from '../MenuItem';
 const SubMenuWrapper = styled.div`
   position: absolute;
   top: -5px;
-  left: 100%;
+  left: ${props => props.renderSide === 'left' ? '-100%' : '100%'}
   max-width: 240px;
   width: 100%;
   background-color: white;
   padding: 5px 0px;
   border-left: 1px solid #eee;
+  z-index: ${props => props.level + 8}
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 `;
 
 export default class SubMenu extends Component {
@@ -26,9 +29,19 @@ export default class SubMenu extends Component {
     return menu.map((menuItem, i) => {
       if (menuItem.submenu) {
         // create submenu item
+        let menuWidth = this.props.right + 240;
+        const windowWidth = window.innerWidth;
+        let renderSide = 'right';
+        if ((menuWidth) > windowWidth) {
+          renderSide = 'left';
+          menuWidth = this.props.right - 240;
+        }
         return (
           <SubMenu
             key={`${i}${menuItem.label}`}
+            renderSide={renderSide}
+            right={menuWidth}
+            level={this.props.level + 1}
             label={menuItem.label}
             menu={menuItem.submenu}
           />
@@ -47,7 +60,9 @@ export default class SubMenu extends Component {
   render() {
     const {
       menu,
-      label
+      label,
+      level,
+      renderSide,
     } = this.props;
 
     return (
@@ -67,7 +82,10 @@ export default class SubMenu extends Component {
       >
         {
           (this.state.hovering) &&
-            <SubMenuWrapper>
+            <SubMenuWrapper
+              level={level}
+              renderSide={renderSide}
+            >
               {
                 this.generateMenu(menu)
               }
@@ -81,4 +99,11 @@ export default class SubMenu extends Component {
 SubMenu.propTypes = {
   menu: PropTypes.array,
   label: PropTypes.string,
+  level: PropTypes.number,
+  renderSide: PropTypes.string,
 };
+
+SubMenu.defaultProps = {
+  level: 1,
+  renderSide: 'right',
+}

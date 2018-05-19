@@ -104,10 +104,11 @@ export default class MenuItem extends Component {
 }
 
 MenuItem.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   enabled: PropTypes.bool,
 };
 
 MenuItem.defaultProps = {
   enabled: true,
+  label: '',
 };

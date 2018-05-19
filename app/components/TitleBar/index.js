@@ -14,6 +14,7 @@ const Bar = styled.div`
   width: 100%;
   -webkit-app-region: drag;
   background-color: ${props => props.backgroundColor}
+  border-bottom: ${props => props.showBorder ? props.borderBottom : ''};
 `;
 
 const Title = styled.div`
@@ -57,12 +58,16 @@ export default class TitleBar extends Component {
       onTitleClick,
       onIconClick,
       height,
+      showBorder,
+      borderBottom,
       backgroundColor,
     } = this.props;
 
     return (
       <Bar
         height={height}
+        showBorder={showBorder}
+        borderBottom={borderBottom}
         backgroundColor={backgroundColor}
       >
         <ResizeTop />
@@ -104,6 +109,8 @@ TitleBar.propTypes = {
   menu: PropTypes.array,
   height: PropTypes.string,
   backgroundColor: PropTypes.string,
+  showBorder: PropTypes.bool,
+  borderBottom: PropTypes.string,
   onIconClick: PropTypes.func,
   onTitleClick: PropTypes.func,
 };
@@ -115,6 +122,8 @@ TitleBar.defaultProps = {
   icon: '',
   menu: [],
   height: '28px',
+  borderBottom: '1px solid #000',
+  showBorder: true,
   backgroundColor: '#24292e',
   titleColor: '#fff',
   onIconClick: () => {},

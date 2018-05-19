@@ -1,23 +1,26 @@
 // @flow
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import styles from './Home.css';
-import TitleBar from './TitleBar';
-import menu from './tempMenu';
+
+const ToolBar = styled.div`
+  height: 50px;
+  background-color: #24292e;
+  line-height: 50px;
+  padding 0 1vw;
+`;
 
 export default class Home extends Component {
   render() {
     return (
       <div>
-        <TitleBar
-          icon={`${__dirname}/../resources/icon.png`}
-          title="Electron"
-          menu={menu}
-        />
+        <ToolBar>
+          <div style={{ fontSize: '0.8em' }}>Electron TitleBar</div>
+        </ToolBar>
         <div className={styles.container} data-tid="container">
-          <div style={{ color: '#cadef3', fontSize: '1.3em' }}>Electron TitleBar</div>
           <h2>Home</h2>
-          <Link to="/counter">to Counter</Link>
+          <Link style={{ color: '#cadef3' }} to="/counter">Example Application</Link>
         </div>
       </div>
     );

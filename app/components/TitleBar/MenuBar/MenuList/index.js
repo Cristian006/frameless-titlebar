@@ -27,6 +27,7 @@ const MenuFoldOut = styled.div`
   background: #fff;
   padding-top: 5px;
   padding-bottom: 5px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 `;
 
 const MenuPane = styled.div`
@@ -50,10 +51,20 @@ export default class MenuList extends Component {
   generateMenu = (menu = []) => {
     return menu.map((menuItem, i) => {
       if (menuItem.submenu) {
-        // create submenu item
+        const menuWidth = this.props.rect.left + 240;
+        const windowWidth = window.innerWidth;
+        let renderSide = 'right';
+        let right = menuWidth + 240;
+        if (right > windowWidth) {
+          renderSide = 'left';
+          right = menuWidth - 240;
+        }
         return (
           <SubMenu
             key={`${i}${menuItem.label}`}
+            level={1}
+            right={right}
+            renderSide={renderSide}
             label={menuItem.label}
             menu={menuItem.submenu}
           />
