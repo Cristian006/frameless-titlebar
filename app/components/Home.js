@@ -15,6 +15,7 @@ export default class Home extends Component {
           menu={menu}
         />
         <div className={styles.container} data-tid="container">
+          <div style={{ color: '#cadef3', fontSize: '1.3em' }}>Electron TitleBar</div>
           <h2>Home</h2>
           <Link to="/counter">to Counter</Link>
         </div>

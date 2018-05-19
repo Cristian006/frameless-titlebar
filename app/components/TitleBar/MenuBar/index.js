@@ -8,7 +8,6 @@ const Wrapper = styled.div`
   display: flex;
   -webkit-app-region: no-drag;
   max-width: calc(100% - 163px);
-  overflow: hidden;
   color: ${props => props.lightTextColor};
 `;
 
@@ -17,37 +16,99 @@ export default class MenuBar extends Component {
     super(props);
     this.state = {
       hovering: -1,
-      focusing: -1,
+      focusing: 0,
       clicked: false,
+      menu: props.menu,
     };
   }
 
-  onMenuItemClick = (index) => {
+  // if hovering over another button while menu is clicked; change focus
+  onMenuButtonMouseOver = (i) => {
+    if (this.state.clicked) {
+      this.setState({
+        focusing: i
+      });
+    }
+  }
+
+  // lock set to true to keep menu panes open
+  onTouchStart = (i) => {
+    if (i !== this.state.focusing && this.state.clicked) {
+      this.lock = true;
+    }
+  }
+
+  // if moving over a different menu button - select that menu button
+  onMouseMove = (i) => {
+    if (i === this.state.focusing) return;
     this.setState({
-      clicked: true,
-      focusing: index,
+      focusing: i,
     });
+  }
+
+  // when a menu button is clicked
+  onMenuButtonClick = (index) => {
+    if (this.lock) {
+      this.lock = false;
+      return;
+    }
+    console.log('clicked');
+    this.setState({
+      clicked: !(this.state.focusing === index && this.state.clicked),
+      hovering: !(this.state.focusing === index && this.state.clicked) ? this.state.hovering : -1,
+    });
+  };
+
+  // we need the rect's bounds for the child menu pane
+  setMenuRef = (ref, i) => {
+    if (this.menuItems) {
+      this.menuItems[i] = ref;
+    } else {
+      this.menuItems = { [i]: ref };
+    }
   };
 
   generateMenu = (menuObj = []) => {
     return menuObj.map((menuItem, i) => {
       return (
         <MenuButton
-          key={i}
-          onMouseOver={() => this.setState({hovering: i})}
-          onFocus={() => this.setState({focusing: i})}
-          onClick={() => this.onMenuItemClick(i)}
+          key={`${menuItem.label}`}
+          onMouseEnter={() => {
+            this.setState({
+              hovering: i,
+            });
+          }}
+          onMouseLeave={() => {
+            this.setState({
+              hovering: -1,
+            });
+          }}
+          onMouseOver={() => {
+            this.onMenuButtonMouseOver(i);
+          }}
+          onMouseMove={() => {
+            this.onMouseMove(i);
+          }}
+          onTouchStart={() => {
+            this.onTouchStart(i);
+          }}
+          onClick={() => {
+            this.onMenuButtonClick(i);
+          }}
+          onFocus={() => {
+            // idk - linting says it needs it? it has no purpose for me
+          }}
+          rectRef={(ref) => this.setMenuRef(ref, i)}
           hovering={i === this.state.hovering}
-          open={this.state.clicked && i === this.state.foucing}
+          open={this.state.clicked && i === this.state.focusing}
           closed={!this.state.clicked || i !== this.state.focusing}
           label={menuItem.label}
         >
           {
-            this.state.clicked && i === this.state.focusing &&
+            (this.state.clicked && i === this.state.focusing) &&
             <MenuList
               rect={this.menuItems[i].getBoundingClientRect()}
-              menuList={menuItem.submenu}
-              changeCheckState={this.changeCheckState}
+              menu={menuItem.submenu}
               mainIndex={i}
             />
           }
@@ -58,7 +119,6 @@ export default class MenuBar extends Component {
 
   render() {
     const {
-      menu,
       lightTextColor
     } = this.props;
 
@@ -69,7 +129,7 @@ export default class MenuBar extends Component {
         lightTextColor={lightTextColor}
       >
         {
-          this.generateMenu(menu)
+          this.generateMenu(this.state.menu)
         }
       </Wrapper>
     );
@@ -79,9 +139,11 @@ export default class MenuBar extends Component {
 MenuBar.propTypes = {
   menu: PropTypes.array,
   lightTextColor: PropTypes.string,
+  hoverHighlightColor: PropTypes.string,
 };
 
 MenuBar.defaultProps = {
   menu: [],
   lightTextColor: '#6a737d',
+  hoverHighlightColor: '#BDBDBD',
 };

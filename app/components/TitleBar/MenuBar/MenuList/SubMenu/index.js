@@ -16,11 +16,12 @@ const SubMenuWrapper = styled.div`
 
 export default class SubMenu extends Component {
   generateMenu = (menu = []) => {
-    return menu.map((menuItem) => {
+    return menu.map((menuItem, i) => {
       if (menuItem.submenu) {
         // create submenu item
         return (
           <SubMenu
+            key={`${i}${menuItem.label}`}
             label={menuItem.label}
             menu={menuItem.submenu}
           />
@@ -28,6 +29,7 @@ export default class SubMenu extends Component {
       }
       return (
         <MenuItem
+          key={`${i}${menuItem.label}`}
           label={menuItem.label}
           onClick={menuItem.click}
         />
@@ -44,7 +46,7 @@ export default class SubMenu extends Component {
     } = this.props;
 
     return (
-      <MenuItemWrapper label={label}>
+      <MenuItemWrapper label={label} showArrow>
         <SubMenuWrapper>
           {
             this.generateMenu(menu)

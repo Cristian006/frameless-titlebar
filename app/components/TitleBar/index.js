@@ -1,8 +1,49 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styles from './TitleBar.css';
+import styled from 'styled-components';
 import MenuBar from './MenuBar';
 import WindowControls from './WindowControls';
+
+const Bar = styled.div`
+  height: ${props => props.height};
+  flex-grow: 0;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  font-size: 12px;
+  width: 100%;
+  -webkit-app-region: drag;
+  background-color: ${props => props.backgroundColor}
+`;
+
+const Title = styled.div`
+  line-height: ${props => props.height}
+  margin: 0px 6px 0px 0px;
+  padding: 0px 4px;
+`;
+
+const Icon = styled.img`
+  height: 16px;
+  width: 16px;
+  margin: 6px;
+`;
+
+const ResizeHandle = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-app-region: no-drag;
+`;
+
+const ResizeLeft = styled(ResizeHandle)`
+  width: 3px;
+  height: 28px;
+`;
+
+const ResizeTop = styled(ResizeHandle)`
+  width: 100%;
+  height: 3px;
+`;
 
 export default class TitleBar extends Component {
   render() {
@@ -13,27 +54,22 @@ export default class TitleBar extends Component {
       menu,
       disableMinimize,
       disableMaximize,
-      backgroundColor,
-      className,
       onTitleClick,
       onIconClick,
+      height,
+      backgroundColor,
     } = this.props;
 
     return (
-      <div
-        id="electron-title-bar"
-        className={`${styles.wrapper} ${className || ''}`}
-        data-tid="container"
-        style={{
-          backgroundColor,
-        }}
+      <Bar
+        height={height}
+        backgroundColor={backgroundColor}
       >
-        <div className={`${styles.resizeHandle} ${styles.resizeTop}`} />
-        <div className={`${styles.resizeHandle} ${styles.resizeLeft}`} />
+        <ResizeTop />
+        <ResizeLeft />
         {
           icon &&
-          <img
-            className={styles.icon}
+          <Icon
             src={icon}
             alt="app-icon"
             onClick={onIconClick}
@@ -41,12 +77,12 @@ export default class TitleBar extends Component {
         }
         {
           title &&
-          <div
-            className={styles.title}
+          <Title
+            height={height}
             onClick={onTitleClick}
           >
             {title}
-          </div>
+          </Title>
         }
         <MenuBar menu={menu} />
         {children}
@@ -54,7 +90,7 @@ export default class TitleBar extends Component {
           disableMinimize={disableMinimize}
           disableMaximize={disableMaximize}
         />
-      </div>
+      </Bar>
     );
   }
 }
@@ -66,6 +102,7 @@ TitleBar.propTypes = {
   disableMinimize: PropTypes.bool,
   disableMaximize: PropTypes.bool,
   menu: PropTypes.array,
+  height: PropTypes.string,
   backgroundColor: PropTypes.string,
   onIconClick: PropTypes.func,
   onTitleClick: PropTypes.func,
@@ -77,9 +114,9 @@ TitleBar.defaultProps = {
   title: '',
   icon: '',
   menu: [],
+  height: '28px',
   backgroundColor: '#24292e',
   titleColor: '#fff',
-  color: '',
   onIconClick: () => {},
   onTitleClick: () => {},
 };
