@@ -106,4 +106,4 @@ SubMenu.propTypes = {
 SubMenu.defaultProps = {
   level: 1,
   renderSide: 'right',
-}
+};
