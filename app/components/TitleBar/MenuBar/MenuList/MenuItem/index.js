@@ -11,12 +11,11 @@ const Wrapper = styled.div`
   font-size: 12px;
   padding: 0 10px;
   height: 30px;
-  color: #24292e;
+  color: inherit;
   cursor: default;
   &:hover {
-    color: ${props => props.enabled ? '#fff' : '#24292e'};
-    border-color: ${props => props.enabled ? '#0366d6' : ''};
-    background-color: ${props => props.enabled ? '#0372ef' : ''};
+    color: ${props => props.enabled ? props.textHighlightColor : ''};
+    background-color: ${props => props.enabled ? props.highlightColor : ''};
   }
 `;
 
@@ -60,6 +59,8 @@ export default class MenuItem extends Component {
       type,
       checked,
       showArrow,
+      menuHighlightColor,
+      menuTextHighlightColor,
     } = this.props;
 
     if (visiable === false) {
@@ -76,6 +77,8 @@ export default class MenuItem extends Component {
         onMouseLeave={onMouseLeave}
         enabled={enabled}
         onClick={onClick}
+        highlightColor={menuHighlightColor}
+        textHighlightColor={menuTextHighlightColor}
       >
         <Label
           checked={checked}
@@ -106,9 +109,27 @@ export default class MenuItem extends Component {
 MenuItem.propTypes = {
   label: PropTypes.string,
   enabled: PropTypes.bool,
+  showArrow: PropTypes.bool,
+  checked: PropTypes.bool,
+  visiable: PropTypes.bool,
+  menuTextHighlightColor: PropTypes.string,
+  menuHighlightColor: PropTypes.string,
+  type: PropTypes.string,
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func,
+  onClick: PropTypes.func,
 };
 
 MenuItem.defaultProps = {
   enabled: true,
   label: '',
+  showArrow: false,
+  checked: false,
+  visiable: true,
+  type: '',
+  menuTextHighlightColor: '#fff',
+  menuHighlightColor: '#0372ef',
+  onMouseEnter: () => {},
+  onMouseLeave: () => {},
+  onClick: () => {},
 };

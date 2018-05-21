@@ -23,7 +23,21 @@ const template = [
             label: 'Random 3',
             submenu: [
               {
-                label: 'Random 4'
+                label: 'Random 4',
+                submenu: [
+                  {
+                    label: 'Random 7',
+                  },
+                  {
+                    label: 'Random 8',
+                  },
+                  {
+                    label: 'Random 9',
+                  },
+                  {
+                    label: 'Random 10',
+                  }
+                ],
               },
               {
                 label: 'Random 5'

@@ -69,6 +69,13 @@ export default class MenuBar extends Component {
   };
 
   generateMenu = (menuObj = []) => {
+    const {
+      menuTextColor,
+      menuHighlightColor,
+      menuTextHighlightColor,
+      menuBackgroundColor,
+    } = this.props;
+
     return menuObj.map((menuItem, i) => {
       return (
         <MenuButton
@@ -102,6 +109,9 @@ export default class MenuBar extends Component {
           hovering={i === this.state.hovering}
           open={this.state.clicked && i === this.state.focusing}
           closed={!this.state.clicked || i !== this.state.focusing}
+          dimMenuItem={this.props.dimMenuItems}
+          menuTextColor={menuTextColor}
+          menuBackgroundColor={menuBackgroundColor}
           label={menuItem.label}
         >
           {
@@ -109,6 +119,10 @@ export default class MenuBar extends Component {
             <MenuList
               rect={this.menuItems[i].getBoundingClientRect()}
               menu={menuItem.submenu}
+              menuBackgroundColor={menuBackgroundColor}
+              menuTextColor={menuTextColor}
+              menuTextHighlightColor={menuTextHighlightColor}
+              menuHighlightColor={menuHighlightColor}
               mainIndex={i}
             />
           }
@@ -119,14 +133,12 @@ export default class MenuBar extends Component {
 
   render() {
     const {
-      defaultTextColor
+      theme,
     } = this.props;
 
     return (
       <Wrapper
-        role="menubar"
-        aria-label="App MenuBar"
-        color={defaultTextColor}
+        color={theme === 'dark' ? '#fff' : '#24292e'}
       >
         {
           this.generateMenu(this.state.menu)
@@ -138,14 +150,23 @@ export default class MenuBar extends Component {
 
 MenuBar.propTypes = {
   menu: PropTypes.array,
+  theme: PropTypes.oneOf(['light', 'dark']),
   defaultTextColor: PropTypes.string,
   hoverTextColor: PropTypes.string,
   hoverBackgroundColor: PropTypes.string,
+  dimMenuItems: PropTypes.bool,
+  menuBackgroundColor: PropTypes.string,
+  menuTextColor: PropTypes.string,
+  menuTextHighlightColor: PropTypes.string,
+  menuHighlightColor: PropTypes.string,
 };
 
 MenuBar.defaultProps = {
   menu: [],
-  defaultTextColor: '#6a737d',
-  hoverTextColor: '#BDBDBD',
-  hoverBackgroundColor: '#BDBDBD',
+  theme: 'dark',
+  dimMenuItems: false,
+  menuBackgroundColor: '#fff',
+  menuTextColor: '#24292e',
+  menuTextHighlightColor: '#fff',
+  menuHighlightColor: '#0372ef',
 };

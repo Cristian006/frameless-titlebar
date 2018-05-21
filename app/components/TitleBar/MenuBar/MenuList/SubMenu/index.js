@@ -6,15 +6,14 @@ import MenuItem from '../MenuItem';
 const SubMenuWrapper = styled.div`
   position: absolute;
   top: -5px;
-  left: ${props => props.renderSide === 'left' ? '-100%' : '100%'}
+  left: ${props => props.renderSide === 'left' ? '-100%' : '100%'};
   max-width: 240px;
   width: 100%;
-  background-color: white;
+  background-color: ${props => props.menuBackgroundColor};
   padding: 5px 0px;
-  border-left: 1px solid #eee;
-  z-index: ${props => props.level + 8}
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  color: ${props => props.menuTextColor};
+  z-index: ${props => props.level + 8};
+  box-shadow: ${props => props.showBoxShadow ? '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)' : ''};
 `;
 
 export default class SubMenu extends Component {
@@ -26,15 +25,22 @@ export default class SubMenu extends Component {
   }
 
   generateMenu = (menu = []) => {
+    const {
+      menuTextHighlightColor,
+      menuHighlightColor,
+      showBoxShadow,
+      menuTextColor,
+      menuBackgroundColor,
+    } = this.props;
     return menu.map((menuItem, i) => {
       if (menuItem.submenu) {
         // create submenu item
-        let menuWidth = this.props.right + 240;
+        let menuWidth = this.props.right + this.props.menuWidth;
         const windowWidth = window.innerWidth;
         let renderSide = 'right';
         if ((menuWidth) > windowWidth) {
           renderSide = 'left';
-          menuWidth = this.props.right - 240;
+          menuWidth = this.props.right - this.props.menuWidth;
         }
         return (
           <SubMenu
@@ -44,14 +50,27 @@ export default class SubMenu extends Component {
             level={this.props.level + 1}
             label={menuItem.label}
             menu={menuItem.submenu}
+            onClick={menuItem.click}
+            enabled={menuItem.enabled}
+            visiable={menuItem.visiable}
+            showBoxShadow={showBoxShadow}
+            menuTextColor={menuTextColor}
+            menuBackgroundColor={menuBackgroundColor}
+            menuTextHighlightColor={menuTextHighlightColor}
+            menuHighlightColor={menuHighlightColor}
           />
         );
       }
       return (
         <MenuItem
           key={`${i}${menuItem.label}`}
+          type={menuItem.type}
           label={menuItem.label}
           onClick={menuItem.click}
+          enabled={menuItem.enabled}
+          visiable={menuItem.visiable}
+          menuTextHighlightColor={menuTextHighlightColor}
+          menuHighlightColor={menuHighlightColor}
         />
       );
     });
@@ -63,6 +82,12 @@ export default class SubMenu extends Component {
       label,
       level,
       renderSide,
+      menuWidth,
+      showBoxShadow,
+      menuBackgroundColor,
+      menuTextHighlightColor,
+      menuHighlightColor,
+      menuTextColor,
     } = this.props;
 
     return (
@@ -78,11 +103,17 @@ export default class SubMenu extends Component {
           });
         }}
         label={label}
+        menuTextHighlightColor={menuTextHighlightColor}
+        menuHighlightColor={menuHighlightColor}
         showArrow
       >
         {
           (this.state.hovering) &&
             <SubMenuWrapper
+              menuTextColor={menuTextColor}
+              menuBackgroundColor={menuBackgroundColor}
+              showBoxShadow={showBoxShadow}
+              menuWidth={menuWidth}
               level={level}
               renderSide={renderSide}
             >
@@ -101,9 +132,13 @@ SubMenu.propTypes = {
   label: PropTypes.string,
   level: PropTypes.number,
   renderSide: PropTypes.string,
+  menuWidth: PropTypes.number,
+  showBoxShadow: PropTypes.bool,
 };
 
 SubMenu.defaultProps = {
   level: 1,
   renderSide: 'right',
+  menuWidth: 240,
+  showBoxShadow: true,
 };

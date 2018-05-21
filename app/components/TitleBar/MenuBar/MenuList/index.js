@@ -20,19 +20,19 @@ const FoldOut = styled.div`
   margin-left: ${props => props.rect.left}px;
   max-width: calc(100% - ${props => props.rect.left}px);
   top: 0;
-  color: #24292e;
+  color: ${props => props.color};
 `;
 
 const MenuFoldOut = styled.div`
-  background: #fff;
+  background: ${props => props.menuBackgroundColor};
   padding-top: 5px;
   padding-bottom: 5px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  box-shadow: ${props => props.showBoxShadow ? '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)' : ''};
 `;
 
 const MenuPane = styled.div`
   pointer-events: all;
-  width: 240px;
+  width: ${props => props.menuWidth}px;
 `;
 
 const Overlay = styled.div`
@@ -49,24 +49,40 @@ const Overlay = styled.div`
 
 export default class MenuList extends Component {
   generateMenu = (menu = []) => {
+    const {
+      menuBackgroundColor,
+      menuTextHighlightColor,
+      menuHighlightColor,
+      showBoxShadow,
+      menuTextColor,
+    } = this.props;
     return menu.map((menuItem, i) => {
       if (menuItem.submenu) {
-        const menuWidth = this.props.rect.left + 240;
+        const menuWidth = this.props.rect.left + this.props.menuWidth;
         const windowWidth = window.innerWidth;
         let renderSide = 'right';
-        let right = menuWidth + 240;
+        let right = menuWidth + this.props.menuWidth;
         if (right > windowWidth) {
           renderSide = 'left';
-          right = menuWidth - 240;
+          right = menuWidth - this.props.menuWidth;
         }
         return (
           <SubMenu
             key={`${i}${menuItem.label}`}
             level={1}
+            menuWidth={this.props.menuWidth}
             right={right}
             renderSide={renderSide}
             label={menuItem.label}
             menu={menuItem.submenu}
+            onClick={menuItem.click}
+            enabled={menuItem.enabled}
+            visiable={menuItem.visiable}
+            showBoxShadow={showBoxShadow}
+            menuTextColor={menuTextColor}
+            menuBackgroundColor={menuBackgroundColor}
+            menuTextHighlightColor={menuTextHighlightColor}
+            menuHighlightColor={menuHighlightColor}
           />
         );
       }
@@ -78,6 +94,8 @@ export default class MenuList extends Component {
           onClick={menuItem.click}
           enabled={menuItem.enabled}
           visiable={menuItem.visiable}
+          menuTextHighlightColor={menuTextHighlightColor}
+          menuHighlightColor={menuHighlightColor}
         />
       );
     });
@@ -87,14 +105,26 @@ export default class MenuList extends Component {
     const {
       menu,
       rect,
+      menuTextColor,
+      menuBackgroundColor,
+      showBoxShadow,
+      menuWidth,
     } = this.props;
     // const menuListHeight = menu.map((l, index) => this.getRowHeight({ index })).reduce((a, b) => a + b, 0);
     return (
       <Wrapper rect={rect}>
         <Overlay tabIndex="-1" />
-        <FoldOut rect={rect}>
-          <MenuFoldOut>
-            <MenuPane>
+        <FoldOut
+          color={menuTextColor}
+          rect={rect}
+        >
+          <MenuFoldOut
+            showBoxShadow={showBoxShadow}
+            menuBackgroundColor={menuBackgroundColor}
+          >
+            <MenuPane
+              menuWidth={menuWidth}
+            >
               {this.generateMenu(menu)}
             </MenuPane>
           </MenuFoldOut>
@@ -107,4 +137,19 @@ export default class MenuList extends Component {
 MenuList.propTypes = {
   menu: PropTypes.array,
   rect: PropTypes.object,
+  showBoxShadow: PropTypes.bool,
+  menuBackgroundColor: PropTypes.string,
+  menuTextColor: PropTypes.string,
+  menuTextHighlightColor: PropTypes.string,
+  menuHighlightColor: PropTypes.string,
+  menuWidth: PropTypes.number,
+};
+
+MenuList.defaultProps = {
+  menuBackgroundColor: '#fff',
+  menuTextColor: '#24292e',
+  menuTextHighlightColor: '#fff',
+  menuHighlightColor: '#0372ef',
+  showBoxShadow: true,
+  menuWidth: 240,
 };

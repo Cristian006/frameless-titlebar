@@ -27,6 +27,7 @@ const Button = styled.button`
   color: ${props => props.color};
   background-color: transparent;
   transition: background-color 0.25s ease;
+  opacity: 0.5;
   & svg {  
     fill: currentColor;
   }
@@ -35,11 +36,12 @@ const Button = styled.button`
   }
   &:hover {
     background-color: ${props => props.backgroundColor};
-    color: ${props => props.activeColor};
+    opacity: 1;
   }
   &:hover:active {
     background-color: ${props => props.backgroundActive};
     transition: none;
+    opacity: 1;
   }
 `;
 
@@ -84,8 +86,7 @@ export default class WindowControls extends Component {
       disableMinimize,
       closeBackground,
       closeActive,
-      defaultColor,
-      activeColor,
+      color,
       defaultBackground,
       defaultActive,
     } = this.props;
@@ -100,8 +101,7 @@ export default class WindowControls extends Component {
           aria-label="minimize"
           tabIndex="-1"
           disabled={disableMinimize}
-          color={defaultColor}
-          activeColor={activeColor}
+          color={color}
           backgroundColor={defaultBackground}
           backgroundActive={defaultActive}
           onClick={() => currentWindow.minimize()}
@@ -121,8 +121,7 @@ export default class WindowControls extends Component {
           aria-label="maximize"
           tabIndex="-1"
           disabled={disableMaximize}
-          color={defaultColor}
-          activeColor={activeColor}
+          color={color}
           backgroundColor={defaultBackground}
           backgroundActive={defaultActive}
           onClick={this.onMaximizeClicked}
@@ -154,8 +153,7 @@ export default class WindowControls extends Component {
         <Button
           aria-label="close"
           tabIndex="-1"
-          color={defaultColor}
-          activeColor={activeColor}
+          color={color}
           backgroundColor={closeBackground}
           backgroundActive={closeActive}
           onClick={() => currentWindow.close()}
@@ -182,17 +180,15 @@ WindowControls.propTypes = {
   closeActive: PropTypes.string,
   defaultBackground: PropTypes.string,
   defaultActive: PropTypes.string,
-  defaultColor: PropTypes.string,
-  activeColor: PropTypes.string,
+  color: PropTypes.string,
 };
 
 WindowControls.defaultProps = {
   disableMinimize: false,
   disableMaximize: false,
-  defaultColor: '#a0a0a0',
-  activeColor: '#fff',
+  color: '#fff',
   closeBackground: '#e81123',
   closeActive: '#bf0f1d',
-  defaultBackground: '#888',
-  defaultActive: '#666',
+  defaultBackground: 'rgba(255,255,255,0.3)',
+  defaultActive: 'rgba(255,255,255,0.2)',
 };
