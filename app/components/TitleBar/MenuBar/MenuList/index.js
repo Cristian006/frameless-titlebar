@@ -11,6 +11,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: calc(100% - ${props => props.rect.bottom}px);
   top: ${props => props.rect.bottom}px;
+  overflow: hidden;
   left: 0;
 `;
 
@@ -56,10 +57,14 @@ class MenuList extends Component {
         const windowWidth = window.innerWidth;
         let renderSide = 'right';
         let right = menuWidth + this.props.theme.menuWidth;
-        if (right > windowWidth) {
+
+        // Render menu to the left if the right side of the
+        // current menu is greater than the current window width
+        if (right > windowWidth && this.props.theme.menuWidth < this.props.rect.left) {
           renderSide = 'left';
           right = menuWidth - this.props.theme.menuWidth;
         }
+
         return (
           <SubMenu
             key={`${i}${menuItem.label}`}

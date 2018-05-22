@@ -25,6 +25,7 @@ export const darkTheme = {
   /* Menu */
   menuDimItems: true,
   menuDimOpacity: 0.6,
+  menuDisabledOpacity: 0.3,
   menuWidth: 240,
   menuBackgroundColor: '#fff',
   menuItemTextColor: '#fff',
@@ -34,11 +35,12 @@ export const darkTheme = {
   menuHighlightColor: '#0372ef',
   menuSubLabelHeaders: true,
   menuSubLabelColor: '#6a737d',
+  menuAcceleratorColor: '#6a737d',
   menuShowBoxShadow: true,
   menuBoxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
   /* Menu Overlay */
   menuOverlayBackground: 'black',
-  menuOverlayOpacity: '0.4',
+  menuOverlayOpacity: 0.4,
   menuSeperatorColor: '#e1e4e8',
 
   /* WindowControls */

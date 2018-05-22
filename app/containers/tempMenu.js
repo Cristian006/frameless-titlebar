@@ -112,6 +112,18 @@ const template = [
     ],
   },
   {
+    label: 'Disabled',
+    enabled: false,
+    submenu: [
+      {
+        label: 'Light',
+        type: 'radio',
+        checked: false,
+        click: (item, win, e) => document.querySelector('html').style.background = 'rgb(240,240,240)',
+      },
+    ],
+  },
+  {
     label: 'Help',
     submenu: [
       {

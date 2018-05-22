@@ -43,24 +43,38 @@ class SubMenu extends Component {
     return menu.map((menuItem, i) => {
       if (menuItem.submenu) {
         // create submenu item
-        let menuWidth = this.props.right + this.props.theme.menuWidth;
         const windowWidth = window.innerWidth;
         let renderSide = 'right';
-        if ((menuWidth) > windowWidth) {
-          renderSide = 'left';
-          menuWidth = this.props.right - this.props.theme.menuWidth;
+        let right = this.props.right + this.props.theme.menuWidth;
+
+        // Render menu to the left if the right side of the
+        // current menu is greater than the current window width
+        if (right > windowWidth) {
+          if (this.props.theme.menuWidth < (this.props.right - this.props.theme.menuWidth)) {
+            renderSide = 'left';
+            right = this.props.right - this.props.theme.menuWidth;
+          } else {
+            // check wich side has more space and zero it out to the right or left
+            const rightDiff = windowWidth - right;
+            const leftDiff = this.props.right - this.props.theme.menuWidth;
+            if (rightDiff < leftDiff) {
+              // zero out to the right
+            }
+          }
         }
+
         return (
           <SubMenu
             key={`${i}${menuItem.label}`}
             renderSide={renderSide}
-            right={menuWidth}
+            right={right}
             level={this.props.level + 1}
             theme={this.props.theme}
             menuItem={{ ...defaultMenuItem, ...menuItem, type: 'submenu' }}
           />
         );
       }
+
       return (
         <MenuItem
           key={`${i}${menuItem.label}`}
@@ -115,11 +129,13 @@ class SubMenu extends Component {
 }
 
 SubMenu.propTypes = {
+  menuItem: PropTypes.object,
   level: PropTypes.number,
   renderSide: PropTypes.string,
 };
 
 SubMenu.defaultProps = {
+  menuItem: {},
   level: 1,
   renderSide: 'right',
 };

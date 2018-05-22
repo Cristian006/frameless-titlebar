@@ -73,25 +73,31 @@ export default class MenuBar extends Component {
         <MenuButton
           key={`${menuItem.label}`}
           onMouseEnter={() => {
+            if (menuItem.enabled === false) return;
             this.setState({
               hovering: i,
             });
           }}
           onMouseLeave={() => {
+            if (menuItem.enabled === false) return;
             this.setState({
               hovering: -1,
             });
           }}
           onMouseOver={() => {
+            if (menuItem.enabled === false) return;
             this.onMenuButtonMouseOver(i);
           }}
           onMouseMove={() => {
+            if (menuItem.enabled === false) return;
             this.onMouseMove(i);
           }}
           onTouchStart={() => {
+            if (menuItem.enabled === false) return;
             this.onTouchStart(i);
           }}
           onClick={() => {
+            if (menuItem.enabled === false) return;
             this.onMenuButtonClick(i);
           }}
           onFocus={() => {

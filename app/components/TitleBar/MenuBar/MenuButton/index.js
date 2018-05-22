@@ -35,7 +35,7 @@ const Button = styled.button`
 `;
 
 const Label = styled.div`
-  opacity: ${props => props.theme.menuDimItems ? ((props.open || props.hovering) ? '1' : props.theme.menuDimOpacity) : '1'};
+  opacity: ${props => props.enabled ? (((props.open || props.hovering) || !props.theme.menuDimItems) ? 1 : props.theme.menuDimOpacity) : props.theme.menuDisabledOpacity};
 `;
 
 const Text = styled.span`
@@ -81,6 +81,7 @@ export default class MenuButton extends Component {
             tabIndex="-1"
           >
             <Label
+              enabled={enabled}
               hovering={hovering}
               open={open}
             >

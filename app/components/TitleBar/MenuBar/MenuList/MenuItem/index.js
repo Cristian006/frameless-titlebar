@@ -20,7 +20,7 @@ const Label = styled.span`
 const Accelerator = styled.span`
   flex-shrink: 0;
   margin-right: 10px;
-  color: #6a737d;
+  color: ${props => props.theme.menuAcceleratorColor};
 `;
 
 const Wrapper = styled.div`
