@@ -10,7 +10,7 @@
  *
  * @flow
  */
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, globalShortcut, ipcMain } from 'electron';
 import MenuBuilder from './menu';
 
 let mainWindow = null;
@@ -53,6 +53,15 @@ app.on('window-all-closed', () => {
   }
 });
 
+const testShortcutFunction = () => {
+  console.log('CommandOrControl+Y');
+};
+
+const registerShortCuts = () => {  
+  globalShortcut.register('CommandOrControl+Y', testShortcutFunction);
+};
+
+ipcMain.on('Test', testShortcutFunction);
 
 app.on('ready', async () => {
   if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
@@ -70,6 +79,8 @@ app.on('ready', async () => {
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
+
+  registerShortCuts();
 
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event

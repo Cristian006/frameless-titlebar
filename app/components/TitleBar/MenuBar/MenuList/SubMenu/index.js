@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import MenuItem from '../MenuItem';
+import { defaultMenuItem } from '../../../utils';
 
 const SubMenuWrapper = styled.div`
   position: absolute;
-  top: -5px;
+  top: ${props => props.showSubLabelHeaders ? '-25px' : '-5px'};
   left: ${props => props.renderSide === 'left' ? '-100%' : '100%'};
   max-width: 240px;
   width: 100%;
@@ -14,6 +15,20 @@ const SubMenuWrapper = styled.div`
   color: ${props => props.menuTextColor};
   z-index: ${props => props.level + 8};
   box-shadow: ${props => props.showBoxShadow ? '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)' : ''};
+`;
+
+const SubMenuLabel = styled.div`
+  height: 20px;
+  line-height: 20px;
+  margin: 0 10px;
+  color: #6a737d;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  direction: rtl;
+  font-size: 1em;
+  text-align: left;
 `;
 
 export default class SubMenu extends Component {
@@ -48,11 +63,7 @@ export default class SubMenu extends Component {
             renderSide={renderSide}
             right={menuWidth}
             level={this.props.level + 1}
-            label={menuItem.label}
-            menu={menuItem.submenu}
-            onClick={menuItem.click}
-            enabled={menuItem.enabled}
-            visiable={menuItem.visiable}
+            menuItem={{ ...defaultMenuItem, ...menuItem, type: 'submenu' }}
             showBoxShadow={showBoxShadow}
             menuTextColor={menuTextColor}
             menuBackgroundColor={menuBackgroundColor}
@@ -64,11 +75,7 @@ export default class SubMenu extends Component {
       return (
         <MenuItem
           key={`${i}${menuItem.label}`}
-          type={menuItem.type}
-          label={menuItem.label}
-          onClick={menuItem.click}
-          enabled={menuItem.enabled}
-          visiable={menuItem.visiable}
+          menuItem={{ ...defaultMenuItem, ...menuItem }}
           menuTextHighlightColor={menuTextHighlightColor}
           menuHighlightColor={menuHighlightColor}
         />
@@ -78,12 +85,12 @@ export default class SubMenu extends Component {
 
   render() {
     const {
-      menu,
-      label,
+      menuItem,
       level,
       renderSide,
       menuWidth,
       showBoxShadow,
+      showSubLabelHeaders,
       menuBackgroundColor,
       menuTextHighlightColor,
       menuHighlightColor,
@@ -102,15 +109,15 @@ export default class SubMenu extends Component {
             hovering: false,
           });
         }}
-        label={label}
+        menuItem={{ ...defaultMenuItem, ...menuItem }}
         menuTextHighlightColor={menuTextHighlightColor}
         menuHighlightColor={menuHighlightColor}
-        showArrow
       >
         {
           (this.state.hovering) &&
             <SubMenuWrapper
               menuTextColor={menuTextColor}
+              showSubLabelHeaders={showSubLabelHeaders}
               menuBackgroundColor={menuBackgroundColor}
               showBoxShadow={showBoxShadow}
               menuWidth={menuWidth}
@@ -118,7 +125,11 @@ export default class SubMenu extends Component {
               renderSide={renderSide}
             >
               {
-                this.generateMenu(menu)
+                showSubLabelHeaders &&
+                <SubMenuLabel>{menuItem.label}</SubMenuLabel>
+              }
+              {
+                this.generateMenu(menuItem.submenu)
               }
             </SubMenuWrapper>
         }
@@ -128,12 +139,12 @@ export default class SubMenu extends Component {
 }
 
 SubMenu.propTypes = {
-  menu: PropTypes.array,
-  label: PropTypes.string,
   level: PropTypes.number,
   renderSide: PropTypes.string,
   menuWidth: PropTypes.number,
   showBoxShadow: PropTypes.bool,
+  menuItem: PropTypes.object,
+  showSubLabelHeaders: PropTypes.bool,
 };
 
 SubMenu.defaultProps = {
@@ -141,4 +152,5 @@ SubMenu.defaultProps = {
   renderSide: 'right',
   menuWidth: 240,
   showBoxShadow: true,
+  showSubLabelHeaders: true,
 };

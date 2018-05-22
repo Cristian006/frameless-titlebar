@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import MenuItem from './MenuItem';
 import SubMenu from './SubMenu';
+import { defaultMenuItem } from '../../utils';
 
 const Wrapper = styled.div`
   z-index: 8;
@@ -57,7 +58,7 @@ export default class MenuList extends Component {
       menuTextColor,
     } = this.props;
     return menu.map((menuItem, i) => {
-      if (menuItem.submenu) {
+      if (menuItem.submenu || (menuItem.type && menuItem.type.toLowerCase() === 'submenu')) {
         const menuWidth = this.props.rect.left + this.props.menuWidth;
         const windowWidth = window.innerWidth;
         let renderSide = 'right';
@@ -73,11 +74,7 @@ export default class MenuList extends Component {
             menuWidth={this.props.menuWidth}
             right={right}
             renderSide={renderSide}
-            label={menuItem.label}
-            menu={menuItem.submenu}
-            onClick={menuItem.click}
-            enabled={menuItem.enabled}
-            visiable={menuItem.visiable}
+            menuItem={{ ...defaultMenuItem, ...menuItem, type: 'submenu' }}
             showBoxShadow={showBoxShadow}
             menuTextColor={menuTextColor}
             menuBackgroundColor={menuBackgroundColor}
@@ -89,11 +86,8 @@ export default class MenuList extends Component {
       return (
         <MenuItem
           key={`${i}${menuItem.label}`}
-          type={menuItem.type}
-          label={menuItem.label}
-          onClick={menuItem.click}
-          enabled={menuItem.enabled}
-          visiable={menuItem.visiable}
+          menuItem={{ ...defaultMenuItem, ...menuItem }}
+          menuTextColor={menuTextColor}
           menuTextHighlightColor={menuTextHighlightColor}
           menuHighlightColor={menuHighlightColor}
         />
@@ -110,7 +104,7 @@ export default class MenuList extends Component {
       showBoxShadow,
       menuWidth,
     } = this.props;
-    // const menuListHeight = menu.map((l, index) => this.getRowHeight({ index })).reduce((a, b) => a + b, 0);
+
     return (
       <Wrapper rect={rect}>
         <Overlay tabIndex="-1" />

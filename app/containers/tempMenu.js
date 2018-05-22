@@ -1,4 +1,4 @@
-import { shell, remote } from 'electron';
+import { shell, ipcRenderer } from 'electron';
 
 const { openExternal } = shell;
 
@@ -50,28 +50,35 @@ const template = [
         ]
       },
       {
-        label: 'Not Visiable',
-        visiable: false,
+        label: 'Not visible',
+        visible: false,
       },
       {
         label: 'Arguments',
         click: (item, win, e) => console.log(item, win, e),
       },
       {
-        label: 'Really Long Sub Menu Title that should be truncated',
+        label: 'Really Long Menu Label that should be truncated',
       },
       { type: 'separator' },
       {
+        label: 'Test Accelerator',
+        accelerator: 'CommandOrControl+Y',
+        click: (item, win, e) => {
+          ipcRenderer.send('Test');
+        },
+      },
+      {
         label: 'Open Dev Tools',
         click: (item, win, e) => {
-          remote.getCurrentWindow().openDevTools();
+          win.openDevTools();
         },
       },
       {
         label: 'Resizable',
         type: 'checkbox',
         checked: true,
-        click: (item, win, e) => remote.getCurrentWindow().setResizable(item.checked),
+        click: (item, win, e) => win.setResizable(item.checked),
       },
       {
         label: 'Quit',

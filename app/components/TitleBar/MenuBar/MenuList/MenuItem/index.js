@@ -1,6 +1,28 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { remote } from 'electron';
+
+
+const checked = <svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1671 566q0 40-28 68l-724 724-136 136q-28 28-68 28t-68-28l-136-136-362-362q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 295 656-657q28-28 68-28t68 28l136 136q28 28 28 68z"/></svg>
+const unchecked = <span />
+const radioUnchecked = <svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M896 352q-148 0-273 73t-198 198-73 273 73 273 198 198 273 73 273-73 198-198 73-273-73-273-198-198-273-73zm768 544q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"/></svg>
+const radioChecked = <svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1152 896q0 106-75 181t-181 75-181-75-75-181 75-181 181-75 181 75 75 181zm-256-544q-148 0-273 73t-198 198-73 273 73 273 198 198 273 73 273-73 198-198 73-273-73-273-198-198-273-73zm768 544q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"/></svg>
+
+const Label = styled.span`
+  flex-grow: 1;
+  margin-left: ${props => props.checked ? '0px' : '10px'};
+  margin-right: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
+const Accelerator = styled.span`
+  flex-shrink: 0;
+  margin-right: 10px;
+  color: #6a737d;
+`;
 
 const Wrapper = styled.div`
   position: relative;
@@ -13,19 +35,15 @@ const Wrapper = styled.div`
   height: 30px;
   color: inherit;
   cursor: default;
+
   &:hover {
-    color: ${props => props.enabled ? props.textHighlightColor : ''};
     background-color: ${props => props.enabled ? props.highlightColor : ''};
   }
-`;
 
-const Label = styled.span`
-  flex-grow: 1;
-  margin-left: ${props => props.checked ? '0px' : '10px'};
-  margin-right: 10px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  &:hover,
+  &:hover ${Accelerator} {
+    color: ${props => props.enabled ? props.textHighlightColor : ''};
+  }
 `;
 
 const SubMenuArrow = styled.div`
@@ -47,27 +65,36 @@ const Seperator = styled.hr`
 `;
 
 export default class MenuItem extends Component {
+  handleClick = (e) => {
+    const {
+      menuItem,
+    } = this.props;
+
+    if (menuItem.enabled === false) {
+      e.stopPropagation();
+      return;
+    }
+
+    this.props.menuItem.click(this.props.menuItem, remote.getCurrentWindow(), e);
+  };
+
   render() {
     const {
+      children,
       onMouseEnter,
       onMouseLeave,
-      onClick,
-      label,
-      children,
-      enabled,
-      visiable,
-      type,
-      checked,
-      showArrow,
+      menuItem,
       menuHighlightColor,
       menuTextHighlightColor,
     } = this.props;
 
-    if (visiable === false) {
+    const isSubMenu = (menuItem.type && menuItem.type.toLowerCase() === 'submenu');
+
+    if (menuItem.visible === false) {
       return null;
     }
 
-    if (type && (type.toLowerCase() === 'separator')) {
+    if (menuItem.type && (menuItem.type.toLowerCase() === 'separator')) {
       return <Seperator />;
     }
 
@@ -75,18 +102,21 @@ export default class MenuItem extends Component {
       <Wrapper
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
-        enabled={enabled}
-        onClick={onClick}
+        enabled={menuItem.enabled}
+        onClick={this.handleClick}
         highlightColor={menuHighlightColor}
         textHighlightColor={menuTextHighlightColor}
       >
         <Label
-          checked={checked}
+          checked={menuItem.checked}
         >
-          {label}
+          {menuItem.label}
         </Label>
+        <Accelerator>
+          {menuItem.accelerator}
+        </Accelerator>
         {
-          showArrow &&
+          (isSubMenu) &&
           <SubMenuArrow>
             <svg
               version="1.1"
@@ -100,36 +130,48 @@ export default class MenuItem extends Component {
             </svg>
           </SubMenuArrow>
         }
-        {showArrow && children}
+        {isSubMenu && children}
       </Wrapper>
     );
   }
 }
 
 MenuItem.propTypes = {
-  label: PropTypes.string,
-  enabled: PropTypes.bool,
-  showArrow: PropTypes.bool,
-  checked: PropTypes.bool,
-  visiable: PropTypes.bool,
+  menuItem: PropTypes.shape({
+    label: PropTypes.string,
+    enabled: PropTypes.bool,
+    checked: PropTypes.bool,
+    visible: PropTypes.bool,
+    type: PropTypes.oneOf([
+      'normal',
+      'separator',
+      'submenu',
+      'checkbox',
+      'radio'
+    ]),
+    click: PropTypes.func,
+  }),
+  children: PropTypes.node,
   menuTextHighlightColor: PropTypes.string,
   menuHighlightColor: PropTypes.string,
-  type: PropTypes.string,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
-  onClick: PropTypes.func,
 };
 
 MenuItem.defaultProps = {
-  enabled: true,
-  label: '',
-  showArrow: false,
-  checked: false,
-  visiable: true,
-  type: '',
+  menuItem: {
+    id: '',
+    enabled: true,
+    label: '',
+    checked: false,
+    visible: true,
+    type: 'normal',
+    accelerator: '',
+    position: '',
+  },
+  children: null,
   menuTextHighlightColor: '#fff',
   menuHighlightColor: '#0372ef',
   onMouseEnter: () => {},
   onMouseLeave: () => {},
-  onClick: () => {},
 };
