@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   display: flex;
   -webkit-app-region: no-drag;
   max-width: calc(100% - 163px);
-  color: ${props => props.color};
+  color: ${props => props.theme.menuItemTextColor || props.theme.barColor};
 `;
 
 export default class MenuBar extends Component {
@@ -52,7 +52,6 @@ export default class MenuBar extends Component {
       this.lock = false;
       return;
     }
-    console.log('clicked');
     this.setState({
       clicked: !(this.state.focusing === index && this.state.clicked),
       hovering: !(this.state.focusing === index && this.state.clicked) ? this.state.hovering : -1,
@@ -69,13 +68,6 @@ export default class MenuBar extends Component {
   };
 
   generateMenu = (menuObj = []) => {
-    const {
-      menuTextColor,
-      menuHighlightColor,
-      menuTextHighlightColor,
-      menuBackgroundColor,
-    } = this.props;
-
     return menuObj.map((menuItem, i) => {
       return (
         <MenuButton
@@ -109,22 +101,16 @@ export default class MenuBar extends Component {
           hovering={i === this.state.hovering}
           open={this.state.clicked && i === this.state.focusing}
           closed={!this.state.clicked || i !== this.state.focusing}
-          dimMenuItem={this.props.dimMenuItems}
-          menuTextColor={menuTextColor}
-          menuBackgroundColor={menuBackgroundColor}
+          enabled={menuItem.enabled}
           label={menuItem.label}
         >
           {
             (this.state.clicked && i === this.state.focusing) &&
-            <MenuList
-              rect={this.menuItems[i].getBoundingClientRect()}
-              menu={menuItem.submenu}
-              menuBackgroundColor={menuBackgroundColor}
-              menuTextColor={menuTextColor}
-              menuTextHighlightColor={menuTextHighlightColor}
-              menuHighlightColor={menuHighlightColor}
-              mainIndex={i}
-            />
+              <MenuList
+                rect={this.menuItems[i].getBoundingClientRect()}
+                submenu={menuItem.submenu}
+                mainIndex={i}
+              />
           }
         </MenuButton>
       );
@@ -132,14 +118,8 @@ export default class MenuBar extends Component {
   };
 
   render() {
-    const {
-      theme,
-    } = this.props;
-
     return (
-      <Wrapper
-        color={theme === 'dark' ? '#fff' : '#24292e'}
-      >
+      <Wrapper>
         {
           this.generateMenu(this.state.menu)
         }
@@ -150,23 +130,8 @@ export default class MenuBar extends Component {
 
 MenuBar.propTypes = {
   menu: PropTypes.array,
-  theme: PropTypes.oneOf(['light', 'dark']),
-  defaultTextColor: PropTypes.string,
-  hoverTextColor: PropTypes.string,
-  hoverBackgroundColor: PropTypes.string,
-  dimMenuItems: PropTypes.bool,
-  menuBackgroundColor: PropTypes.string,
-  menuTextColor: PropTypes.string,
-  menuTextHighlightColor: PropTypes.string,
-  menuHighlightColor: PropTypes.string,
 };
 
 MenuBar.defaultProps = {
   menu: [],
-  theme: 'dark',
-  dimMenuItems: false,
-  menuBackgroundColor: '#fff',
-  menuTextColor: '#24292e',
-  menuTextHighlightColor: '#fff',
-  menuHighlightColor: '#0372ef',
 };

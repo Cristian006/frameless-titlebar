@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import MenuBar from './MenuBar';
 import WindowControls from './WindowControls';
+import { darkTheme, lightTheme } from './utils';
 
 const Bar = styled.div`
-  height: ${props => props.height};
+  height: ${props => props.theme.barHeight};
   flex-grow: 0;
   flex-shrink: 0;
   display: flex;
@@ -13,16 +14,18 @@ const Bar = styled.div`
   font-size: 12px;
   width: 100%;
   -webkit-app-region: drag;
+  user-select: none;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
-  background-color: ${props => props.backgroundColor}
-  border-bottom: ${props => props.showBorder ? props.borderBottom : ''};
+  background-color: ${props => props.theme.barBackgroundColor};
+  color: ${props => props.theme.barColor};
+  border-bottom: ${props => props.theme.barShowBorder ? props.theme.barBorderBottom : ''};
 `;
 
 const Title = styled.div`
-  line-height: ${props => props.height}
+  line-height: ${props => props.theme.barHeight}
   margin: 0px 6px 0px 0px;
   padding: 0px 4px;
-  color: ${props => props.titleColor}
+  color: ${props => props.theme.barTitleColor}
 `;
 
 const Icon = styled.img`
@@ -54,20 +57,10 @@ export default class TitleBar extends Component {
       children,
       title,
       icon,
-      menu,
       theme,
-      height,
-      titleColor,
-      showBorder,
-      borderBottom,
-      backgroundColor,
+      menu,
       disableMinimize,
       disableMaximize,
-      dimMenuItems,
-      menuBackgroundColor,
-      menuTextColor,
-      menuTextHighlightColor,
-      menuHighlightColor,
       onTitleClick,
       onIconClick,
       onCloseClick,
@@ -75,51 +68,54 @@ export default class TitleBar extends Component {
       onMaximizeClick,
     } = this.props;
 
+    const currentTheme = {
+      ...(theme.barTheme === 'light' ? lightTheme : darkTheme),
+      ...theme,
+    };
+
     return (
-      <Bar
-        height={height}
-        showBorder={showBorder}
-        borderBottom={borderBottom}
-        backgroundColor={backgroundColor}
-      >
-        <ResizeTop />
-        <ResizeLeft />
-        {
-          icon &&
-          <Icon
-            src={icon}
-            alt="app-icon"
-            onClick={onIconClick}
+      <ThemeProvider theme={currentTheme}>
+        <Bar>
+          <ResizeTop />
+          <ResizeLeft />
+          {
+            currentTheme.barStyle !== 'normal' &&
+              <MenuBar
+                menu={menu}
+              />
+          }
+          {
+            icon &&
+            <Icon
+              src={icon}
+              alt="app-icon"
+              onClick={onIconClick}
+            />
+          }
+          {
+            title &&
+            <Title
+              onClick={onTitleClick}
+            >
+              {title}
+            </Title>
+          }
+          {
+            currentTheme.barStyle === 'normal' &&
+              <MenuBar
+                menu={menu}
+              />
+          }
+          {children}
+          <WindowControls
+            disableMinimize={disableMinimize}
+            disableMaximize={disableMaximize}
+            onCloseClick={onCloseClick}
+            onMinimizeClick={onMinimizeClick}
+            onMaximizeClick={onMaximizeClick}
           />
-        }
-        {
-          title &&
-          <Title
-            color={titleColor || (theme === 'dark' ? '#fff' : '#24292e')}
-            height={height}
-            onClick={onTitleClick}
-          >
-            {title}
-          </Title>
-        }
-        <MenuBar
-          menu={menu}
-          theme={theme}
-          dimMenuItems={dimMenuItems}
-          menuBackgroundColor={menuBackgroundColor}
-          menuTextColor={menuTextColor}
-          menuTextHighlightColor={menuTextHighlightColor}
-          menuHighlightColor={menuHighlightColor}
-        />
-        {children}
-        <WindowControls
-          disableMinimize={disableMinimize}
-          disableMaximize={disableMaximize}
-          onCloseClick={onCloseClick}
-          onMinimizeClick={onMinimizeClick}
-          onMaximizeClick={onMaximizeClick}
-        />
-      </Bar>
+        </Bar>
+      </ThemeProvider>
     );
   }
 }
@@ -128,19 +124,9 @@ TitleBar.propTypes = {
   children: PropTypes.node,
   icon: PropTypes.string,
   title: PropTypes.string,
-  theme: PropTypes.oneOf(['light', 'dark']),
-  height: PropTypes.string,
-  backgroundColor: PropTypes.string,
-  showBorder: PropTypes.bool,
-  borderBottom: PropTypes.string,
-  titleColor: PropTypes.string,
+  theme: PropTypes.object,
   /* Menu */
   menu: PropTypes.array,
-  dimMenuItems: PropTypes.bool,
-  menuBackgroundColor: PropTypes.string,
-  menuTextColor: PropTypes.string,
-  menuTextHighlightColor: PropTypes.string,
-  menuHighlightColor: PropTypes.string,
   /* Window */
   disableMinimize: PropTypes.bool,
   disableMaximize: PropTypes.bool,
@@ -153,22 +139,12 @@ TitleBar.propTypes = {
 };
 
 TitleBar.defaultProps = {
+  children: null,
+
   /* Main */
   icon: '',
   title: '',
-  titleColor: '',
-  showBorder: false,
-  borderBottom: '1px solid #000',
-  backgroundColor: '#24292e',
-  theme: 'dark',
-  height: '28px',
-
-  /* Menu */
-  dimMenuItems: true,
-  menuBackgroundColor: '#fff',
-  menuTextColor: '#24292e',
-  menuTextHighlightColor: '#fff',
-  menuHighlightColor: '#0372ef',
+  theme: {},
 
   /* WindowControls */
   disableMinimize: false,

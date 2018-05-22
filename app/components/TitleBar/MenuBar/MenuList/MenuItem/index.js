@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 import { remote } from 'electron';
-
 
 const checked = <svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1671 566q0 40-28 68l-724 724-136 136q-28 28-68 28t-68-28l-136-136-362-362q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 295 656-657q28-28 68-28t68 28l136 136q28 28 28 68z"/></svg>
 const unchecked = <span />
@@ -37,12 +36,12 @@ const Wrapper = styled.div`
   cursor: default;
 
   &:hover {
-    background-color: ${props => props.enabled ? props.highlightColor : ''};
+    background-color: ${props => props.enabled ? props.theme.menuHighlightColor : ''};
   }
 
   &:hover,
   &:hover ${Accelerator} {
-    color: ${props => props.enabled ? props.textHighlightColor : ''};
+    color: ${props => props.enabled ? props.theme.menuTextHighlightColor : ''};
   }
 `;
 
@@ -61,10 +60,10 @@ const Seperator = styled.hr`
   width: 100%;
   border: none;
   height: 1px;
-  border-bottom: 1px solid #e1e4e8;
+  border-bottom: 1px solid ${props => props.theme.menuSeperatorColor};
 `;
 
-export default class MenuItem extends Component {
+class MenuItem extends Component {
   handleClick = (e) => {
     const {
       menuItem,
@@ -84,8 +83,6 @@ export default class MenuItem extends Component {
       onMouseEnter,
       onMouseLeave,
       menuItem,
-      menuHighlightColor,
-      menuTextHighlightColor,
     } = this.props;
 
     const isSubMenu = (menuItem.type && menuItem.type.toLowerCase() === 'submenu');
@@ -104,8 +101,6 @@ export default class MenuItem extends Component {
         onMouseLeave={onMouseLeave}
         enabled={menuItem.enabled}
         onClick={this.handleClick}
-        highlightColor={menuHighlightColor}
-        textHighlightColor={menuTextHighlightColor}
       >
         <Label
           checked={menuItem.checked}
@@ -152,8 +147,6 @@ MenuItem.propTypes = {
     click: PropTypes.func,
   }),
   children: PropTypes.node,
-  menuTextHighlightColor: PropTypes.string,
-  menuHighlightColor: PropTypes.string,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
 };
@@ -170,8 +163,8 @@ MenuItem.defaultProps = {
     position: '',
   },
   children: null,
-  menuTextHighlightColor: '#fff',
-  menuHighlightColor: '#0372ef',
   onMouseEnter: () => {},
   onMouseLeave: () => {},
 };
+
+export default withTheme(MenuItem);

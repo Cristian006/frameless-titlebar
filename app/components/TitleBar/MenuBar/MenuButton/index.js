@@ -25,9 +25,9 @@ const Button = styled.button`
   font-size: 12px;
   padding: 0 10px;
 
-  background-color: ${props => props.open ? props.menuBackgroundColor : ((props.hovering && !props.disabled) ? (props.theme === 'dark' ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.3)') : 'transparent')};
-  border-color: ${props => props.open ? props.menuBackgroundColor : 'initial'};
-  color: ${props => props.open ? props.menuTextColor : 'inherit'};
+  background-color: ${props => props.open ? props.theme.menuBackgroundColor : ((props.hovering && props.enabled) ? props.theme.menuItemHoverBackground : 'transparent')};
+  border-color: ${props => props.open ? props.theme.menuBackgroundColor : ''};
+  color: ${props => props.open ? props.theme.menuActiveTextColor : props.theme.menuItemTextColor};
 
   &:focus:not(.focus-ring) {
     outline: none;
@@ -35,7 +35,7 @@ const Button = styled.button`
 `;
 
 const Label = styled.div`
-  opacity: ${props => props.dimMenuItem ? ((props.open || props.hovering) ? '1' : '0.6') : '1'};
+  opacity: ${props => props.theme.menuDimItems ? ((props.open || props.hovering) ? '1' : props.theme.menuDimOpacity) : '1'};
 `;
 
 const Text = styled.span`
@@ -53,14 +53,10 @@ export default class MenuButton extends Component {
       onFocus,
       onClick,
       label,
-      theme,
       open,
-      disabled,
+      enabled,
       hovering,
       rectRef,
-      dimMenuItem,
-      menuBackgroundColor,
-      menuTextColor,
     } = this.props;
 
     return (
@@ -80,15 +76,11 @@ export default class MenuButton extends Component {
         >
           <Button
             open={open}
-            theme={theme}
-            disabled={disabled}
-            menuTextColor={menuTextColor}
-            menuBackgroundColor={menuBackgroundColor}
+            enabled={enabled}
             hovering={hovering}
             tabIndex="-1"
           >
             <Label
-              dimMenuItem={dimMenuItem}
               hovering={hovering}
               open={open}
             >
@@ -103,15 +95,11 @@ export default class MenuButton extends Component {
 
 MenuButton.propTypes = {
   children: PropTypes.node,
+  enabled: PropTypes.bool,
   label: PropTypes.string.isRequired,
-  theme: PropTypes.oneOf(['light', 'dark']),
   open: PropTypes.bool,
   closed: PropTypes.bool,
   hovering: PropTypes.bool,
-  disabled: PropTypes.bool,
-  dimMenuItem: PropTypes.bool,
-  menuTextColor: PropTypes.string,
-  menuBackgroundColor: PropTypes.string,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
   onMouseOver: PropTypes.func,
@@ -123,14 +111,10 @@ MenuButton.propTypes = {
 };
 
 MenuButton.defaultProps = {
-  theme: 'dark',
-  dimMenuItem: true,
   open: false,
   closed: false,
   hovering: false,
-  disabled: false,
-  menuTextColor: '#24292e',
-  menuBackgroundColor: '#fff',
+  enabled: true,
   onMouseEnter: () => {},
   onMouseLeave: () => {},
   onMouseOver: () => {},

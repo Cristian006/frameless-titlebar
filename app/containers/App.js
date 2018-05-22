@@ -21,7 +21,10 @@ export default class App extends React.Component<Props> {
           icon={`${__dirname}/../resources/icon.png`}
           title="Electron Title Bar"
           menu={menu}
-          showBorder
+          theme={{
+            barTheme: 'light',
+            /* barStyle: 'hamburger', */
+          }}
         />
         {this.props.children}
       </div>
