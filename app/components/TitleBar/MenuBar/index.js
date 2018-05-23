@@ -1,76 +1,194 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 import MenuButton from './MenuButton';
 import MenuList from './MenuList';
+
+const menuIcon = (
+  <svg version="1.1" width="24px" height="24px" viewBox="0 0 32 32">
+    <path d="M 4 7 L 4 9 L 28 9 L 28 7 Z M 4 15 L 4 17 L 28 17 L 28 15 Z M 4 23 L 4 25 L 28 25 L 28 23 Z "/>
+  </svg>
+);
 
 const Wrapper = styled.div`
   display: flex;
   -webkit-app-region: no-drag;
   max-width: calc(100% - 163px);
-  overflow: hidden;
-  color: ${props => props.lightTextColor};
+  color: ${props => props.theme.menuItemTextColor || props.theme.barColor};
 `;
 
-export default class MenuBar extends Component {
+class MenuBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       hovering: -1,
-      focusing: -1,
+      focusing: 0,
       clicked: false,
+      menu: props.menu,
     };
   }
 
-  onMenuItemClick = (index) => {
+  // if hovering over another button while menu is clicked; change focus
+  onMenuButtonMouseOver = (i) => {
+    if (this.state.clicked) {
+      this.setState({
+        focusing: i
+      });
+    }
+  };
+
+  // lock set to true to keep menu panes open
+  onTouchStart = (i) => {
+    if (i !== this.state.focusing && this.state.clicked) {
+      this.lock = true;
+    }
+  };
+
+  // if moving over a different menu button - select that menu button
+  onMouseMove = (i) => {
+    if (i === this.state.focusing) return;
     this.setState({
-      clicked: true,
-      focusing: index,
+      focusing: i,
     });
   };
 
-  generateMenu = (menuObj = []) => {
+  // when a menu button is clicked
+  onMenuButtonClick = (index) => {
+    if (this.lock) {
+      this.lock = false;
+      return;
+    }
+    this.setState({
+      clicked: !(this.state.focusing === index && this.state.clicked),
+      hovering: !(this.state.focusing === index && this.state.clicked) ? this.state.hovering : -1,
+    });
+  };
+
+  // we need the rect's bounds for the child menu pane
+  setMenuRef = (ref, i) => {
+    if (this.menuItems) {
+      this.menuItems[i] = ref;
+    } else {
+      this.menuItems = { [i]: ref };
+    }
+  };
+
+  generateHorizontalMenu = (menuObj = []) => {
     return menuObj.map((menuItem, i) => {
       return (
         <MenuButton
-          key={i}
-          onMouseOver={() => this.setState({hovering: i})}
-          onFocus={() => this.setState({focusing: i})}
-          onClick={() => this.onMenuItemClick(i)}
+          key={`${menuItem.label}`}
+          onMouseEnter={() => {
+            if (menuItem.enabled === false) return;
+            this.setState({
+              hovering: i,
+            });
+          }}
+          onMouseLeave={() => {
+            if (menuItem.enabled === false) return;
+            this.setState({
+              hovering: -1,
+            });
+          }}
+          onMouseOver={() => {
+            if (menuItem.enabled === false) return;
+            this.onMenuButtonMouseOver(i);
+          }}
+          onMouseMove={() => {
+            if (menuItem.enabled === false) return;
+            this.onMouseMove(i);
+          }}
+          onTouchStart={() => {
+            if (menuItem.enabled === false) return;
+            this.onTouchStart(i);
+          }}
+          onClick={() => {
+            if (menuItem.enabled === false) return;
+            this.onMenuButtonClick(i);
+          }}
+          onFocus={() => {
+            // idk - linting says it needs it? it has no purpose for me
+          }}
+          rectRef={(ref) => this.setMenuRef(ref, i)}
           hovering={i === this.state.hovering}
-          open={this.state.clicked && i === this.state.foucing}
+          open={this.state.clicked && i === this.state.focusing}
           closed={!this.state.clicked || i !== this.state.focusing}
+          enabled={menuItem.enabled}
           label={menuItem.label}
         >
           {
-            this.state.clicked && i === this.state.focusing &&
-            <MenuList
-              rect={this.menuItems[i].getBoundingClientRect()}
-              menuList={menuItem.submenu}
-              changeCheckState={this.changeCheckState}
-              mainIndex={i}
-            />
+            (this.state.clicked && i === this.state.focusing) &&
+              <MenuList
+                rect={this.menuItems[i].getBoundingClientRect()}
+                submenu={menuItem.submenu}
+                mainIndex={i}
+              />
           }
         </MenuButton>
       );
     });
   };
 
-  render() {
-    const {
-      menu,
-      lightTextColor
-    } = this.props;
-
+  generateVerticalMenu = (menuObj = []) => {
     return (
-      <Wrapper
-        role="menubar"
-        aria-label="App MenuBar"
-        lightTextColor={lightTextColor}
-      >
-        {
-          this.generateMenu(menu)
-        }
+      <MenuList
+        rect={this.menuItems[0].getBoundingClientRect()}
+        submenu={menuObj}
+        vertical
+      />
+    );
+  };
+
+  render() {
+    if (this.props.theme.menuStyle === 'horizontal') {
+      return (
+        <Wrapper>
+          {
+            this.generateHorizontalMenu(this.state.menu)
+          }
+        </Wrapper>
+      );
+    }
+    return (
+      <Wrapper>
+        <MenuButton
+          onMouseEnter={() => {
+            this.setState({
+              hovering: 0,
+            });
+          }}
+          onMouseLeave={() => {
+            this.setState({
+              hovering: -1,
+            });
+          }}
+          onMouseOver={() => {
+            this.onMenuButtonMouseOver(0);
+          }}
+          onMouseMove={() => {
+            this.onMouseMove(0);
+          }}
+          onTouchStart={() => {
+            this.onTouchStart(0);
+          }}
+          onClick={() => {
+            this.onMenuButtonClick(0);
+          }}
+          onFocus={() => {
+            // idk - linting says it needs it? it has no purpose for me
+          }}
+          rectRef={(ref) => this.setMenuRef(ref, 0)}
+          hovering={this.state.hovering === 0}
+          open={this.state.clicked && this.state.focusing === 0}
+          closed={!this.state.clicked || this.state.focusing !== 0}
+          label={menuIcon}
+          enabled
+        >
+          {
+            (this.state.clicked && this.state.focusing === 0) &&
+              this.generateVerticalMenu(this.state.menu)
+          }
+        </MenuButton>
       </Wrapper>
     );
   }
@@ -78,10 +196,10 @@ export default class MenuBar extends Component {
 
 MenuBar.propTypes = {
   menu: PropTypes.array,
-  lightTextColor: PropTypes.string,
 };
 
 MenuBar.defaultProps = {
   menu: [],
-  lightTextColor: '#6a737d',
 };
+
+export default withTheme(MenuBar);

@@ -1,6 +1,7 @@
-import { shell, remote } from 'electron';
+import { shell, ipcRenderer } from 'electron';
 
 const { openExternal } = shell;
+
 const template = [
   {
     label: 'App',
@@ -10,49 +11,85 @@ const template = [
         enabled: false,
       },
       {
-        label: 'Sub',
+        label: 'Sub Menu',
         submenu: [
           {
-            label: 'random1',
+            label: 'Random 1',
           },
           {
-            label: 'random2',
+            label: 'Random 2',
           },
           {
-            label: 'randomSub',
+            label: 'Random 3',
             submenu: [
               {
-                label: 'random-sub'
+                label: 'Random 4',
+                submenu: [
+                  {
+                    label: 'Random 7',
+                  },
+                  {
+                    label: 'Random 8',
+                  },
+                  {
+                    label: 'Random 9',
+                  },
+                  {
+                    label: 'Random 10',
+                  }
+                ],
+              },
+              {
+                label: 'Random 5'
+              },
+              {
+                label: 'Random 6'
               }
             ]
           }
         ]
       },
       {
-        label: 'Not Visiable',
-        visiable: false,
+        label: 'Not visible',
+        visible: false,
       },
       {
         label: 'Arguments',
         click: (item, win, e) => console.log(item, win, e),
       },
+      {
+        label: 'Really Long Menu Label that should be truncated',
+      },
       { type: 'separator' },
+      {
+        label: 'Test Accelerator',
+        accelerator: 'CommandOrControl+Y',
+        click: (item, win, e) => {
+          ipcRenderer.send('Test');
+        },
+      },
       {
         label: 'Open Dev Tools',
         click: (item, win, e) => {
-          win.openDevTools()
+          win.openDevTools();
         },
       },
       {
         label: 'Resizable',
         type: 'checkbox',
         checked: true,
-        click: (item, win, e) => remote.getCurrentWindow().setResizable(item.checked),
+        click: (item, win, e) => win.setResizable(item.checked),
+      },
+      {
+        label: 'Unchecked',
+        type: 'checkbox',
+        checked: false,
+        click: (item, win, e) => win.setResizable(item.checked),
       },
       {
         label: 'Quit',
         click: () => {
-          window.close()
+          window.close();
         },
       },
     ],
@@ -77,6 +114,18 @@ const template = [
         type: 'radio',
         checked: false,
         click: (item, win, e) => document.querySelector('html').style.background = 'rgb(0,0,0)',
+      },
+    ],
+  },
+  {
+    label: 'Disabled',
+    enabled: false,
+    submenu: [
+      {
+        label: 'Light',
+        type: 'radio',
+        checked: false,
+        click: (item, win, e) => document.querySelector('html').style.background = 'rgb(240,240,240)',
       },
     ],
   },

@@ -1,9 +1,63 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import electron from 'electron';
-import styles from './WindowControls.css';
+import styled from 'styled-components';
 
 const currentWindow = electron.remote.getCurrentWindow();
+
+const Controls = styled.div`
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin-left: auto;
+  height: 100%;
+`;
+
+const Button = styled.button`
+  -webkit-app-region: no-drag;
+  display: inline-block;
+  position: relative;
+  width: 45px;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  color: ${props => props.theme.windowControlsColor};
+  background-color: transparent;
+  transition: background-color 0.25s ease;
+  opacity: 0.5;
+  & svg {  
+    fill: currentColor;
+  }
+  &:focus {
+    outline: none;
+  }
+  &:hover {
+    background-color: ${props => props.theme.windowDefaultBackground};
+    opacity: 1;
+  }
+  &:hover:active {
+    background-color: ${props => props.theme.windowDefaultActive};
+    transition: none;
+    opacity: 1;
+  }
+`;
+
+const CloseButton = styled(Button)`
+  &:hover {
+    color: ${props => props.theme.windowCloseHover};
+    background-color: ${props => props.theme.windowCloseBackground};
+    opacity: 1;
+  }
+  &:hover:active {
+    color: ${props => props.theme.windowCloseHover};
+    background-color: ${props => props.theme.windowCloseActive};
+    transition: none;
+    opacity: 1;
+  }
+`;
 
 export default class WindowControls extends Component {
   constructor(props) {
@@ -21,7 +75,7 @@ export default class WindowControls extends Component {
 
   componentWillUnmount() {
     currentWindow.removeListener('maximize', () => this.setState({ isMaximized: true }));
-    currentWindow.removeListener('unmaximize', () => this.setState({ isMaximized: false }));  
+    currentWindow.removeListener('unmaximize', () => this.setState({ isMaximized: false }));
   }
 
   handleMaximize = (max: boolean) => {
@@ -45,17 +99,17 @@ export default class WindowControls extends Component {
       disableMaximize,
       disableMinimize,
     } = this.props;
+
     const {
       isMaximized
     } = this.state;
 
     return (
-      <div className={styles.windowControls}>
-        <button
+      <Controls>
+        <Button
           aria-label="minimize"
           tabIndex="-1"
           disabled={disableMinimize}
-          className={`${styles.windowControl} ${styles.windowMinimize}`}
           onClick={() => currentWindow.minimize()}
         >
           <svg
@@ -68,12 +122,11 @@ export default class WindowControls extends Component {
               d="M 0,5 10,5 10,6 0,6 Z"
             />
           </svg>
-        </button>
-        <button
+        </Button>
+        <Button
           aria-label="maximize"
           tabIndex="-1"
           disabled={disableMaximize}
-          className={`${styles.windowControl} ${styles.windowMaximize}`}
           onClick={this.onMaximizeClicked}
         >
           {
@@ -99,11 +152,10 @@ export default class WindowControls extends Component {
                 />
               </svg>
           }
-        </button>
-        <button
+        </Button>
+        <CloseButton
           aria-label="close"
           tabIndex="-1"
-          className={`${styles.windowControl} ${styles.windowClose}`}
           onClick={() => currentWindow.close()}
         >
           <svg
@@ -114,8 +166,8 @@ export default class WindowControls extends Component {
           >
             <path d="M 0,0 0,0.7 4.3,5 0,9.3 0,10 0.7,10 5,5.7 9.3,10 10,10 10,9.3 5.7,5 10,0.7 10,0 9.3,0 5,4.3 0.7,0 Z" />
           </svg>
-        </button>
-      </div>
+        </CloseButton>
+      </Controls>
     );
   }
 }
