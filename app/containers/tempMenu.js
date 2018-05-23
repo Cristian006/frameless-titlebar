@@ -81,6 +81,12 @@ const template = [
         click: (item, win, e) => win.setResizable(item.checked),
       },
       {
+        label: 'Unchecked',
+        type: 'checkbox',
+        checked: false,
+        click: (item, win, e) => win.setResizable(item.checked),
+      },
+      {
         label: 'Quit',
         click: () => {
           window.close();

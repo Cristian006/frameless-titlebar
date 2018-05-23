@@ -3,18 +3,32 @@ import PropTypes from 'prop-types';
 import styled, { withTheme } from 'styled-components';
 import { remote } from 'electron';
 
-const checked = <svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1671 566q0 40-28 68l-724 724-136 136q-28 28-68 28t-68-28l-136-136-362-362q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 295 656-657q28-28 68-28t68 28l136 136q28 28 28 68z"/></svg>
-const unchecked = <span />
-const radioUnchecked = <svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M896 352q-148 0-273 73t-198 198-73 273 73 273 198 198 273 73 273-73 198-198 73-273-73-273-198-198-273-73zm768 544q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"/></svg>
-const radioChecked = <svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1152 896q0 106-75 181t-181 75-181-75-75-181 75-181 181-75 181 75 75 181zm-256-544q-148 0-273 73t-198 198-73 273 73 273 198 198 273 73 273-73 198-198 73-273-73-273-198-198-273-73zm768 544q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"/></svg>
+const checked = <svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1671 566q0 40-28 68l-724 724-136 136q-28 28-68 28t-68-28l-136-136-362-362q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 295 656-657q28-28 68-28t68 28l136 136q28 28 28 68z" /></svg>;
+const unchecked = <span />;
+// const checked = <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" /></svg>;
+// const unchecked = <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z" /></svg>;
+const radioUnchecked = <svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M896 352q-148 0-273 73t-198 198-73 273 73 273 198 198 273 73 273-73 198-198 73-273-73-273-198-198-273-73zm768 544q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z" /></svg>;
+const radioChecked = <svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1152 896q0 106-75 181t-181 75-181-75-75-181 75-181 181-75 181 75 75 181zm-256-544q-148 0-273 73t-198 198-73 273 73 273 198 198 273 73 273-73 198-198 73-273-73-273-198-198-273-73zm768 544q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z" /></svg>;
+const arrow = <svg version="1.1" width="24px" height="24px"><g id="Rounded"><path d="M9.29,6.71L9.29,6.71c-0.39,0.39-0.39,1.02,0,1.41L13.17,12l-3.88,3.88c-0.39,0.39-0.39,1.02,0,1.41l0,0c0.39,0.39,1.02,0.39,1.41,0l4.59-4.59c0.39-0.39,0.39-1.02,0-1.41l-4.59-4.59C10.32,6.32,9.68,6.32,9.29,6.71z" /></g></svg>;
 
 const Label = styled.span`
   flex-grow: 1;
-  margin-left: ${props => props.checked ? '0px' : '10px'};
+  margin-left: 10px;
   margin-right: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+`;
+
+const StatusIcon = styled.div`
+  width: 12px;
+  height: 12px;
+  color: ${props => props.theme.accentStatusIcons ? props.theme.menuHighlightColor : props.theme.menuActiveTextColor};
+  & svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+  }
 `;
 
 const Accelerator = styled.span`
@@ -40,7 +54,8 @@ const Wrapper = styled.div`
   }
 
   &:hover,
-  &:hover ${Accelerator} {
+  &:hover ${Accelerator},
+  &:hover ${StatusIcon} {
     color: ${props => props.enabled ? props.theme.menuTextHighlightColor : ''};
   }
 `;
@@ -95,6 +110,14 @@ class MenuItem extends Component {
       return <Seperator />;
     }
 
+    let statusIcon = <span />;
+
+    if (menuItem.type === 'radio') {
+      statusIcon = menuItem.checked ? radioChecked : radioUnchecked;
+    } else if (menuItem.type === 'checkbox') {
+      statusIcon = menuItem.checked ? checked : unchecked;
+    }
+
     return (
       <Wrapper
         onMouseEnter={onMouseEnter}
@@ -102,6 +125,9 @@ class MenuItem extends Component {
         enabled={menuItem.enabled}
         onClick={this.handleClick}
       >
+        <StatusIcon>
+          {statusIcon}
+        </StatusIcon>
         <Label
           checked={menuItem.checked}
         >
@@ -113,16 +139,7 @@ class MenuItem extends Component {
         {
           (isSubMenu) &&
           <SubMenuArrow>
-            <svg
-              version="1.1"
-              width="24px"
-              height="24px"
-            >
-              <g id="Rounded">
-                <path d="M9.29,6.71L9.29,6.71c-0.39,0.39-0.39,1.02,0,1.41L13.17,12l-3.88,3.88c-0.39,0.39-0.39,1.02,0,1.41l0,0
-                  c0.39,0.39,1.02,0.39,1.41,0l4.59-4.59c0.39-0.39,0.39-1.02,0-1.41l-4.59-4.59C10.32,6.32,9.68,6.32,9.29,6.71z"/>
-              </g>
-            </svg>
+            {arrow}
           </SubMenuArrow>
         }
         {isSubMenu && children}

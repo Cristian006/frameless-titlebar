@@ -79,7 +79,7 @@ export default class TitleBar extends Component {
           <ResizeTop />
           <ResizeLeft />
           {
-            currentTheme.barStyle !== 'normal' &&
+            currentTheme.menuStyle === 'vertical' &&
               <MenuBar
                 menu={menu}
               />
@@ -101,7 +101,7 @@ export default class TitleBar extends Component {
             </Title>
           }
           {
-            currentTheme.barStyle === 'normal' &&
+            currentTheme.menuStyle === 'horizontal' &&
               <MenuBar
                 menu={menu}
               />

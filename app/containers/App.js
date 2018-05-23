@@ -22,8 +22,8 @@ export default class App extends React.Component<Props> {
           title="Electron Title Bar"
           menu={menu}
           theme={{
-            barTheme: 'light',
-            /* barStyle: 'hamburger', */
+            barTheme: 'dark',
+            menuStyle: 'vertical',
           }}
         />
         {this.props.children}

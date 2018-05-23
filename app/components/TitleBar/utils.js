@@ -14,7 +14,6 @@ export const defaultMenuItem = {
 export const darkTheme = {
   /* Title */
   barTheme: 'dark',
-  barStyle: 'normal', /* normal, hamburger */
   barHeight: '28px',
   barColor: '#fff',
   barTitleColor: 'inherit',
@@ -23,6 +22,7 @@ export const darkTheme = {
   barBorderBottom: '1px solid #000',
 
   /* Menu */
+  menuStyle: 'horizontal', /* horizontal, vertical */
   menuDimItems: true,
   menuDimOpacity: 0.6,
   menuDisabledOpacity: 0.3,
@@ -33,6 +33,7 @@ export const darkTheme = {
   menuActiveTextColor: '#24292e',
   menuTextHighlightColor: '#fff',
   menuHighlightColor: '#0372ef',
+  accentStatusIcons: true,
   menuSubLabelHeaders: true,
   menuSubLabelColor: '#6a737d',
   menuAcceleratorColor: '#6a737d',

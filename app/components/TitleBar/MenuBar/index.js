@@ -1,8 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 import MenuButton from './MenuButton';
 import MenuList from './MenuList';
+
+const menuIcon = (
+  <svg version="1.1" width="24px" height="24px" viewBox="0 0 24 24">
+    <g id="Rounded">
+      <path d="M4,18h16c0.55,0,1-0.45,1-1v0c0-0.55-0.45-1-1-1H4c-0.55,0-1,0.45-1,1v0C3,17.55,3.45,18,4,18z M4,13h16c0.55,0,1-0.45,1-1
+      v0c0-0.55-0.45-1-1-1H4c-0.55,0-1,0.45-1,1v0C3,12.55,3.45,13,4,13z M3,7L3,7c0,0.55,0.45,1,1,1h16c0.55,0,1-0.45,1-1v0
+      c0-0.55-0.45-1-1-1H4C3.45,6,3,6.45,3,7z"
+      />
+    </g>
+  </svg>
+);
 
 const Wrapper = styled.div`
   display: flex;
@@ -11,7 +22,50 @@ const Wrapper = styled.div`
   color: ${props => props.theme.menuItemTextColor || props.theme.barColor};
 `;
 
-export default class MenuBar extends Component {
+const MenuButtonWrapper = styled.div`
+  flex-grow: 0;
+  flex-shrink: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+`;
+
+const Button = styled.button`
+  -webkit-app-region: no-drag;
+  display: inline-block;
+  position: relative;
+  width: 45px;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  color: ${props => props.theme.menuItemTextColor};
+  background-color: transparent;
+  transition: background-color 0.25s ease;
+  opacity: 0.5;
+  & svg {
+    fill: currentColor;
+  }
+  &:focus {
+    outline: none;
+  }
+  &:hover {
+    background-color: ${props => props.theme.menuItemHoverBackground};
+    opacity: 1;
+  }
+  &:hover:active {
+    background-color: ${props => props.theme.menuItemHoverBackground};
+    transition: none;
+    opacity: 1;
+  }
+`;
+
+class MenuBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,14 +83,14 @@ export default class MenuBar extends Component {
         focusing: i
       });
     }
-  }
+  };
 
   // lock set to true to keep menu panes open
   onTouchStart = (i) => {
     if (i !== this.state.focusing && this.state.clicked) {
       this.lock = true;
     }
-  }
+  };
 
   // if moving over a different menu button - select that menu button
   onMouseMove = (i) => {
@@ -44,7 +98,7 @@ export default class MenuBar extends Component {
     this.setState({
       focusing: i,
     });
-  }
+  };
 
   // when a menu button is clicked
   onMenuButtonClick = (index) => {
@@ -124,12 +178,21 @@ export default class MenuBar extends Component {
   };
 
   render() {
+    if (this.props.theme.menuStyle === 'horizontal') {
+      return (
+        <Wrapper>
+          {
+            this.generateMenu(this.state.menu)
+          }
+        </Wrapper>
+      );
+    }
     return (
-      <Wrapper>
-        {
-          this.generateMenu(this.state.menu)
-        }
-      </Wrapper>
+      <MenuButtonWrapper>
+        <Button>
+          {menuIcon}
+        </Button>
+      </MenuButtonWrapper>
     );
   }
 }
@@ -141,3 +204,5 @@ MenuBar.propTypes = {
 MenuBar.defaultProps = {
   menu: [],
 };
+
+export default withTheme(MenuBar);
