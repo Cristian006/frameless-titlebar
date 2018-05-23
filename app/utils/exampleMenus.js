@@ -142,14 +142,237 @@ export const defaultTemplate = [
   },
 ];
 
-export const signalTemplate = [
+export const githubTemplate = [
+  {
+    label: 'File',
+    submenu: [
+      {
+        label: 'New repository',
+        accelerator: 'Ctrl+N',
+      },
+      {
+        type: 'separator',
+      },
+      {
+        label: 'Add local repository',
+        accelerator: 'Ctrl+O',
+      },
+      {
+        label: 'Clone repository',
+        accelerator: 'Ctrl+Shift+O',
+      },
+      {
+        type: 'separator',
+      },
+      {
+        label: 'Options',
+        accelerator: 'Ctrl+,',
+      },
+      {
+        type: 'separator',
+      },
+      {
+        label: 'Exit',
+      }
+    ],
+  },
+  {
+    label: 'Edit',
+    submenu: [
+      {
+        label: 'Undo',
+        accelerator: 'Ctrl+Z',
+      },
+      {
+        label: 'Redo',
+        accelerator: 'Ctrl+Y',
+      },
+      {
+        type: 'separator',
+      },
+      {
+        label: 'Cut',
+        accelerator: 'Ctrl+X',
+      },
+      {
+        label: 'Copy',
+        accelerator: 'Ctrl+C'
+      },
+      {
+        label: 'Paste',
+        accelerator: 'Ctrl+V',
+      },
+      {
+        label: 'Paste and Match Style',
+        accelerator: 'Ctrl+Shift+V',
+      },
+      {
+        label: 'Delete',
+      },
+      {
+        label: 'Select all',
+        accelerator: 'Ctrl+A',
+      }
+    ],
+  },
+  {
+    label: 'View',
+    submenu: [
 
+    ],
+  },
+  {
+    label: 'Repository',
+    submenu: [
+
+    ],
+  },
+  {
+    label: 'Branch',
+    submenu: [
+
+    ],
+  },
+  {
+    label: 'Help',
+    submenu: [
+
+    ],
+  }
 ];
 
-export const githubTemplate = [
-
+export const signalTemplate = [
+  {
+    label: 'File',
+    submenu: [
+      {
+        label: 'Preferences...',
+      },
+      {
+        type: 'separator',
+      },
+      {
+        label: 'Exit',
+      }
+    ],
+  },
+  {
+    label: 'Edit',
+    submenu: [
+      {
+        label: 'Undo',
+        accelerator: 'Ctrl+Z',
+      },
+      {
+        label: 'Redo',
+        accelerator: 'Ctrl+Y',
+      },
+      {
+        type: 'separator',
+      },
+      {
+        label: 'Cut',
+        accelerator: 'Ctrl+X',
+      },
+      {
+        label: 'Copy',
+        accelerator: 'Ctrl+C'
+      },
+      {
+        label: 'Paste',
+        accelerator: 'Ctrl+V',
+      },
+      {
+        label: 'Paste and Match Style',
+        accelerator: 'Ctrl+Shift+V',
+      },
+      {
+        label: 'Delete',
+      },
+      {
+        label: 'Select all',
+        accelerator: 'Ctrl+A',
+      }
+    ],
+  },
+  {
+    label: 'View'
+  },
+  {
+    label: 'Window'
+  },
+  {
+    label: 'Help'
+  }
 ];
 
 export const slackTemplate = [
-
+  {
+    label: 'File',
+    submenu: [
+      {
+        label: 'Preferences',
+        accelerator: 'Ctrl+,'
+      },
+      {
+        label: 'Close',
+        accelerator: 'Ctrl+W',
+      },
+      {
+        label: 'Quit Slack',
+        accelerator: 'Ctrl+Q',
+      }
+    ],
+  },
+  {
+    label: 'Edit',
+    submenu: [
+      {
+        label: 'Undo',
+        accelerator: 'Ctrl+Z',
+      },
+      {
+        label: 'Redo',
+        accelerator: 'Ctrl+Y',
+      },
+      {
+        type: 'separator',
+      },
+      {
+        label: 'Cut',
+        accelerator: 'Ctrl+X',
+      },
+      {
+        label: 'Copy',
+        accelerator: 'Ctrl+C'
+      },
+      {
+        label: 'Paste',
+        accelerator: 'Ctrl+V',
+      },
+      {
+        label: 'Paste and Match Style',
+        accelerator: 'Ctrl+Shift+V',
+      },
+      {
+        label: 'Delete',
+      },
+      {
+        label: 'Select all',
+        accelerator: 'Ctrl+A',
+      }
+    ],
+  },
+  {
+    label: 'View'
+  },
+  {
+    label: 'History'
+  },
+  {
+    label: 'Window'
+  },
+  {
+    label: 'Help'
+  }
 ];
