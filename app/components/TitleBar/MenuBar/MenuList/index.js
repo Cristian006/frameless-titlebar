@@ -37,6 +37,20 @@ const MenuPane = styled.div`
   width: ${props => props.theme.menuWidth}px;
 `;
 
+const SubMenuLabel = styled.div`
+  height: 20px;
+  line-height: 20px;
+  margin: 0 10px;
+  color: ${props => props.theme.menuSubLabelColor};
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  direction: rtl;
+  font-size: 1em;
+  text-align: left;
+`;
+
 const Overlay = styled.div`
   background: ${props => props.theme.menuOverlayBackground};
   opacity: ${props => props.theme.menuOverlayOpacity};
@@ -87,7 +101,8 @@ class MenuList extends Component {
   render() {
     const {
       submenu,
-      rect
+      rect,
+      theme,
     } = this.props;
 
     return (
@@ -96,6 +111,10 @@ class MenuList extends Component {
         <FoldOut rect={rect}>
           <MenuFoldOut>
             <MenuPane>
+              {
+                (theme.menuStyle === 'vertical' && theme.menuSubLabelHeaders) &&
+                  <SubMenuLabel key="main-menu-sublabel">Menu</SubMenuLabel>
+              }
               {this.generateMenu(submenu)}
             </MenuPane>
           </MenuFoldOut>

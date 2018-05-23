@@ -23,7 +23,7 @@ const Label = styled.span`
 const StatusIcon = styled.div`
   width: 12px;
   height: 12px;
-  color: ${props => props.theme.accentStatusIcons ? props.theme.menuHighlightColor : props.theme.menuActiveTextColor};
+  color: ${props => props.theme.accentStatusIcon ? props.theme.menuHighlightColor : props.theme.menuActiveTextColor};
   & svg {
     width: 100%;
     height: 100%;

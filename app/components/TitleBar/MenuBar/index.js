@@ -5,13 +5,8 @@ import MenuButton from './MenuButton';
 import MenuList from './MenuList';
 
 const menuIcon = (
-  <svg version="1.1" width="24px" height="24px" viewBox="0 0 24 24">
-    <g id="Rounded">
-      <path d="M4,18h16c0.55,0,1-0.45,1-1v0c0-0.55-0.45-1-1-1H4c-0.55,0-1,0.45-1,1v0C3,17.55,3.45,18,4,18z M4,13h16c0.55,0,1-0.45,1-1
-      v0c0-0.55-0.45-1-1-1H4c-0.55,0-1,0.45-1,1v0C3,12.55,3.45,13,4,13z M3,7L3,7c0,0.55,0.45,1,1,1h16c0.55,0,1-0.45,1-1v0
-      c0-0.55-0.45-1-1-1H4C3.45,6,3,6.45,3,7z"
-      />
-    </g>
+  <svg version="1.1" width="24px" height="24px" viewBox="0 0 32 32">
+    <path d="M 4 7 L 4 9 L 28 9 L 28 7 Z M 4 15 L 4 17 L 28 17 L 28 15 Z M 4 23 L 4 25 L 28 25 L 28 23 Z "/>
   </svg>
 );
 
@@ -20,49 +15,6 @@ const Wrapper = styled.div`
   -webkit-app-region: no-drag;
   max-width: calc(100% - 163px);
   color: ${props => props.theme.menuItemTextColor || props.theme.barColor};
-`;
-
-const MenuButtonWrapper = styled.div`
-  flex-grow: 0;
-  flex-shrink: 0;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-`;
-
-const Button = styled.button`
-  -webkit-app-region: no-drag;
-  display: inline-block;
-  position: relative;
-  width: 45px;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  overflow: hidden;
-  border: none;
-  box-shadow: none;
-  border-radius: 0;
-  color: ${props => props.theme.menuItemTextColor};
-  background-color: transparent;
-  transition: background-color 0.25s ease;
-  opacity: 0.5;
-  & svg {
-    fill: currentColor;
-  }
-  &:focus {
-    outline: none;
-  }
-  &:hover {
-    background-color: ${props => props.theme.menuItemHoverBackground};
-    opacity: 1;
-  }
-  &:hover:active {
-    background-color: ${props => props.theme.menuItemHoverBackground};
-    transition: none;
-    opacity: 1;
-  }
 `;
 
 class MenuBar extends Component {
@@ -121,7 +73,7 @@ class MenuBar extends Component {
     }
   };
 
-  generateMenu = (menuObj = []) => {
+  generateHorizontalMenu = (menuObj = []) => {
     return menuObj.map((menuItem, i) => {
       return (
         <MenuButton
@@ -177,22 +129,67 @@ class MenuBar extends Component {
     });
   };
 
+  generateVerticalMenu = (menuObj = []) => {
+    return (
+      <MenuList
+        rect={this.menuItems[0].getBoundingClientRect()}
+        submenu={menuObj}
+        vertical
+      />
+    );
+  };
+
   render() {
     if (this.props.theme.menuStyle === 'horizontal') {
       return (
         <Wrapper>
           {
-            this.generateMenu(this.state.menu)
+            this.generateHorizontalMenu(this.state.menu)
           }
         </Wrapper>
       );
     }
     return (
-      <MenuButtonWrapper>
-        <Button>
-          {menuIcon}
-        </Button>
-      </MenuButtonWrapper>
+      <Wrapper>
+        <MenuButton
+          onMouseEnter={() => {
+            this.setState({
+              hovering: 0,
+            });
+          }}
+          onMouseLeave={() => {
+            this.setState({
+              hovering: -1,
+            });
+          }}
+          onMouseOver={() => {
+            this.onMenuButtonMouseOver(0);
+          }}
+          onMouseMove={() => {
+            this.onMouseMove(0);
+          }}
+          onTouchStart={() => {
+            this.onTouchStart(0);
+          }}
+          onClick={() => {
+            this.onMenuButtonClick(0);
+          }}
+          onFocus={() => {
+            // idk - linting says it needs it? it has no purpose for me
+          }}
+          rectRef={(ref) => this.setMenuRef(ref, 0)}
+          hovering={this.state.hovering === 0}
+          open={this.state.clicked && this.state.focusing === 0}
+          closed={!this.state.clicked || this.state.focusing !== 0}
+          label={menuIcon}
+          enabled
+        >
+          {
+            (this.state.clicked && this.state.focusing === 0) &&
+              this.generateVerticalMenu(this.state.menu)
+          }
+        </MenuButton>
+      </Wrapper>
     );
   }
 }

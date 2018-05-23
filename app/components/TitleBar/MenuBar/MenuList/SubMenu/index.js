@@ -95,11 +95,13 @@ class SubMenu extends Component {
     return (
       <MenuItem
         onMouseEnter={() => {
+          if (menuItem.enabled === false) return;
           this.setState({
             hovering: true,
           });
         }}
         onMouseLeave={() => {
+          if (menuItem.enabled === false) return;
           this.setState({
             hovering: false,
           });

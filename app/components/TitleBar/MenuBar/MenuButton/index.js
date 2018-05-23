@@ -29,6 +29,12 @@ const Button = styled.button`
   border-color: ${props => props.open ? props.theme.menuBackgroundColor : ''};
   color: ${props => props.open ? props.theme.menuActiveTextColor : props.theme.menuItemTextColor};
 
+  & svg {
+    fill: currentColor;
+    width: 20px;
+    height: 20px;
+  }
+
   &:focus:not(.focus-ring) {
     outline: none;
   }
@@ -97,7 +103,10 @@ export default class MenuButton extends Component {
 MenuButton.propTypes = {
   children: PropTypes.node,
   enabled: PropTypes.bool,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+  ]).isRequired,
   open: PropTypes.bool,
   closed: PropTypes.bool,
   hovering: PropTypes.bool,

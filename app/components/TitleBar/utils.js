@@ -33,7 +33,7 @@ export const darkTheme = {
   menuActiveTextColor: '#24292e',
   menuTextHighlightColor: '#fff',
   menuHighlightColor: '#0372ef',
-  accentStatusIcons: true,
+  accentStatusIcon: false,
   menuSubLabelHeaders: true,
   menuSubLabelColor: '#6a737d',
   menuAcceleratorColor: '#6a737d',
