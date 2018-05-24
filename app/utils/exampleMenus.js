@@ -142,6 +142,43 @@ export const defaultTemplate = [
   },
 ];
 
+const Edit = [
+  {
+    label: 'Undo',
+    accelerator: 'Ctrl+Z',
+  },
+  {
+    label: 'Redo',
+    accelerator: 'Ctrl+Y',
+  },
+  {
+    type: 'separator',
+  },
+  {
+    label: 'Cut',
+    accelerator: 'Ctrl+X',
+  },
+  {
+    label: 'Copy',
+    accelerator: 'Ctrl+C'
+  },
+  {
+    label: 'Paste',
+    accelerator: 'Ctrl+V',
+  },
+  {
+    label: 'Paste and Match Style',
+    accelerator: 'Ctrl+Shift+V',
+  },
+  {
+    label: 'Delete',
+  },
+  {
+    label: 'Select all',
+    accelerator: 'Ctrl+A',
+  }
+];
+
 export const githubTemplate = [
   {
     label: 'File',
@@ -178,42 +215,7 @@ export const githubTemplate = [
   },
   {
     label: 'Edit',
-    submenu: [
-      {
-        label: 'Undo',
-        accelerator: 'Ctrl+Z',
-      },
-      {
-        label: 'Redo',
-        accelerator: 'Ctrl+Y',
-      },
-      {
-        type: 'separator',
-      },
-      {
-        label: 'Cut',
-        accelerator: 'Ctrl+X',
-      },
-      {
-        label: 'Copy',
-        accelerator: 'Ctrl+C'
-      },
-      {
-        label: 'Paste',
-        accelerator: 'Ctrl+V',
-      },
-      {
-        label: 'Paste and Match Style',
-        accelerator: 'Ctrl+Shift+V',
-      },
-      {
-        label: 'Delete',
-      },
-      {
-        label: 'Select all',
-        accelerator: 'Ctrl+A',
-      }
-    ],
+    submenu: Edit,
   },
   {
     label: 'View',
@@ -258,57 +260,80 @@ export const signalTemplate = [
   },
   {
     label: 'Edit',
+    submenu: Edit,
+  },
+  {
+    label: 'View',
     submenu: [
       {
-        label: 'Undo',
-        accelerator: 'Ctrl+Z',
+        label: 'Actual Size',
+        accelerator: 'Ctrl+0'
       },
       {
-        label: 'Redo',
-        accelerator: 'Ctrl+Y',
+        label: 'Zoom In',
+        accelerator: 'Ctrl+Shift+='
+      },
+      {
+        label: 'Zoom Out',
+        accelerator: 'CtrlCtrl+-'
       },
       {
         type: 'separator',
       },
       {
-        label: 'Cut',
-        accelerator: 'Ctrl+X',
+        label: 'Toggle Full Screen',
+        accelerator: 'F11'
       },
       {
-        label: 'Copy',
-        accelerator: 'Ctrl+C'
+        type: 'separator',
       },
       {
-        label: 'Paste',
-        accelerator: 'Ctrl+V',
+        label: 'Debug Log',
       },
       {
-        label: 'Paste and Match Style',
-        accelerator: 'Ctrl+Shift+V',
-      },
-      {
-        label: 'Delete',
-      },
-      {
-        label: 'Select all',
-        accelerator: 'Ctrl+A',
+        label: 'Toggle Developer Tools',
+        accelerator: 'Ctrl+Shift+I'
       }
     ],
   },
   {
-    label: 'View'
+    label: 'Window',
+    submenu: [
+      {
+        label: 'Minimize',
+        accelerator: 'Ctrl+M'
+      }
+    ]
   },
   {
-    label: 'Window'
-  },
-  {
-    label: 'Help'
+    label: 'Help',
+    submenu: [
+      {
+        label: 'Go to Release Notes',
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: 'Go to Forums',
+      },
+      {
+        label: 'Report An Issue',
+      },
+      {
+        type: 'separator',
+      },
+      {
+        label: 'About Signal Desktop'
+      }
+    ],
   }
 ];
 
 export const slackTemplate = [
   {
     label: 'File',
+    accelerator: 'Ctrl+F',
     submenu: [
       {
         label: 'Preferences',
@@ -373,6 +398,7 @@ export const slackTemplate = [
     label: 'Window'
   },
   {
-    label: 'Help'
+    label: 'Help',
+    accelerator: 'Ctrl+H',
   }
 ];

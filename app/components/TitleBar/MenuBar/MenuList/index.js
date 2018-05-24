@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled, { withTheme } from 'styled-components';
 import MenuItem from './MenuItem';
-import SubMenu from './SubMenu';
+import SubMenu, { SubMenuLabel } from './SubMenu';
 import { defaultMenuItem } from '../../utils';
 
 const Wrapper = styled.div`
@@ -35,20 +35,6 @@ const MenuFoldOut = styled.div`
 const MenuPane = styled.div`
   pointer-events: all;
   width: ${props => props.theme.menuWidth}px;
-`;
-
-const SubMenuLabel = styled.div`
-  height: 20px;
-  line-height: 20px;
-  margin: 0 10px;
-  color: ${props => props.theme.menuSubLabelColor};
-  font-weight: bold;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  direction: rtl;
-  font-size: 1em;
-  text-align: left;
 `;
 
 const Overlay = styled.div`

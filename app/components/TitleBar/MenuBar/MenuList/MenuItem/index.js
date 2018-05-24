@@ -5,8 +5,6 @@ import { remote } from 'electron';
 
 const checked = <svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1671 566q0 40-28 68l-724 724-136 136q-28 28-68 28t-68-28l-136-136-362-362q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 295 656-657q28-28 68-28t68 28l136 136q28 28 28 68z" /></svg>;
 const unchecked = <span />;
-// const checked = <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" /></svg>;
-// const unchecked = <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z" /></svg>;
 const radioUnchecked = <svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M896 352q-148 0-273 73t-198 198-73 273 73 273 198 198 273 73 273-73 198-198 73-273-73-273-198-198-273-73zm768 544q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z" /></svg>;
 const radioChecked = <svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1152 896q0 106-75 181t-181 75-181-75-75-181 75-181 181-75 181 75 75 181zm-256-544q-148 0-273 73t-198 198-73 273 73 273 198 198 273 73 273-73 198-198 73-273-73-273-198-198-273-73zm768 544q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z" /></svg>;
 const arrow = <svg version="1.1" width="24px" height="24px"><g id="Rounded"><path d="M9.29,6.71L9.29,6.71c-0.39,0.39-0.39,1.02,0,1.41L13.17,12l-3.88,3.88c-0.39,0.39-0.39,1.02,0,1.41l0,0c0.39,0.39,1.02,0.39,1.41,0l4.59-4.59c0.39-0.39,0.39-1.02,0-1.41l-4.59-4.59C10.32,6.32,9.68,6.32,9.29,6.71z" /></g></svg>;
@@ -23,7 +21,7 @@ const Label = styled.span`
 const StatusIcon = styled.div`
   width: 12px;
   height: 12px;
-  color: ${props => props.theme.accentStatusIcon ? props.theme.menuHighlightColor : props.theme.menuActiveTextColor};
+  color: ${props => props.hovering ? props.theme.menuActiveTextColor : (props.theme.accentStatusIcon ? props.theme.menuHighlightColor : props.theme.menuActiveTextColor)};
   & svg {
     width: 100%;
     height: 100%;
@@ -34,7 +32,7 @@ const StatusIcon = styled.div`
 const Accelerator = styled.span`
   flex-shrink: 0;
   margin-right: 10px;
-  color: ${props => props.theme.menuAcceleratorColor};
+  color: ${props => props.hovering ? props.theme.menuTextHighlightColor : props.theme.menuAcceleratorColor};
 `;
 
 const Wrapper = styled.div`
@@ -48,16 +46,8 @@ const Wrapper = styled.div`
   height: 30px;
   color: inherit;
   cursor: default;
-
-  &:hover {
-    background-color: ${props => props.enabled ? props.theme.menuHighlightColor : ''};
-  }
-
-  &:hover,
-  &:hover ${Accelerator},
-  &:hover ${StatusIcon} {
-    color: ${props => props.enabled ? props.theme.menuTextHighlightColor : ''};
-  }
+  background-color: ${props => props.hovering ? props.theme.menuHighlightColor : ''};
+  color: ${props => props.hovering ? props.theme.menuTextHighlightColor : ''};
 `;
 
 const SubMenuArrow = styled.div`
@@ -70,15 +60,50 @@ const SubMenuArrow = styled.div`
   }
 `;
 
-const Seperator = styled.hr`
+const Separator = styled.hr`
   display: block;
   width: 100%;
   border: none;
   height: 1px;
-  border-bottom: 1px solid ${props => props.theme.menuSeperatorColor};
+  border-bottom: 1px solid ${props => props.theme.menuSeparatorColor};
 `;
 
 class MenuItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hovering: false,
+    };
+  }
+
+  handleMouseEnter = (e) => {
+    const {
+      menuItem,
+    } = this.props;
+
+    if (menuItem.enabled === false) {
+      e.stopPropagation();
+      return;
+    }
+    this.setState({
+      hovering: true,
+    });
+  };
+
+  handleMouseLeave = (e) => {
+    const {
+      menuItem,
+    } = this.props;
+
+    if (menuItem.enabled === false) {
+      e.stopPropagation();
+      return;
+    }
+    this.setState({
+      hovering: false,
+    });
+  };
+
   handleClick = (e) => {
     const {
       menuItem,
@@ -95,8 +120,6 @@ class MenuItem extends Component {
   render() {
     const {
       children,
-      onMouseEnter,
-      onMouseLeave,
       menuItem,
     } = this.props;
 
@@ -107,7 +130,7 @@ class MenuItem extends Component {
     }
 
     if (menuItem.type && (menuItem.type.toLowerCase() === 'separator')) {
-      return <Seperator />;
+      return <Separator />;
     }
 
     let statusIcon = <span />;
@@ -120,12 +143,13 @@ class MenuItem extends Component {
 
     return (
       <Wrapper
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
         enabled={menuItem.enabled}
         onClick={this.handleClick}
+        hovering={this.state.hovering}
       >
-        <StatusIcon>
+        <StatusIcon hovering={this.state.hovering}>
           {statusIcon}
         </StatusIcon>
         <Label
@@ -133,7 +157,7 @@ class MenuItem extends Component {
         >
           {menuItem.label}
         </Label>
-        <Accelerator>
+        <Accelerator hovering={this.state.hovering}>
           {menuItem.accelerator}
         </Accelerator>
         {
@@ -142,7 +166,7 @@ class MenuItem extends Component {
             {arrow}
           </SubMenuArrow>
         }
-        {isSubMenu && children}
+        {(isSubMenu && this.state.hovering) && children}
       </Wrapper>
     );
   }
@@ -164,8 +188,6 @@ MenuItem.propTypes = {
     click: PropTypes.func,
   }),
   children: PropTypes.node,
-  onMouseEnter: PropTypes.func,
-  onMouseLeave: PropTypes.func,
 };
 
 MenuItem.defaultProps = {
@@ -180,8 +202,6 @@ MenuItem.defaultProps = {
     position: '',
   },
   children: null,
-  onMouseEnter: () => {},
-  onMouseLeave: () => {},
 };
 
 export default withTheme(MenuItem);

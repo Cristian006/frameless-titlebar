@@ -28,6 +28,14 @@ class MenuBar extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.menu !== this.state.menu) {
+      this.setState({
+        menu: nextProps.menu,
+      });
+    }
+  }
+
   // if hovering over another button while menu is clicked; change focus
   onMenuButtonMouseOver = (i) => {
     if (this.state.clicked) {
@@ -129,13 +137,50 @@ class MenuBar extends Component {
     });
   };
 
-  generateVerticalMenu = (menuObj = []) => {
+  generateVerticalMenu = (menuList = []) => {
     return (
-      <MenuList
-        rect={this.menuItems[0].getBoundingClientRect()}
-        submenu={menuObj}
-        vertical
-      />
+      <MenuButton
+        onMouseEnter={() => {
+          this.setState({
+            hovering: 0,
+          });
+        }}
+        onMouseLeave={() => {
+          this.setState({
+            hovering: -1,
+          });
+        }}
+        onMouseOver={() => {
+          this.onMenuButtonMouseOver(0);
+        }}
+        onMouseMove={() => {
+          this.onMouseMove(0);
+        }}
+        onTouchStart={() => {
+          this.onTouchStart(0);
+        }}
+        onClick={() => {
+          this.onMenuButtonClick(0);
+        }}
+        onFocus={() => {
+          // idk - linting says it needs it? it has no purpose for me
+        }}
+        rectRef={(ref) => this.setMenuRef(ref, 0)}
+        hovering={this.state.hovering === 0}
+        open={this.state.clicked && this.state.focusing === 0}
+        closed={!this.state.clicked || this.state.focusing !== 0}
+        label={menuIcon}
+        enabled
+      >
+        {
+          (this.state.clicked && this.state.focusing === 0) &&
+            <MenuList
+              rect={this.menuItems[0].getBoundingClientRect()}
+              submenu={menuList}
+              mainIndex={0}
+            />
+        }
+      </MenuButton>
     );
   };
 
@@ -151,44 +196,9 @@ class MenuBar extends Component {
     }
     return (
       <Wrapper>
-        <MenuButton
-          onMouseEnter={() => {
-            this.setState({
-              hovering: 0,
-            });
-          }}
-          onMouseLeave={() => {
-            this.setState({
-              hovering: -1,
-            });
-          }}
-          onMouseOver={() => {
-            this.onMenuButtonMouseOver(0);
-          }}
-          onMouseMove={() => {
-            this.onMouseMove(0);
-          }}
-          onTouchStart={() => {
-            this.onTouchStart(0);
-          }}
-          onClick={() => {
-            this.onMenuButtonClick(0);
-          }}
-          onFocus={() => {
-            // idk - linting says it needs it? it has no purpose for me
-          }}
-          rectRef={(ref) => this.setMenuRef(ref, 0)}
-          hovering={this.state.hovering === 0}
-          open={this.state.clicked && this.state.focusing === 0}
-          closed={!this.state.clicked || this.state.focusing !== 0}
-          label={menuIcon}
-          enabled
-        >
-          {
-            (this.state.clicked && this.state.focusing === 0) &&
-              this.generateVerticalMenu(this.state.menu)
-          }
-        </MenuButton>
+        {
+          this.generateVerticalMenu(this.state.menu)
+        }
       </Wrapper>
     );
   }
