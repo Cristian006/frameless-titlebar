@@ -42,7 +42,7 @@ export const darkTheme = {
   /* Menu Overlay */
   menuOverlayBackground: 'black',
   menuOverlayOpacity: 0.4,
-  menuSeperatorColor: '#e1e4e8',
+  menuSeparatorColor: '#e1e4e8',
 
   /* WindowControls */
   windowControlsColor: '#fff',

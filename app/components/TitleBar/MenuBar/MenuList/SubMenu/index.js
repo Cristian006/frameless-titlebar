@@ -17,7 +17,7 @@ const SubMenuWrapper = styled.div`
   box-shadow: ${props => props.theme.menuShowBoxShadow ? props.theme.menuBoxShadow : ''};
 `;
 
-const SubMenuLabel = styled.div`
+export const SubMenuLabel = styled.div`
   height: 20px;
   line-height: 20px;
   margin: 0 10px;
@@ -32,13 +32,6 @@ const SubMenuLabel = styled.div`
 `;
 
 class SubMenu extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hovering: false,
-    };
-  }
-
   generateMenu = (menu = []) => {
     return menu.map((menuItem, i) => {
       if (menuItem.submenu) {
@@ -62,13 +55,12 @@ class SubMenu extends Component {
             }
           }
         }
-
         return (
           <SubMenu
             key={`${i}${menuItem.label}`}
-            renderSide={renderSide}
-            right={right}
             level={this.props.level + 1}
+            right={right}
+            renderSide={renderSide}
             theme={this.props.theme}
             menuItem={{ ...defaultMenuItem, ...menuItem, type: 'submenu' }}
           />
@@ -94,37 +86,22 @@ class SubMenu extends Component {
 
     return (
       <MenuItem
-        onMouseEnter={() => {
-          if (menuItem.enabled === false) return;
-          this.setState({
-            hovering: true,
-          });
-        }}
-        onMouseLeave={() => {
-          if (menuItem.enabled === false) return;
-          this.setState({
-            hovering: false,
-          });
-        }}
         menuItem={{ ...defaultMenuItem, ...menuItem }}
       >
-        {
-          (this.state.hovering) &&
-            <SubMenuWrapper
-              level={level}
-              renderSide={renderSide}
-            >
-              {
-                theme.menuSubLabelHeaders &&
-                <SubMenuLabel>
-                  {menuItem.label}
-                </SubMenuLabel>
-              }
-              {
-                this.generateMenu(menuItem.submenu)
-              }
-            </SubMenuWrapper>
-        }
+        <SubMenuWrapper
+          level={level}
+          renderSide={renderSide}
+        >
+          {
+            theme.menuSubLabelHeaders &&
+            <SubMenuLabel>
+              {menuItem.label}
+            </SubMenuLabel>
+          }
+          {
+            this.generateMenu(menuItem.submenu)
+          }
+        </SubMenuWrapper>
       </MenuItem>
     );
   }
