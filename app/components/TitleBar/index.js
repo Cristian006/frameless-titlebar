@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled, { ThemeProvider } from 'styled-components';
+import os from 'os';
 import MenuBar from './MenuBar';
 import WindowControls from './WindowControls';
 import { darkTheme, lightTheme } from './utils';
@@ -52,20 +53,88 @@ const ResizeTop = styled(ResizeHandle)`
 `;
 
 export default class TitleBar extends Component {
+  generatePlatformChildren = ({
+    icon,
+    title,
+    platform,
+    theme,
+    menu,
+    children,
+    currentTheme,
+    onIconClick,
+    onTitleClick,
+    onCloseClick,
+    onMinimizeClick,
+    onMaximizeClick,
+    disableMaximize,
+    disableMinimize,
+  }) => {
+    switch (platform) {
+      case 'darwin':
+        return (
+          <Bar>
+            <ResizeTop />
+            <ResizeLeft />
+            
+          </Bar>
+        );
+      case 'linux':
+        return (
+          <Bar>
+            <ResizeTop />
+            <ResizeLeft />
+          
+          </Bar>
+        );
+      default: // win32
+        return (
+          <Bar>
+            <ResizeTop />
+            <ResizeLeft />
+            {
+              currentTheme.menuStyle === 'vertical' &&
+                <MenuBar
+                  menu={menu}
+                />
+            }
+            {
+              icon &&
+              <Icon
+                src={icon}
+                alt="app-icon"
+                onClick={onIconClick}
+              />
+            }
+            {
+              title &&
+              <Title
+                onClick={onTitleClick}
+              >
+                {title}
+              </Title>
+            }
+            {
+              currentTheme.menuStyle === 'horizontal' &&
+                <MenuBar
+                  menu={menu}
+                />
+            }
+            {children}
+            <WindowControls
+              disableMinimize={disableMinimize}
+              disableMaximize={disableMaximize}
+              onCloseClick={onCloseClick}
+              onMinimizeClick={onMinimizeClick}
+              onMaximizeClick={onMaximizeClick}
+            />
+          </Bar>
+        );
+    }
+  }
   render() {
     const {
-      children,
-      title,
-      icon,
       theme,
-      menu,
-      disableMinimize,
-      disableMaximize,
-      onTitleClick,
-      onIconClick,
-      onCloseClick,
-      onMinimizeClick,
-      onMaximizeClick,
+      platform,
     } = this.props;
 
     const currentTheme = {
@@ -75,46 +144,13 @@ export default class TitleBar extends Component {
 
     return (
       <ThemeProvider theme={currentTheme}>
-        <Bar>
-          <ResizeTop />
-          <ResizeLeft />
-          {
-            currentTheme.menuStyle === 'vertical' &&
-              <MenuBar
-                menu={menu}
-              />
-          }
-          {
-            icon &&
-            <Icon
-              src={icon}
-              alt="app-icon"
-              onClick={onIconClick}
-            />
-          }
-          {
-            title &&
-            <Title
-              onClick={onTitleClick}
-            >
-              {title}
-            </Title>
-          }
-          {
-            currentTheme.menuStyle === 'horizontal' &&
-              <MenuBar
-                menu={menu}
-              />
-          }
-          {children}
-          <WindowControls
-            disableMinimize={disableMinimize}
-            disableMaximize={disableMaximize}
-            onCloseClick={onCloseClick}
-            onMinimizeClick={onMinimizeClick}
-            onMaximizeClick={onMaximizeClick}
-          />
-        </Bar>
+        {
+          this.generatePlatformChildren({
+            ...this.props,
+            currentTheme,
+            platform: platform || os.platform(),
+          })
+        }
       </ThemeProvider>
     );
   }
@@ -124,6 +160,7 @@ TitleBar.propTypes = {
   children: PropTypes.node,
   icon: PropTypes.string,
   title: PropTypes.string,
+  platform: PropTypes.string,
   theme: PropTypes.object,
   /* Menu */
   menu: PropTypes.array,
@@ -144,6 +181,7 @@ TitleBar.defaultProps = {
   /* Main */
   icon: '',
   title: '',
+  platform: '',
   theme: {},
 
   /* WindowControls */

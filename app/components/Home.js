@@ -16,8 +16,9 @@ import signalIcon from '../images/Signal.png';
 import whatIcon from '../images/What.png';
 
 const ExampleContainer = styled.div`
-  padding:20px;
+  padding: 20px;
   text-align: left;
+  overflow-y: auto;
   & h2 {
     margin-bottom: 0px;
     font-size: 5rem;
@@ -28,12 +29,12 @@ const Wrapper = styled.div`
 
 `;
 
-const ChangeTheme = styled.div`
+const Selection = styled.div`
   cursor: pointer;
   font-size: 2em;
   font-weight: bold;
   color: #24292e;
-  opacity: 0.4;
+  opacity: ${props => props.selected ? '1' : '0.4'};
   &:hover {
     opacity: 1;
     text-decoration: underline;
@@ -45,7 +46,8 @@ export default class Home extends Component {
     super(props);
 
     this.state = {
-      type: 'normal',
+      type: 'default',
+      platform: 'default',
     };
   }
 
@@ -59,6 +61,7 @@ export default class Home extends Component {
           theme={{
             barTheme: 'dark',
           }}
+          platform={this.state.platform}
         />
         {children}
       </Wrapper>
@@ -92,6 +95,7 @@ export default class Home extends Component {
             barShowBorder: true,
             menuDimItems: false,
           }}
+          platform={this.state.platform}
         />
         <ToolBar>
           <Section />
@@ -149,6 +153,7 @@ export default class Home extends Component {
             barBorderBottom: '1px solid #1a70b7',
             menuDimItems: false,
           }}
+          platform={this.state.platform}
         />
         <Horizontal>
           <SideSection width="300px" background="#fafafa">
@@ -218,6 +223,7 @@ export default class Home extends Component {
             menuHighlightColor: '#33c151',
             menuDimItems: false,
           }}
+          platform={this.state.platform}
         />
         <Horizontal>
           <SideSection width="300px" background="#fafafa">
@@ -271,6 +277,7 @@ export default class Home extends Component {
             menuHighlightColor: '#52a98c',
             menuDimItems: false,
           }}
+          platform={this.state.platform}
         />
         <Horizontal>
           <SideSection background="#332832" width="50px" />
@@ -290,50 +297,98 @@ export default class Home extends Component {
     });
   }
 
+  changePlatform = (value) => {
+    this.setState({
+      platform: value || '',
+    });
+  }
+
   render() {
     const container = (
       <ExampleContainer>
         <h2>Examples</h2>
-        <ChangeTheme
+        <Selection
           key="default"
+          selected={this.state.type === 'default'}
           onClick={() => {
-            this.changeTitleBar('normal');
+            this.changeTitleBar('default');
           }}
         >
           Default
-        </ChangeTheme>
-        <ChangeTheme
+        </Selection>
+        <Selection
           key="signal"
+          selected={this.state.type === 'signal'}
           onClick={() => {
             this.changeTitleBar('signal');
           }}
         >
           Signal
-        </ChangeTheme>
-        <ChangeTheme
+        </Selection>
+        <Selection
           key="what"
+          selected={this.state.type === 'what'}
           onClick={() => {
             this.changeTitleBar('what');
           }}
         >
           WhatsApp
-        </ChangeTheme>
-        <ChangeTheme
+        </Selection>
+        <Selection
           key="git"
+          selected={this.state.type === 'git'}
           onClick={() => {
             this.changeTitleBar('git');
           }}
         >
           GitHub
-        </ChangeTheme>
-        <ChangeTheme
+        </Selection>
+        <Selection
           key="slack"
+          selected={this.state.type === 'slack'}
           onClick={() => {
             this.changeTitleBar('slack');
           }}
         >
           Slack
-        </ChangeTheme>
+        </Selection>
+        <h2>Platform</h2>
+        <Selection
+          key="default_platform"
+          selected={this.state.platform === 'default'}
+          onClick={() => {
+            this.changePlatform('default');
+          }}
+        >
+          Default
+        </Selection>
+        <Selection
+          key="win32"
+          selected={this.state.platform === 'win32'}
+          onClick={() => {
+            this.changePlatform('win32');
+          }}
+        >
+          Win32
+        </Selection>
+        <Selection
+          key="darwin"
+          selected={this.state.platform === 'darwin'}
+          onClick={() => {
+            this.changePlatform('darwin');
+          }}
+        >
+          Darwin
+        </Selection>
+        <Selection
+          key="linux"
+          selected={this.state.platform === 'linux'}
+          onClick={() => {
+            this.changePlatform('linux');
+          }}
+        >
+          Linux
+        </Selection>
       </ExampleContainer>
     );
     let Bar = <span />;
