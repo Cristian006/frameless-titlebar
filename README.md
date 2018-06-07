@@ -45,21 +45,61 @@ export default class App extends React.Component {
 }
 ```
 
+## Documentation
+
 | Name | Type | Platforms | Description | Default Value |
 | :--------- | :--: | :----------: | :------- | :----: |
 | icon | string | Windows |The App Icon shown on the top left | '' |
 | title | string | Windows |The App Title shown on the top left | '' |
 | menu | array | All | The array of menu items | [] |
-| backgroundColor | string | All | The Titlebar's background color | '#24292e' |
-| showBottomBorder | bool | All | Show a bottom border on the title bar | false |
-| borderBottom | string | All | The border for the bottom of the title bar | '1px solid #000' |
-| titleColor | string | Windows | The title's text color | '' |
-| color | string | Windows | The bar's text color for menu items | '#fff' |
-| dimMenuItems | bool | Windows | If true, the menu item's opacity is set to `0.6` and on hover set to `1` | true |
-| menuBackgroundColor | string | Windows | The background color of the menu panes | #fff |
-| menuTextColor | string | Windows | The text color of menu items | '#24292e' |
-| menuTextHighlightColor | string | Windows | The text color of menu items when hovering over them | '#fff' |
-| menuHighlightColor | string | Windows | The highlight color of menu items when hovering over them | '#0372ef' |
+| theme | object | All | Theme object to customize Titlebar | See Bellow |
+
+```js
+// This is the default theme
+// Override any of these values by passing object into TitleBar Element via the theme property
+export const darkTheme = {
+  /* Title */
+  barTheme: 'dark', /* Light, Dark */
+  barHeight: '28px',
+  barColor: '#fff',
+  barTitleColor: 'inherit',
+  barBackgroundColor: '#24292e',
+  barShowBorder: false,
+  barBorderBottom: '1px solid #000',
+
+  /* Menu */
+  menuStyle: 'horizontal', /* horizontal, vertical */
+  menuDimItems: true,
+  menuDimOpacity: 0.6,
+  menuDisabledOpacity: 0.3,
+  menuWidth: 240,
+  menuBackgroundColor: '#fff',
+  menuItemTextColor: '#fff',
+  menuItemHoverBackground: 'rgba(255,255,255,0.3)',
+  menuActiveTextColor: '#24292e',
+  menuTextHighlightColor: '#fff',
+  menuHighlightColor: '#0372ef',
+  accentStatusIcon: false,
+  menuSubLabelHeaders: true,
+  menuSubLabelColor: '#6a737d',
+  menuAcceleratorColor: '#6a737d',
+  menuShowBoxShadow: true,
+  menuBoxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
+
+  /* Menu Overlay */
+  menuOverlayBackground: 'black',
+  menuOverlayOpacity: 0.4,
+  menuSeparatorColor: '#e1e4e8',
+
+  /* WindowControls */
+  windowControlsColor: '#fff',
+  windowCloseHover: '#fff',
+  windowCloseBackground: '#e81123',
+  windowCloseActive: '#bf0f1d',
+  windowDefaultBackground: 'rgba(255,255,255,0.3)',
+  windowDefaultActive: 'rgba(255,255,255,0.2)',
+};
+```
 
 ## TODO
 
@@ -74,21 +114,85 @@ export default class App extends React.Component {
 
 ![Default][default]
 
+```js
+<TitleBar
+  icon={`${__dirname}/../resources/icon.png`}
+  title="Electron Title Bar"
+  menu={defaultTemplate}
+/>
+```
+
 ### GitHub - Dark Theme Example
 
 ![Github][github]
+
+```js
+<TitleBar
+  icon={githubIcon}
+  menu={githubTemplate}
+  theme={{
+    barTheme: 'dark',
+    barShowBorder: true,
+    menuDimItems: false,
+  }}
+/>
+```
 
 ### Signal
 
 ![Signal][signal]
 
+```js
+<TitleBar
+  icon={signalIcon}
+  title="Signal"
+  menu={signalTemplate}
+  theme={{
+    barTheme: 'dark',
+    barBackgroundColor: '#2090ea',
+    menuHighlightColor: '#2090ea',
+    barShowBorder: true,
+    barBorderBottom: '1px solid #1a70b7',
+    menuDimItems: false,
+  }}
+/>
+```
+
 ### WhatsApp - Light Theme Example
 
 ![WhatsApp][what]
 
+```js
+<TitleBar
+  icon={whatIcon}
+  title="WhatsApp"
+  theme={{
+    barTheme: 'light',
+    barBackgroundColor: '#eaeaea',
+    menuHighlightColor: '#33c151',
+    menuDimItems: false,
+  }}
+/>
+```
+
 ### Slack - Vertical Menu Example
 
 ![Slack][slack]
+
+```js
+<TitleBar
+  icon={slackIcon}
+  title="Slack - ProjectName"
+  menu={slackTemplate}
+  theme={{
+    barTheme: 'dark',
+    barBackgroundColor: '#251d24',
+    menuStyle: 'vertical',
+    menuHighlightColor: '#52a98c',
+    menuDimItems: false,
+  }}
+/>
+```
 
 [default]: ./app/images/DefaultExample.png "Default"
 [github]: ./app/images/GithubExample.png "GitHub"
