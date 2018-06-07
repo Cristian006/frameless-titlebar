@@ -27,6 +27,8 @@ const Title = styled.div`
   margin: 0px 6px 0px 0px;
   padding: 0px 4px;
   color: ${props => props.theme.barTitleColor}
+  text-align: center;
+  flex: ${props => props.flex};
 `;
 
 const Icon = styled.img`
@@ -57,7 +59,6 @@ export default class TitleBar extends Component {
     icon,
     title,
     platform,
-    theme,
     menu,
     children,
     currentTheme,
@@ -71,19 +72,20 @@ export default class TitleBar extends Component {
   }) => {
     switch (platform) {
       case 'darwin':
-        return (
-          <Bar>
-            <ResizeTop />
-            <ResizeLeft />
-            
-          </Bar>
-        );
       case 'linux':
         return (
           <Bar>
             <ResizeTop />
-            <ResizeLeft />
-          
+            <ResizeRight />
+            {
+              title &&
+              <Title
+                onClick={onTitleClick}
+                flex={1}
+              >
+                {title}
+              </Title>
+            }
           </Bar>
         );
       default: // win32
