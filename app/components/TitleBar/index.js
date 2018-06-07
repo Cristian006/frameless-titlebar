@@ -76,7 +76,7 @@ export default class TitleBar extends Component {
         return (
           <Bar>
             <ResizeTop />
-            <ResizeRight />
+            <ResizeLeft />
             {
               title &&
               <Title
