@@ -114,7 +114,34 @@ class MenuItem extends Component {
       return;
     }
 
-    this.props.menuItem.click(this.props.menuItem, remote.getCurrentWindow(), e);
+    switch (menuItem.type) {
+      case 'checkbox': {
+        e.persist();
+        const newMenuItem = {
+          ...menuItem,
+          checked: !menuItem.checked,
+        };
+        menuItem.click(newMenuItem, remote.getCurrentWindow(), e);
+        // TODO: Change Checked State
+        return;
+      }
+      case 'radio': {
+        e.persist();
+        const newMenuItem = {
+          ...menuItem,
+          checked: true,
+        };
+        menuItem.click(newMenuItem, remote.getCurrentWindow(), e);
+        if (!menuItem.checked) {
+          // TODO: Change Checked State
+        }
+        return;
+      }
+      default:
+        e.persist();
+        menuItem.click(this.props.menuItem, remote.getCurrentWindow(), e);
+        break;
+    }
   };
 
   render() {

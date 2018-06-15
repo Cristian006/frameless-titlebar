@@ -84,6 +84,10 @@ class MenuList extends Component {
     });
   }
 
+  changeCheckState = (mainIndex, subIndex, checked, isRadio=false) => {
+    // TODO
+  }
+
   render() {
     const {
       submenu,

@@ -1,3 +1,7 @@
+export const setItems = (obj, path, val) => {
+  return obj;
+};
+
 export const defaultMenuItem = {
   id: '',
   enabled: true,
