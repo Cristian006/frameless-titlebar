@@ -62,7 +62,9 @@ class SubMenu extends Component {
             right={right}
             renderSide={renderSide}
             theme={this.props.theme}
+            changeCheckState={this.props.changeCheckState}
             menuItem={{ ...defaultMenuItem, ...menuItem, type: 'submenu' }}
+            path={[...this.props.path, i, 'submenu']}
           />
         );
       }
@@ -70,7 +72,10 @@ class SubMenu extends Component {
       return (
         <MenuItem
           key={`${i}${menuItem.label}`}
+          changeCheckState={this.props.changeCheckState}
           menuItem={{ ...defaultMenuItem, ...menuItem }}
+          indx={i}
+          path={[...this.props.path]}
         />
       );
     });
@@ -111,12 +116,14 @@ SubMenu.propTypes = {
   menuItem: PropTypes.object,
   level: PropTypes.number,
   renderSide: PropTypes.string,
+  changeCheckState: PropTypes.func,
 };
 
 SubMenu.defaultProps = {
   menuItem: {},
   level: 1,
   renderSide: 'right',
+  changeCheckState: () => {},
 };
 
 export default withTheme(SubMenu);

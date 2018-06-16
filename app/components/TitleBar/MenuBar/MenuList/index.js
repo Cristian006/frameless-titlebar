@@ -71,7 +71,9 @@ class MenuList extends Component {
             level={1}
             right={right}
             renderSide={renderSide}
+            changeCheckState={this.props.changeCheckState}
             menuItem={{ ...defaultMenuItem, ...menuItem, type: 'submenu' }}
+            path={this.props.vertical ? [...this.props.path, i, 'submenu'] : [...this.props.path, 'submenu', i, 'submenu']}
           />
         );
       }
@@ -79,6 +81,9 @@ class MenuList extends Component {
         <MenuItem
           key={`${i}${menuItem.label}`}
           menuItem={{ ...defaultMenuItem, ...menuItem }}
+          changeCheckState={this.props.changeCheckState}
+          indx={i}
+          path={this.props.vertical ? [...this.props.path] : [...this.props.path, 'submenu']}
         />
       );
     });
@@ -112,16 +117,20 @@ class MenuList extends Component {
 
 MenuList.propTypes = {
   submenu: PropTypes.array,
+  path: PropTypes.array,
   rect: PropTypes.shape({
     height: PropTypes.number,
     width: PropTypes.number,
     x: PropTypes.number,
     y: PropTypes.number
   }).isRequired,
+  changeCheckState: PropTypes.func,
 };
 
 MenuList.defaultProps = {
   submenu: [],
+  path: [],
+  changeCheckState: () => {},
 };
 
 export default withTheme(MenuList);

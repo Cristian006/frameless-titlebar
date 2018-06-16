@@ -1,3 +1,38 @@
+import { isEqual } from 'lodash';
+
+export const getProperty = (path, obj) => path.reduce((xs, x) => (xs && xs[x]) ? xs[x] : null, obj);
+
+export const reduxSet = (obj, path, val) => {
+  const [prop, ...restPath] = path;
+  if (typeof prop === 'undefined') {
+    if (!isEqual(obj, val)) {
+      return val;
+    }
+    return obj;
+  }
+  let before;
+  if (prop in obj) {
+    before = obj[prop];
+  } else {
+    before = {};
+  }
+  const after = reduxSet(before, restPath, val);
+  if (after !== before) {
+    let result;
+    if (Array.isArray(obj)) {
+      result = obj.slice();
+      result[prop] = after;
+    } else {
+      result = {
+        ...obj,
+        [prop]: after,
+      };
+    }
+    return result;
+  }
+  return obj;
+};
+
 export const defaultMenuItem = {
   id: '',
   enabled: true,
