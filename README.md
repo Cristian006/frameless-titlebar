@@ -54,6 +54,8 @@ export default class App extends React.Component {
 | menu | array | All | The array of menu items | [] |
 | theme | object | All | Theme object to customize Titlebar | See Bellow |
 
+> [Menu Object Documentation/Template](https://electronjs.org/docs/api/menu "Electron Menu Documentation")
+
 ```js
 // This is the default theme
 // Override any of these values by passing object into TitleBar Element via the theme property
@@ -84,12 +86,12 @@ export const darkTheme = {
   menuSubLabelColor: '#6a737d',
   menuAcceleratorColor: '#6a737d',
   menuShowBoxShadow: true,
+  menuSeparatorColor: '#e1e4e8',
   menuBoxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
 
   /* Menu Overlay */
   menuOverlayBackground: 'black',
   menuOverlayOpacity: 0.4,
-  menuSeparatorColor: '#e1e4e8',
 
   /* WindowControls */
   windowControlsColor: '#fff',
@@ -104,9 +106,9 @@ export const darkTheme = {
 ## TODO
 
 - [ ] Set application menu for MacOS and Linux Applications
-- [x] Change Menu Item states - checkmarks, radios
+- [x] ~~Change Menu Item states - checkmarks, radios~~
 - [ ] All menus have fixed `width` to make it easier to calculate what side to render the submenu on. Menus should have dynamic `width` with a `max-width` property.
-- [ ] Add default role functions to be more in-line with Electron MenuItem
+- [ ] Add default role functions to be more in-line with Electron MenuItem Documentation
 - [ ] Add position and id properties to menu item objects for ordering the menu item list
 - [ ] Add ability to change default icons with custom icons
 
