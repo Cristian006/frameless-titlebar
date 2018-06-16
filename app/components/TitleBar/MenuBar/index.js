@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled, { withTheme } from 'styled-components';
 import MenuButton from './MenuButton';
 import MenuList from './MenuList';
+import { reduxSet, getProperty } from '../utils';
 
 const menuIcon = (
   <svg version="1.1" width="24px" height="24px" viewBox="0 0 32 32">
@@ -81,6 +82,23 @@ class MenuBar extends Component {
     }
   };
 
+  // path: to current submenu
+  // checked: new state
+  changeCheckState = (path, itemIndx, checked, isRadio = false) => {
+    if (!isRadio) {
+      // change checked state
+      this.setState(reduxSet(this.state, [...path, itemIndx, 'checked'], checked));
+    } else {
+      let newState = { ...this.state };
+      getProperty(path, this.state).forEach((menuItem, indx) => {
+        if (menuItem.type === 'radio') {
+          newState = reduxSet(newState, [...path, indx, 'checked'], indx === itemIndx);
+        }
+      });
+      this.setState(newState);
+    }
+  };
+
   generateHorizontalMenu = (menuObj = []) => {
     return menuObj.map((menuItem, i) => {
       return (
@@ -127,9 +145,11 @@ class MenuBar extends Component {
           {
             (this.state.clicked && i === this.state.focusing) &&
               <MenuList
+                changeCheckState={this.changeCheckState}
                 rect={this.menuItems[i].getBoundingClientRect()}
                 submenu={menuItem.submenu}
                 mainIndex={i}
+                path={['menu', i]}
               />
           }
         </MenuButton>
@@ -175,9 +195,11 @@ class MenuBar extends Component {
         {
           (this.state.clicked && this.state.focusing === 0) &&
             <MenuList
+              changeCheckState={this.changeCheckState}
               rect={this.menuItems[0].getBoundingClientRect()}
               submenu={menuList}
-              mainIndex={0}
+              path={['menu']}
+              vertical
             />
         }
       </MenuButton>
@@ -213,3 +235,10 @@ MenuBar.defaultProps = {
 };
 
 export default withTheme(MenuBar);
+
+/**
+ *AA
+  Phone
+  Ice Cream
+  PopUp Tent
+ */

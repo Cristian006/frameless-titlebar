@@ -14,7 +14,27 @@ export const defaultTemplate = [
         label: 'Sub Menu',
         submenu: [
           {
-            label: 'Random 1',
+            label: 'Color Submenu',
+            submenu: [
+              {
+                label: 'Light',
+                type: 'radio',
+                checked: false,
+                click: (item, win, e) => document.querySelector('html').style.background = 'rgb(240,240,240)',
+              },
+              {
+                label: 'Dark',
+                type: 'radio',
+                checked: true,
+                click: (item, win, e) => document.querySelector('html').style.background = 'rgb(64,64,64)',
+              },
+              {
+                label: 'Black',
+                type: 'radio',
+                checked: false,
+                click: (item, win, e) => document.querySelector('html').style.background = 'rgb(0,0,0)',
+              },
+            ]
           },
           {
             label: 'Random 2',

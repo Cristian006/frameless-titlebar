@@ -107,6 +107,9 @@ class MenuItem extends Component {
   handleClick = (e) => {
     const {
       menuItem,
+      changeCheckState,
+      path,
+      indx,
     } = this.props;
 
     if (menuItem.enabled === false) {
@@ -123,10 +126,11 @@ class MenuItem extends Component {
         };
         menuItem.click(newMenuItem, remote.getCurrentWindow(), e);
         // TODO: Change Checked State
+        changeCheckState(path, indx, !menuItem.checked);
         return;
       }
       case 'radio': {
-        e.persist();
+        // e.persist();
         const newMenuItem = {
           ...menuItem,
           checked: true,
@@ -134,6 +138,7 @@ class MenuItem extends Component {
         menuItem.click(newMenuItem, remote.getCurrentWindow(), e);
         if (!menuItem.checked) {
           // TODO: Change Checked State
+          changeCheckState(path, indx, true, true);
         }
         return;
       }
@@ -215,6 +220,8 @@ MenuItem.propTypes = {
     click: PropTypes.func,
   }),
   children: PropTypes.node,
+  indx: PropTypes.number,
+  changeCheckState: PropTypes.func,
 };
 
 MenuItem.defaultProps = {
@@ -229,6 +236,8 @@ MenuItem.defaultProps = {
     position: '',
   },
   children: null,
+  indx: 0,
+  changeCheckState: () => {},
 };
 
 export default withTheme(MenuItem);
