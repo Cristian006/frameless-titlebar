@@ -104,7 +104,7 @@ export const darkTheme = {
 ## TODO
 
 - [ ] Set application menu for MacOS and Linux Applications
-- [ ] Change Menu Item states - checkmarks, radios
+- [x] Change Menu Item states - checkmarks, radios
 - [ ] All menus have fixed `width` to make it easier to calculate what side to render the submenu on. Menus should have dynamic `width` with a `max-width` property.
 - [ ] Add default role functions to be more in-line with Electron MenuItem
 - [ ] Add position and id properties to menu item objects for ordering the menu item list
