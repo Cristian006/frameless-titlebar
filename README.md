@@ -2,7 +2,7 @@
 
 > Customizable Electron Titlebar for frameless windows built with React
 
-A lot of people like developing apps with the Electron framework because it's cross platform. Developers write code once and run it everywhere. Developers are building beautiful applications that look great on MacOS, you can easily set the title bar to be hidden and be left with 3 cute little round buttons on the top left corner that look like a stop light. On Windows however, Electron applications are often left untouched when it comes to the title bar. In my opinion, the default menu and title bar don't work well with some stylized applications such as Atom, VS Code or Signal. Slack has a custom title bar in their desktop application but even then, they use the default menu layout which is fine but, it would probably look a little more unified if they used a custom menu. This is of course hugely inspired by GitHub's desktop application which was the first Electron app I saw to get the title bar correctly. If we're going to be using Web Technologies to build desktop applications we might as well make them look dope all around, right?
+A lot of people like developing apps with the [Electron](https://electronjs.org/) framework because it's cross platform. On Windows however, Electron applications are often left untouched when it comes to the title bar. In my opinion, the default menu and title bar don't work well with some stylized applications such as Atom, VS Code or Signal. Apps would look a little more unified if they used a custom menu. This is of course hugely inspired by GitHub's desktop application. If we're going to be using Web Technologies to build desktop applications we might as well make them look dope all around, right?
 
 ## Usage
 
