@@ -2,8 +2,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import TitleBar from 'electron-titlebar';
 import styles from './Home.css';
-import TitleBar from '../components/TitleBar';
 import {
   defaultTemplate,
   slackTemplate,
@@ -117,7 +117,7 @@ export default class Home extends Component {
       flex: 1;
     `;
 
-    const Toolbar = styled.div`  
+    const Toolbar = styled.div`
       background-color: ${props => props.background};
       border-bottom: 1px solid rgba(0, 0, 0, 0.1);
       padding-left: 20px;
@@ -177,7 +177,7 @@ export default class Home extends Component {
       flex: 1;
     `;
 
-    const Toolbar = styled.div`  
+    const Toolbar = styled.div`
       background-color: ${props => props.background};
       border-right: ${props => props.border};
       color: #000;
@@ -201,7 +201,7 @@ export default class Home extends Component {
       border: solid 1px #f3f3f3;
       height: 36px;
     `;
-    
+
     const SearchBar = styled.div`
       background-color: #ffffff;
       margin: 8px 16px;
