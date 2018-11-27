@@ -1,205 +1,29 @@
-# Electron Titlebar #WindowsAppsNeedSomeLoveToo
+# Modern and Minimal Electron + React Starter Kit
+_Electron, React, Webpack -- Modern and up-to-date, with a handful of quality of life features included_
 
-> Customizable Electron Titlebar for frameless windows built with React
+I made this starter kit as most boilerplates were either out-of-date, heavy handed, or enforced a structure on me that I just didnt like.
+With a very select assortment of modules, this starter kit is designed to get you up and running very quickly, and to let you easily drop in your own structure and tools on top of it.
+The basic structure of `src/` is intentionally minimal to make it easier to allow you to put your own twist on how you like things laid out.
 
-A lot of people like developing apps with the [Electron](https://electronjs.org/) framework because it's cross platform. On Windows however, Electron applications are often left untouched when it comes to the title bar. In my opinion, the default menu and title bar don't work well with some stylized applications such as Atom, VS Code or Signal. Apps would look a little more unified if they used a custom menu. This is of course hugely inspired by GitHub's desktop application. If we're going to be using Web Technologies to build desktop applications we might as well make them look dope all around, right?
+Production builds babel-minify is used, and ES2015/ES6 transpilation is provided -- As modern node and chromium versions support 99%+ of the ES6 feature set, I feel those steps are unnecessary.
 
-## Usage
+If you like this project, check out [enhanced-electron-react-boilerplate](https://github.com/pbarbiero/enhanced-electron-react-boilerplate) which is this project with my take on additional modules (photon, redux, less, css modules etc) and my personal project structure (based on the redux ducks proposal) I suggest you give it a look if you want less of a minimalistic take on my starter kit.
 
-In your electron `app.js` file:
+### To get started:
+* Run `npm install`
 
-```js
-  // electron browser window set up
-  mainWindow = new BrowserWindow({
-    width: 1024,
-    height: 728,
-    minWidth: 600, // set a min width!
-    minHeight: 300, // and a min height!
-    // Remove the window frame from windows applications
-    frame: false,
-    // Hide the titlebar from MacOS applications while keeping the stop lights
-    titleBarStyle: 'hidden',
-  });
-```
+##### Development
+* Run `npm run dev` to start webpack-dev-server. Electron will launch automatically after compilation.
 
-In your app's root container render method:
+##### Production
+_You have two options, an automatic build or two manual steps_
 
-```js
-import TitleBar from 'electron-titlebar';
-import menu from './AppMenu'; // import your menu file
-...
-export default class App extends React.Component {
-  ...
-  render() {
-    return (
-      <div>
-        <TitleBar
-          icon={`${__dirname}/../resources/icon.png`}
-          title="Electron"
-          menu={menu}
-        />
-        {this.props.children}
-      </div>
-    );
-  }
-}
-```
+###### One Shot
+* Run `npm run package` to have webpack compile your application into `dist/bundle.js` and `dist/index.html`, and then an electron-packager run will be triggered for the current platform/arch, outputting to `builds/`
 
-## Documentation
+###### Manual
+_Recommendation: Update the "postpackage" script call in package.json to specify parameters as you choose and use the `npm run package` command instead of running these steps manually_
+* Run `npm run build` to have webpack compile and output your bundle to `dist/bundle.js`
+* Then you can call electron-packager directly with any commands you choose
 
-| Name | Type | Platforms | Description | Default Value |
-| :--------- | :--: | :----------: | :------- | :----: |
-| icon | string | Windows |The App Icon shown on the top left | '' |
-| title | string | Windows |The App Title shown on the top left | '' |
-| menu | array | All | The array of menu items | [] |
-| theme | object | All | Theme object to customize Titlebar | See Bellow |
-
-> [Menu Object Documentation/Template](https://electronjs.org/docs/api/menu "Electron Menu Documentation")
-
-```js
-// This is the default theme
-// Override any of these values by passing object into TitleBar Element via the theme property
-export const darkTheme = {
-  /* Title */
-  barTheme: 'dark', /* Light, Dark */
-  barHeight: '28px',
-  barColor: '#fff',
-  barTitleColor: 'inherit',
-  barBackgroundColor: '#24292e',
-  barShowBorder: false,
-  barBorderBottom: '1px solid #000',
-
-  /* Menu */
-  menuStyle: 'horizontal', /* horizontal, vertical */
-  menuDimItems: true,
-  menuDimOpacity: 0.6,
-  menuDisabledOpacity: 0.3,
-  menuWidth: 240,
-  menuBackgroundColor: '#fff',
-  menuItemTextColor: '#fff',
-  menuItemHoverBackground: 'rgba(255,255,255,0.3)',
-  menuActiveTextColor: '#24292e',
-  menuTextHighlightColor: '#fff',
-  menuHighlightColor: '#0372ef',
-  accentStatusIcon: false,
-  menuSubLabelHeaders: true,
-  menuSubLabelColor: '#6a737d',
-  menuAcceleratorColor: '#6a737d',
-  menuShowBoxShadow: true,
-  menuSeparatorColor: '#e1e4e8',
-  menuBoxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
-
-  /* Menu Overlay */
-  menuOverlayBackground: 'black',
-  menuOverlayOpacity: 0.4,
-
-  /* WindowControls */
-  windowControlsColor: '#fff',
-  windowCloseHover: '#fff',
-  windowCloseBackground: '#e81123',
-  windowCloseActive: '#bf0f1d',
-  windowDefaultBackground: 'rgba(255,255,255,0.3)',
-  windowDefaultActive: 'rgba(255,255,255,0.2)',
-};
-```
-
-## TODO
-
-- [ ] Set application menu for MacOS and Linux Applications
-- [x] ~~Change Menu Item states - checkmarks, radios~~
-- [ ] All menus have fixed `width` to make it easier to calculate what side to render the submenu on. Menus should have dynamic `width` with a `max-width` property.
-- [ ] Add default role functions to be more in-line with Electron MenuItem Documentation
-- [ ] Add position and id properties to menu item objects for ordering the menu item list
-- [ ] Add ability to change default icons with custom icons
-
-## Examples
-
-### Multi-Level Submenu Example / Submenu Header Labels
-
-![Default][default]
-
-```js
-<TitleBar
-  icon={`${__dirname}/../resources/icon.png`}
-  title="Electron Title Bar"
-  menu={defaultTemplate}
-/>
-```
-
-### GitHub - Dark Theme Example
-
-![Github][github]
-
-```js
-<TitleBar
-  icon={githubIcon}
-  menu={githubTemplate}
-  theme={{
-    barTheme: 'dark',
-    barShowBorder: true,
-    menuDimItems: false,
-  }}
-/>
-```
-
-### Signal
-
-![Signal][signal]
-
-```js
-<TitleBar
-  icon={signalIcon}
-  title="Signal"
-  menu={signalTemplate}
-  theme={{
-    barTheme: 'dark',
-    barBackgroundColor: '#2090ea',
-    menuHighlightColor: '#2090ea',
-    barShowBorder: true,
-    barBorderBottom: '1px solid #1a70b7',
-    menuDimItems: false,
-  }}
-/>
-```
-
-### WhatsApp - Light Theme Example
-
-![WhatsApp][what]
-
-```js
-<TitleBar
-  icon={whatIcon}
-  title="WhatsApp"
-  theme={{
-    barTheme: 'light',
-    barBackgroundColor: '#eaeaea',
-    menuHighlightColor: '#33c151',
-    menuDimItems: false,
-  }}
-/>
-```
-
-### Slack - Vertical Menu Example
-
-![Slack][slack]
-
-```js
-<TitleBar
-  icon={slackIcon}
-  title="Slack - ProjectName"
-  menu={slackTemplate}
-  theme={{
-    barTheme: 'dark',
-    barBackgroundColor: '#251d24',
-    menuStyle: 'vertical',
-    menuHighlightColor: '#52a98c',
-    menuDimItems: false,
-  }}
-/>
-```
-
-[default]: ./app/images/DefaultExample.png "Default"
-[github]: ./app/images/GithubExample.png "GitHub"
-[slack]: ./app/images/SlackExample.png "Slack"
-[signal]: ./app/images/SignalExample.png "Signal"
-[what]: ./app/images/WhatsAppExample.png "WhatsApp"
+If you want to test the production build (In case you think Babili might be breaking something) after running `npm run build` you can then call `npm run prod`. This will cause electron to load off of the `dist/` build instead of looking for the webpack-dev-server instance. Electron will launch automatically after compilation.
