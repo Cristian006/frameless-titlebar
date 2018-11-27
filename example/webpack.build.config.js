@@ -18,6 +18,16 @@ module.exports = {
     publicPath: './',
     filename: 'bundle.js'
   },
+  resolve: {
+    alias: {
+      app: SRC_DIR,
+      assets: path.resolve(__dirname, 'src/assets/'),
+      components: path.resolve(__dirname, 'src/components/'),
+      containers: path.resolve(__dirname, 'src/containers/'),
+      styles: path.resolve(__dirname, 'src/styles/'),
+      utils: path.resolve(__dirname, 'src/utils/')
+    }
+  },
   module: {
     rules: [
       {

@@ -1,0 +1,13 @@
+.Toolbar {
+  height: 50px;
+  background-color: #24292e;
+  display: flex;
+}
+
+.Section {
+  display: flex;
+  font-size: 0.8em;
+  flex: 1;
+  height: 100%;
+  border-right: 1px solid #000;
+}

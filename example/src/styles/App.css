@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css?family=Dosis');
+html, body, p, h1 {
+  font-family: 'Dosis', monospace, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  display: table;
+}
+
+.Children {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 12px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+  width: 100vw;
+}

@@ -1,4 +1,4 @@
-import { shell, ipcRenderer } from 'electron';
+import { ipcRenderer, shell } from 'electron';
 
 const { openExternal } = shell;
 
@@ -8,7 +8,7 @@ export const defaultTemplate = [
     submenu: [
       {
         label: 'Disabled',
-        enabled: false,
+        enabled: false
       },
       {
         label: 'Sub Menu',
@@ -20,24 +20,24 @@ export const defaultTemplate = [
                 label: 'Light',
                 type: 'radio',
                 checked: false,
-                click: (item, win, e) => document.querySelector('html').style.background = 'rgb(240,240,240)',
+                click: (item, win, e) => { document.querySelector('html').style.background = 'rgb(240,240,240)'; }
               },
               {
                 label: 'Dark',
                 type: 'radio',
                 checked: true,
-                click: (item, win, e) => document.querySelector('html').style.background = 'rgb(64,64,64)',
+                click: (item, win, e) => { document.querySelector('html').style.background = 'rgb(64,64,64)'; }
               },
               {
                 label: 'Black',
                 type: 'radio',
                 checked: false,
-                click: (item, win, e) => document.querySelector('html').style.background = 'rgb(0,0,0)',
-              },
+                click: (item, win, e) => { document.querySelector('html').style.background = 'rgb(0,0,0)'; }
+              }
             ]
           },
           {
-            label: 'Random 2',
+            label: 'Random 2'
           },
           {
             label: 'Random 3',
@@ -46,18 +46,18 @@ export const defaultTemplate = [
                 label: 'Random 4',
                 submenu: [
                   {
-                    label: 'Random 7',
+                    label: 'Random 7'
                   },
                   {
-                    label: 'Random 8',
+                    label: 'Random 8'
                   },
                   {
-                    label: 'Random 9',
+                    label: 'Random 9'
                   },
                   {
-                    label: 'Random 10',
+                    label: 'Random 10'
                   }
-                ],
+                ]
               },
               {
                 label: 'Random 5'
@@ -71,48 +71,42 @@ export const defaultTemplate = [
       },
       {
         label: 'Not visible',
-        visible: false,
+        visible: false
       },
       {
         label: 'Arguments',
-        click: (item, win, e) => console.log(item, win, e),
+        click: (item, win, e) => { console.log(item, win, e); }
       },
       {
-        label: 'Really Long Menu Label that should be truncated',
+        label: 'Really Long Menu Label that should be truncated'
       },
       { type: 'separator' },
       {
         label: 'Test Accelerator',
         accelerator: 'CommandOrControl+Y',
-        click: (item, win, e) => {
-          ipcRenderer.send('Test');
-        },
+        click: (item, win, e) => { ipcRenderer.send('Test'); }
       },
       {
         label: 'Open Dev Tools',
-        click: (item, win, e) => {
-          win.openDevTools();
-        },
+        click: (item, win, e) => { win.openDevTools(); }
       },
       {
         label: 'Resizable',
         type: 'checkbox',
         checked: true,
-        click: (item, win, e) => win.setResizable(item.checked),
+        click: (item, win, e) => { win.setResizable(item.checked); }
       },
       {
         label: 'Unchecked',
         type: 'checkbox',
         checked: false,
-        click: (item, win, e) => win.setResizable(item.checked),
+        click: (item, win, e) => { win.setResizable(item.checked); }
       },
       {
         label: 'Quit',
-        click: () => {
-          window.close();
-        },
-      },
-    ],
+        click: () => { window.close(); }
+      }
+    ]
   },
   {
     label: 'Color',
@@ -121,21 +115,21 @@ export const defaultTemplate = [
         label: 'Light',
         type: 'radio',
         checked: false,
-        click: (item, win, e) => document.querySelector('html').style.background = 'rgb(240,240,240)',
+        click: (item, win, e) => { document.querySelector('html').style.background = 'rgb(240,240,240)'; }
       },
       {
         label: 'Dark',
         type: 'radio',
         checked: true,
-        click: (item, win, e) => document.querySelector('html').style.background = 'rgb(64,64,64)',
+        click: (item, win, e) => { document.querySelector('html').style.background = 'rgb(64,64,64)'; }
       },
       {
         label: 'Black',
         type: 'radio',
         checked: false,
-        click: (item, win, e) => document.querySelector('html').style.background = 'rgb(0,0,0)',
-      },
-    ],
+        click: (item, win, e) => { document.querySelector('html').style.background = 'rgb(0,0,0)'; }
+      }
+    ]
   },
   {
     label: 'Disabled',
@@ -145,38 +139,36 @@ export const defaultTemplate = [
         label: 'Light',
         type: 'radio',
         checked: false,
-        click: (item, win, e) => document.querySelector('html').style.background = 'rgb(240,240,240)',
-      },
-    ],
+        click: (item, win, e) => { document.querySelector('html').style.background = 'rgb(240,240,240)'; }
+      }
+    ]
   },
   {
     label: 'Help',
     submenu: [
       {
         label: 'Homepage',
-        click: () => {
-          openExternal('https://github.com/KochiyaOcean/electron-react-titlebar')
-        },
-      },
-    ],
-  },
+        click: () => { openExternal('https://github.com/KochiyaOcean/electron-react-titlebar'); }
+      }
+    ]
+  }
 ];
 
 const Edit = [
   {
     label: 'Undo',
-    accelerator: 'Ctrl+Z',
+    accelerator: 'Ctrl+Z'
   },
   {
     label: 'Redo',
-    accelerator: 'Ctrl+Y',
+    accelerator: 'Ctrl+Y'
   },
   {
-    type: 'separator',
+    type: 'separator'
   },
   {
     label: 'Cut',
-    accelerator: 'Ctrl+X',
+    accelerator: 'Ctrl+X'
   },
   {
     label: 'Copy',
@@ -184,18 +176,18 @@ const Edit = [
   },
   {
     label: 'Paste',
-    accelerator: 'Ctrl+V',
+    accelerator: 'Ctrl+V'
   },
   {
     label: 'Paste and Match Style',
-    accelerator: 'Ctrl+Shift+V',
+    accelerator: 'Ctrl+Shift+V'
   },
   {
-    label: 'Delete',
+    label: 'Delete'
   },
   {
     label: 'Select all',
-    accelerator: 'Ctrl+A',
+    accelerator: 'Ctrl+A'
   }
 ];
 
@@ -205,61 +197,59 @@ export const githubTemplate = [
     submenu: [
       {
         label: 'New repository',
-        accelerator: 'Ctrl+N',
+        accelerator: 'Ctrl+N'
       },
       {
-        type: 'separator',
+        type: 'separator'
       },
       {
         label: 'Add local repository',
-        accelerator: 'Ctrl+O',
+        accelerator: 'Ctrl+O'
       },
       {
         label: 'Clone repository',
-        accelerator: 'Ctrl+Shift+O',
+        accelerator: 'Ctrl+Shift+O'
       },
       {
-        type: 'separator',
+        type: 'separator'
       },
       {
         label: 'Options',
-        accelerator: 'Ctrl+,',
+        accelerator: 'Ctrl+,'
       },
       {
-        type: 'separator',
+        type: 'separator'
       },
       {
-        label: 'Exit',
+        label: 'Exit'
       }
-    ],
+    ]
   },
   {
     label: 'Edit',
-    submenu: Edit,
+    submenu: Edit
   },
   {
     label: 'View',
     submenu: [
-
-    ],
+    ]
   },
   {
     label: 'Repository',
     submenu: [
-
-    ],
+    ]
   },
   {
     label: 'Branch',
     submenu: [
 
-    ],
+    ]
   },
   {
     label: 'Help',
     submenu: [
 
-    ],
+    ]
   }
 ];
 
@@ -268,19 +258,19 @@ export const signalTemplate = [
     label: 'File',
     submenu: [
       {
-        label: 'Preferences...',
+        label: 'Preferences...'
       },
       {
-        type: 'separator',
+        type: 'separator'
       },
       {
-        label: 'Exit',
+        label: 'Exit'
       }
-    ],
+    ]
   },
   {
     label: 'Edit',
-    submenu: Edit,
+    submenu: Edit
   },
   {
     label: 'View',
@@ -298,23 +288,23 @@ export const signalTemplate = [
         accelerator: 'CtrlCtrl+-'
       },
       {
-        type: 'separator',
+        type: 'separator'
       },
       {
         label: 'Toggle Full Screen',
         accelerator: 'F11'
       },
       {
-        type: 'separator',
+        type: 'separator'
       },
       {
-        label: 'Debug Log',
+        label: 'Debug Log'
       },
       {
         label: 'Toggle Developer Tools',
         accelerator: 'Ctrl+Shift+I'
       }
-    ],
+    ]
   },
   {
     label: 'Window',
@@ -329,24 +319,24 @@ export const signalTemplate = [
     label: 'Help',
     submenu: [
       {
-        label: 'Go to Release Notes',
+        label: 'Go to Release Notes'
       },
       {
         type: 'separator'
       },
       {
-        label: 'Go to Forums',
+        label: 'Go to Forums'
       },
       {
-        label: 'Report An Issue',
+        label: 'Report An Issue'
       },
       {
-        type: 'separator',
+        type: 'separator'
       },
       {
         label: 'About Signal Desktop'
       }
-    ],
+    ]
   }
 ];
 
@@ -361,31 +351,31 @@ export const slackTemplate = [
       },
       {
         label: 'Close',
-        accelerator: 'Ctrl+W',
+        accelerator: 'Ctrl+W'
       },
       {
         label: 'Quit Slack',
-        accelerator: 'Ctrl+Q',
+        accelerator: 'Ctrl+Q'
       }
-    ],
+    ]
   },
   {
     label: 'Edit',
     submenu: [
       {
         label: 'Undo',
-        accelerator: 'Ctrl+Z',
+        accelerator: 'Ctrl+Z'
       },
       {
         label: 'Redo',
-        accelerator: 'Ctrl+Y',
+        accelerator: 'Ctrl+Y'
       },
       {
-        type: 'separator',
+        type: 'separator'
       },
       {
         label: 'Cut',
-        accelerator: 'Ctrl+X',
+        accelerator: 'Ctrl+X'
       },
       {
         label: 'Copy',
@@ -393,20 +383,20 @@ export const slackTemplate = [
       },
       {
         label: 'Paste',
-        accelerator: 'Ctrl+V',
+        accelerator: 'Ctrl+V'
       },
       {
         label: 'Paste and Match Style',
-        accelerator: 'Ctrl+Shift+V',
+        accelerator: 'Ctrl+Shift+V'
       },
       {
-        label: 'Delete',
+        label: 'Delete'
       },
       {
         label: 'Select all',
-        accelerator: 'Ctrl+A',
+        accelerator: 'Ctrl+A'
       }
-    ],
+    ]
   },
   {
     label: 'View'
@@ -419,6 +409,6 @@ export const slackTemplate = [
   },
   {
     label: 'Help',
-    accelerator: 'Ctrl+H',
+    accelerator: 'Ctrl+H'
   }
 ];

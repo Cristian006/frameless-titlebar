@@ -49,7 +49,8 @@ export const defaultMenuItem = {
 export const darkTheme = {
   /* Title */
   barTheme: 'dark',
-  barHeight: '28px',
+  barHeight: '22px',
+  winBarHeight: '28px',
   barColor: '#fff',
   barTitleColor: 'inherit',
   barBackgroundColor: '#24292e',

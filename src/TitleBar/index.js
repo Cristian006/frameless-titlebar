@@ -7,7 +7,7 @@ import WindowControls from './WindowControls';
 import { darkTheme, lightTheme } from './utils';
 
 const Bar = styled.div`
-  height: ${props => props.theme.barHeight};
+  height: ${props => props.isWin ? props.theme.winBarHeight : props.theme.barHeight};
   flex-grow: 0;
   flex-shrink: 0;
   display: flex;
@@ -23,12 +23,18 @@ const Bar = styled.div`
 `;
 
 const Title = styled.div`
-  line-height: ${props => props.theme.barHeight}
+  line-height: ${props => props.theme.barHeight};
   margin: 0px 6px 0px 0px;
   padding: 0px 4px;
-  color: ${props => props.theme.barTitleColor}
+  color: ${props => props.theme.barTitleColor};
   text-align: center;
   flex: ${props => props.flex};
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-direction: row;
+  -webkit-app-region: drag;
 `;
 
 const Icon = styled.img`
@@ -68,29 +74,12 @@ export default class TitleBar extends Component {
     onMinimizeClick,
     onMaximizeClick,
     disableMaximize,
-    disableMinimize,
+    disableMinimize
   }) => {
     switch (platform) {
-      case 'darwin':
-      case 'linux':
+      case 'win32': // win32
         return (
-          <Bar>
-            <ResizeTop />
-            <ResizeLeft />
-            {
-              title &&
-              <Title
-                onClick={onTitleClick}
-                flex={1}
-              >
-                {title}
-              </Title>
-            }
-          </Bar>
-        );
-      default: // win32
-        return (
-          <Bar>
+          <Bar isWin>
             <ResizeTop />
             <ResizeLeft />
             {
@@ -103,7 +92,7 @@ export default class TitleBar extends Component {
               icon &&
               <Icon
                 src={icon}
-                alt="app-icon"
+                alt='app-icon'
                 onClick={onIconClick}
               />
             }
@@ -131,17 +120,42 @@ export default class TitleBar extends Component {
             />
           </Bar>
         );
+      default:
+        return (
+          <Bar>
+            <ResizeTop />
+            <ResizeLeft />
+            {
+              title &&
+              <Title
+                onClick={onTitleClick}
+                flex={1}
+              >
+                {
+                  icon &&
+                  <Icon
+                    src={icon}
+                    alt='app-icon'
+                    onClick={onIconClick}
+                  />
+                }
+                {title}
+              </Title>
+            }
+          </Bar>
+        );
     }
   }
+
   render() {
     const {
       theme,
-      platform,
+      platform
     } = this.props;
 
     const currentTheme = {
       ...(theme.barTheme === 'light' ? lightTheme : darkTheme),
-      ...theme,
+      ...theme
     };
 
     return (
@@ -150,7 +164,7 @@ export default class TitleBar extends Component {
           this.generatePlatformChildren({
             ...this.props,
             currentTheme,
-            platform: platform || os.platform(),
+            platform: platform === 'default' ? os.platform() : (platform || os.platform())
           })
         }
       </ThemeProvider>
