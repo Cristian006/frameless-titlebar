@@ -1,0 +1,13 @@
+.Wrapper {
+  padding: 8px 12px;
+  display: table;
+}
+
+.Wrapper:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.Wrapper.Selected {
+  font-weight: bold;
+}
