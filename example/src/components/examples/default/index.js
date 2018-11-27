@@ -10,11 +10,11 @@ class Default extends Component {
       platform
     } = this.props;
     return (
-      <div>
+      <div className="ExampleContainer">
         <TitleBar
           icon={defaultIcon}
           menu={defaultTemplate}
-          title="Electron Titlebar"
+          app="Electron Titlebar"
           theme={{
             barTheme: 'dark'
           }}

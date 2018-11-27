@@ -11,22 +11,24 @@ class GitHub extends Component {
       platform
     } = this.props;
     return (
-      <div>
+      <div className="ExampleContainer">
         <TitleBar
           icon={gitIcon}
+          title="Project Name"
           menu={githubTemplate}
           theme={{
             barTheme: 'dark',
             barShowBorder: true,
-            menuDimItems: false
+            menuDimItems: false,
+            showIconDarLin: false
           }}
           platform={platform}
         />
-        <div className="Toolbar">
-          <div className="Section" style={{ maxWidth: 300 }} />
-          <div className="Section">
-            <div className="Section" style={{ maxWidth: 250 }} />
-            <div className="Section" style={{ maxWidth: 250, marginRight: 10 }} />
+        <div className="GitToolbar">
+          <div className="GitSection" style={{ maxWidth: 300 }} />
+          <div className="GitSection">
+            <div className="GitSection" style={{ maxWidth: 250 }} />
+            <div className="GitSection" style={{ maxWidth: 250, marginRight: 10 }} />
           </div>
         </div>
         {children}

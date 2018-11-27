@@ -25,11 +25,12 @@ const Bar = styled.div`
 const Title = styled.div`
   line-height: ${props => props.theme.barHeight};
   margin: 0px 6px 0px 0px;
-  padding: 0px 4px;
+  padding: ${props => props.isWin ? '0px 4px' : '0 70px'};
   color: ${props => props.theme.barTitleColor};
   text-align: center;
   flex: ${props => props.flex};
   display: flex;
+  white-space: nowrap;
   justify-content: center;
   align-content: center;
   align-items: center;
@@ -63,6 +64,7 @@ const ResizeTop = styled(ResizeHandle)`
 export default class TitleBar extends Component {
   generatePlatformChildren = ({
     icon,
+    app,
     title,
     platform,
     menu,
@@ -97,11 +99,12 @@ export default class TitleBar extends Component {
               />
             }
             {
-              title &&
+              app &&
               <Title
                 onClick={onTitleClick}
+                isWin
               >
-                {title}
+                {app}
               </Title>
             }
             {
@@ -126,20 +129,20 @@ export default class TitleBar extends Component {
             <ResizeTop />
             <ResizeLeft />
             {
-              title &&
+              (title || app) &&
               <Title
                 onClick={onTitleClick}
                 flex={1}
               >
                 {
-                  icon &&
+                  (icon && currentTheme.showIconDarLin) &&
                   <Icon
                     src={icon}
                     alt='app-icon'
                     onClick={onIconClick}
                   />
                 }
-                {title}
+                {(title || app)}
               </Title>
             }
           </Bar>
@@ -196,6 +199,7 @@ TitleBar.defaultProps = {
 
   /* Main */
   icon: '',
+  name: '',
   title: '',
   platform: '',
   theme: {},

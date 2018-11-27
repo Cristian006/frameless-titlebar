@@ -1,0 +1,48 @@
+.CodeContainer {
+  display: flex;
+  flex: 1;
+}
+
+.CodeSide, .CodeSection {
+  flex: 1;
+  background: rgb(37, 37, 38);
+}
+
+.CodeSide {
+  border-right: 1px solid rgb(34, 34, 35);
+}
+
+.CodeSection {
+  background: rgb(41, 42, 43);
+}
+
+.ActiveTab {
+  height: 35px;
+  font-size: 13px;
+  color: rgb(230, 230, 230);
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  line-height: 35px;
+  width: 100px;
+  border-right: 1px solid rgb(37, 37, 38);
+  background-color: rgb(41, 42, 43);
+  border-bottom: 1px solid #0078d6;
+}
+
+.CodeEditor {
+  background: rgb(41, 42, 43);
+  color: #e6e6e6;
+}
+
+.CodeIcon {
+  width: 12px;
+  height: 12px;
+  padding-right: 12px;
+  fill: #0078d6;
+}
+
+.CodeIcon svg {
+  fill: #0078d6;
+}

@@ -43,22 +43,24 @@ export const defaultMenuItem = {
   accelerator: '',
   position: '',
   submenu: [],
-  click: () => {},
+  click: () => {}
 };
 
 export const darkTheme = {
   /* Title */
-  barTheme: 'dark',
-  barHeight: '22px',
+  barTheme: 'dark', // light, dark
+  barHeight: '22px', // Change this value if you set 'titleBarStyle' to 'hiddenInset'
   winBarHeight: '28px',
   barColor: '#fff',
   barTitleColor: 'inherit',
   barBackgroundColor: '#24292e',
   barShowBorder: false,
   barBorderBottom: '1px solid #000',
+  // should the icon be shown in the center of the toolbar on Mac/Linux apps alongside the app or title property
+  showIconDarLin: true,
 
   /* Menu */
-  menuStyle: 'horizontal', /* horizontal, vertical */
+  menuStyle: 'horizontal', // horizontal, vertical
   menuDimItems: true,
   menuDimOpacity: 0.6,
   menuDisabledOpacity: 0.3,
