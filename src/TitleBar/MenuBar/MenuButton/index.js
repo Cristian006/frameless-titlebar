@@ -74,7 +74,7 @@ export default class MenuButton extends Component {
         onTouchStart={onTouchStart}
         onFocus={onFocus}
         onClick={onClick}
-        innerRef={rectRef}
+        ref={rectRef}
       >
         {this.props.children}
         <ButtonWrapper

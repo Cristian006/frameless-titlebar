@@ -18,7 +18,7 @@ In your electron `app.js` file:
     // Remove the window frame from windows applications
     frame: false,
     // Hide the titlebar from MacOS applications while keeping the stop lights
-    titleBarStyle: 'hidden',
+    titleBarStyle: 'hidden' || 'customButtonsOnHover',
   });
 ```
 
@@ -62,7 +62,8 @@ export default class App extends React.Component {
 export const darkTheme = {
   /* Title */
   barTheme: 'dark', /* Light, Dark */
-  barHeight: '28px',
+  barHeight: '22px', /* Change this value if you set 'titleBarStyle' to 'hiddenInset' */
+  winBarHeight: '28px',
   barColor: '#fff',
   barTitleColor: 'inherit',
   barBackgroundColor: '#24292e',
@@ -111,6 +112,7 @@ export const darkTheme = {
 - [ ] Add default role functions to be more in-line with Electron MenuItem Documentation
 - [ ] Add position and id properties to menu item objects for ordering the menu item list
 - [ ] Add ability to change default icons with custom icons
+- [ ] Instead of just hovering over to a submenu, add ability to lock a sub menu when parent menu is clicked on
 
 ## Examples
 

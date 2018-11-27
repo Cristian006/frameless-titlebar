@@ -57,7 +57,7 @@ class MenuBar extends Component {
   onMouseMove = (i) => {
     if (i === this.state.focusing) return;
     this.setState({
-      focusing: i,
+      focusing: i
     });
   };
 
@@ -69,7 +69,7 @@ class MenuBar extends Component {
     }
     this.setState({
       clicked: !(this.state.focusing === index && this.state.clicked),
-      hovering: !(this.state.focusing === index && this.state.clicked) ? this.state.hovering : -1,
+      hovering: !(this.state.focusing === index && this.state.clicked) ? this.state.hovering : -1
     });
   };
 
@@ -107,13 +107,13 @@ class MenuBar extends Component {
           onMouseEnter={() => {
             if (menuItem.enabled === false) return;
             this.setState({
-              hovering: i,
+              hovering: i
             });
           }}
           onMouseLeave={() => {
             if (menuItem.enabled === false) return;
             this.setState({
-              hovering: -1,
+              hovering: -1
             });
           }}
           onMouseOver={() => {
