@@ -24,7 +24,7 @@ function createWindow() {
     height: 768,
     show: false,
     frame: false,
-    titleBarStyle: 'hidden'
+    titleBarStyle: 'customButtonsOnHover'
   });
 
   // and load the index.html of the app.

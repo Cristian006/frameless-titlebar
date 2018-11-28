@@ -1,10 +1,10 @@
-.Toolbar {
+.GitToolbar {
   height: 50px;
   background-color: #24292e;
   display: flex;
 }
 
-.Section {
+.GitSection {
   display: flex;
   font-size: 0.8em;
   flex: 1;

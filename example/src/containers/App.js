@@ -1,6 +1,6 @@
 import 'styles/App.css';
 import React, { Component } from 'react';
-import { Default, GitHub } from 'components/examples';
+import { Default, GitHub, Signal, Slack, What, Code } from 'components/examples';
 import ListItem from 'components/ListItem';
 
 const platforms = [
@@ -12,8 +12,12 @@ const platforms = [
 
 const styles = [
   'default',
-  'github'
-]
+  'github',
+  'vscode',
+  'signal',
+  'slack',
+  'whatsapp'
+];
 
 class App extends Component {
   constructor(props) {
@@ -75,7 +79,31 @@ class App extends Component {
           <GitHub platform={platform}>
             {this.renderChildren()}
           </GitHub>
-        )
+        );
+      case 'vscode':
+        return (
+          <Code platform={platform}>
+            {this.renderChildren()}
+          </Code>
+        );
+      case 'signal':
+        return (
+          <Signal platform={platform}>
+            {this.renderChildren()}
+          </Signal>
+        );
+      case 'slack':
+        return (
+          <Slack platform={platform}>
+            {this.renderChildren()}
+          </Slack>
+        );
+      case 'whatsapp':
+        return (
+          <What platform={platform}>
+            {this.renderChildren()}
+          </What>
+        );
       default:
         return (
           <Default platform={platform}>
