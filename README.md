@@ -25,7 +25,7 @@ yarn dev
 
 ## Add to your own project
 
-> This project is still not on NPM but it will be soon! and probably will be renamed by the time it's uploaded since I'm pretty sure there's already an electron-titlebar library
+> This project is still not on NPM but it will be soon! Probably will be renamed by the time it's uploaded since I'm pretty sure there's already an electron-titlebar library
 
 In your electron `app.js` file:
 
@@ -78,10 +78,8 @@ export default class App extends React.Component {
 | icon | string | Windows | The App Icon shown on the top left | '' |
 | app | string | All | The app name shown to the left of the menu items on Windows applications. On Mac/Linux this will show in the center of the toolbar if the title property is not set | '' |
 | title | string | Mac | The title shown in the center of mac applications, this will override the app property | '' |
-| menu | array | All | The array of menu items | [] |
+| menu | array | All | The array of menu items following the [Electron Menu Object Documentation/Template](https://electronjs.org/docs/api/menu "Electron Menu Documentation") | [] |
 | theme | object | All | Theme object to customize Titlebar | See Bellow |
-
-> [Menu Object Documentation/Template](https://electronjs.org/docs/api/menu "Electron Menu Documentation")
 
 ```js
 // This is the default theme
