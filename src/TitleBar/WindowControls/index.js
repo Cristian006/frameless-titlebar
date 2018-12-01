@@ -5,12 +5,14 @@ import styled from 'styled-components';
 
 const currentWindow = electron.remote.getCurrentWindow();
 
-const Controls = styled.div`
-  flex-grow: 0;
-  flex-shrink: 0;
-  margin-left: auto;
-  height: 100%;
-`;
+const styles = {
+  Controls: {
+    flexGrow: 0,
+    flexShrink: 0,
+    marginLeft: 'auto',
+    height: '100%'
+  }
+}
 
 const Button = styled.button`
   -webkit-app-region: no-drag;
@@ -78,9 +80,9 @@ export default class WindowControls extends Component {
     currentWindow.removeListener('unmaximize', () => this.setState({ isMaximized: false }));
   }
 
-  handleMaximize = (max: boolean) => {
+  handleMaximize = (max) => {
     this.setState({
-      isMaximized: max,
+      isMaximized: max
     });
   };
 
@@ -97,7 +99,7 @@ export default class WindowControls extends Component {
   render() {
     const {
       disableMaximize,
-      disableMinimize,
+      disableMinimize
     } = this.props;
 
     const {
@@ -105,7 +107,7 @@ export default class WindowControls extends Component {
     } = this.state;
 
     return (
-      <Controls>
+      <div style={styles.Controls}>
         <Button
           aria-label="minimize"
           tabIndex="-1"
@@ -167,18 +169,17 @@ export default class WindowControls extends Component {
             <path d="M 0,0 0,0.7 4.3,5 0,9.3 0,10 0.7,10 5,5.7 9.3,10 10,10 10,9.3 5.7,5 10,0.7 10,0 9.3,0 5,4.3 0.7,0 Z" />
           </svg>
         </CloseButton>
-      </Controls>
+      </div>
     );
   }
 }
 
-
 WindowControls.propTypes = {
   disableMinimize: PropTypes.bool,
-  disableMaximize: PropTypes.bool,
+  disableMaximize: PropTypes.bool
 };
 
 WindowControls.defaultProps = {
   disableMinimize: false,
-  disableMaximize: false,
+  disableMaximize: false
 };
