@@ -34,12 +34,12 @@ class TitleBar extends Component {
           <Bar isWin>
             <ResizeHandle top />
             <ResizeHandle left />
-            {
+            {/*
               currentTheme.menuStyle === 'vertical' &&
                 <MenuBar
                   menu={menu}
                 />
-            }
+            */}
             {
               icon &&
               <Icon
@@ -56,12 +56,12 @@ class TitleBar extends Component {
                 {app}
               </Title>
             }
-            {
+            {/*
               currentTheme.menuStyle === 'horizontal' &&
                 <MenuBar
                   menu={menu}
                 />
-            }
+            */}
             {children}
             <WindowControls
               disableMinimize={disableMinimize}
