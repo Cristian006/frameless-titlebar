@@ -1,68 +1,54 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled, { withTheme } from 'styled-components';
 import MenuItem from './MenuItem';
-import SubMenu, { SubMenuLabel } from './SubMenu';
+import SubMenu, { SubMenuLabelStyle } from './SubMenu';
 import { defaultMenuItem } from '../../utils';
+import css from './styles.css';
+import ThemeContext from '../../Theme';
 
-const Wrapper = styled.div`
-  z-index: 8;
-  position: absolute;
-  width: 100%;
-  height: calc(100% - ${props => props.rect.bottom}px);
-  top: ${props => props.rect.bottom}px;
-  overflow: hidden;
-  left: 0;
-`;
-
-const FoldOut = styled.div`
-  background: transparent;
-  pointer-events: none;
-  position: absolute;
-  margin-left: ${props => props.rect.left}px;
-  max-width: calc(100% - ${props => props.rect.left}px);
-  top: 0;
-  color: ${props => props.theme.menuActiveTextColor};
-`;
-
-const MenuFoldOut = styled.div`
-  background: ${props => props.theme.menuBackgroundColor};
-  padding-top: 5px;
-  padding-bottom: 5px;
-  box-shadow: ${props => props.theme.showBoxShadow ? props.theme.menuBoxShadow : ''};
-`;
-
-const MenuPane = styled.div`
-  pointer-events: all;
-  width: ${props => props.theme.menuWidth}px;
-`;
-
-const Overlay = styled.div`
-  background: ${props => props.theme.menuOverlayBackground};
-  opacity: ${props => props.theme.menuOverlayOpacity};
-  height: 100%;
-  overflow: hidden;
-  &:focus {
-    outline: none;
-    border: none;
-    box-shadow: none;
+const styles = {
+  Wrapper: {
+    zIndex: 8,
+    position: 'absolute',
+    width: '100%',
+    overflow: 'hidden',
+    left: 0
+  },
+  FoldOut: {
+    background: 'transparent',
+    pointerEvents: 'none',
+    position: 'absolute',
+    top: 0
+  },
+  MenuPane: {
+    pointerEvents: 'all'
+  },
+  MenuFoldOut: {
+    paddingTop: 5,
+    paddingBottom: 5
   }
-`;
+}
 
 class MenuList extends Component {
-  generateMenu = (menu = []) => {
+  constructor(props) {
+    super(props);
+    this.generateMenu = this.generateMenu.bind(this);
+  }
+
+  generateMenu(menu = []) {
+    const theme = this.context;
     return menu.map((menuItem, i) => {
       if (menuItem.submenu || (menuItem.type && menuItem.type.toLowerCase() === 'submenu')) {
-        const menuWidth = this.props.rect.left + this.props.theme.menuWidth;
+        const menuWidth = this.props.rect.left + theme.menuWidth;
         const windowWidth = window.innerWidth;
         let renderSide = 'right';
-        let right = menuWidth + this.props.theme.menuWidth;
+        let right = menuWidth + theme.menuWidth;
 
         // Render menu to the left if the right side of the
         // current menu is greater than the current window width
-        if (right > windowWidth && this.props.theme.menuWidth < this.props.rect.left) {
+        if (right > windowWidth && theme.menuWidth < this.props.rect.left) {
           renderSide = 'left';
-          right = menuWidth - this.props.theme.menuWidth;
+          right = menuWidth - theme.menuWidth;
         }
 
         return (
@@ -92,25 +78,65 @@ class MenuList extends Component {
   render() {
     const {
       submenu,
-      rect,
-      theme,
+      rect
     } = this.props;
 
+    const theme = this.context;
+
     return (
-      <Wrapper rect={rect}>
-        <Overlay tabIndex="-1" />
-        <FoldOut rect={rect}>
-          <MenuFoldOut>
-            <MenuPane>
+      <div
+        style={{
+          ...styles.Wrapper,
+          height: `calc(100% - ${rect.bottom}px)`,
+          top: `${rect.bottom}px`
+        }}
+      >
+        <div
+          className={css.MenuListOverlay}
+          style={{
+            background: theme.menuOverlayBackground,
+            opacity: theme.menuOverlayOpacity
+          }}
+          tabIndex="-1"
+        />
+        <div
+          style={{
+            ...styles.FoldOut,
+            marginLeft: rect.left,
+            maxWidth: `calc(100% - ${rect.left}px)`,
+            color: theme.menuActiveTextColor
+          }}
+        >
+          <div
+            style={{
+              ...styles.MenuFoldOut,
+              background: theme.menuBackgroundColor,
+              boxShadow: theme.showBoxShadow ? theme.menuBoxShadow : ''
+            }}
+          >
+            <div
+              style={{
+                ...styles.MenuPane,
+                width: theme.menuWidth
+              }}
+            >
               {
                 (theme.menuStyle === 'vertical' && theme.menuSubLabelHeaders) &&
-                  <SubMenuLabel key="main-menu-sublabel">Menu</SubMenuLabel>
+                  <div
+                    style={{
+                      ...SubMenuLabelStyle,
+                      color: theme.menuSubLabelColor
+                    }}
+                    key="main-menu-sublabel"
+                  >
+                    Menu
+                  </div>
               }
               {this.generateMenu(submenu)}
-            </MenuPane>
-          </MenuFoldOut>
-        </FoldOut>
-      </Wrapper>
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 }
@@ -124,13 +150,15 @@ MenuList.propTypes = {
     x: PropTypes.number,
     y: PropTypes.number
   }).isRequired,
-  changeCheckState: PropTypes.func,
+  changeCheckState: PropTypes.func
 };
 
 MenuList.defaultProps = {
   submenu: [],
   path: [],
-  changeCheckState: () => {},
+  changeCheckState: () => {}
 };
 
-export default withTheme(MenuList);
+MenuList.contextType = ThemeContext;
+
+export default MenuList;

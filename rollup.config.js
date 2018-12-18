@@ -10,7 +10,7 @@ import pkg from './package.json'
 
 export default {
   input: 'src/index.js',
-  external: ['lodash', 'styled-components'],
+  external: ['lodash'],
   output: [
     {
       file: pkg.main,

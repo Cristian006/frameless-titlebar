@@ -1,67 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled, { ThemeProvider } from 'styled-components';
+import { ThemeProvider, darkTheme, lightTheme } from './Theme';
 import os from 'os';
 import MenuBar from './MenuBar';
 import WindowControls from './WindowControls';
-import { darkTheme, lightTheme } from './utils';
+import {
+  Bar,
+  Title,
+  ResizeHandle,
+  Icon
+} from './components';
 
-const Bar = styled.div`
-  height: ${props => props.isWin ? props.theme.winBarHeight : props.theme.barHeight};
-  flex-grow: 0;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: row;
-  font-size: 12px;
-  width: 100%;
-  -webkit-app-region: drag;
-  user-select: none;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
-  background-color: ${props => props.theme.barBackgroundColor};
-  color: ${props => props.theme.barColor};
-  border-bottom: ${props => props.theme.barShowBorder ? props.theme.barBorderBottom : ''};
-`;
-
-const Title = styled.div`
-  line-height: ${props => props.theme.barHeight};
-  margin: 0px 6px 0px 0px;
-  padding: ${props => props.isWin ? '0px 4px' : '0 70px'};
-  color: ${props => props.theme.barTitleColor};
-  text-align: center;
-  flex: ${props => props.flex};
-  display: flex;
-  white-space: nowrap;
-  justify-content: center;
-  align-content: center;
-  align-items: center;
-  flex-direction: row;
-  -webkit-app-region: drag;
-`;
-
-const Icon = styled.img`
-  height: 16px;
-  width: 16px;
-  margin: 6px;
-`;
-
-const ResizeHandle = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  -webkit-app-region: no-drag;
-`;
-
-const ResizeLeft = styled(ResizeHandle)`
-  width: 3px;
-  height: 28px;
-`;
-
-const ResizeTop = styled(ResizeHandle)`
-  width: 100%;
-  height: 3px;
-`;
-
-export default class TitleBar extends Component {
+class TitleBar extends Component {
   generatePlatformChildren = ({
     icon,
     app,
@@ -82,8 +32,8 @@ export default class TitleBar extends Component {
       case 'win32': // win32
         return (
           <Bar isWin>
-            <ResizeTop />
-            <ResizeLeft />
+            <ResizeHandle top />
+            <ResizeHandle left />
             {
               currentTheme.menuStyle === 'vertical' &&
                 <MenuBar
@@ -94,7 +44,6 @@ export default class TitleBar extends Component {
               icon &&
               <Icon
                 src={icon}
-                alt='app-icon'
                 onClick={onIconClick}
               />
             }
@@ -126,8 +75,8 @@ export default class TitleBar extends Component {
       default:
         return (
           <Bar>
-            <ResizeTop />
-            <ResizeLeft />
+            <ResizeHandle top />
+            <ResizeHandle left />
             {
               (title || app) &&
               <Title
@@ -138,7 +87,6 @@ export default class TitleBar extends Component {
                   (icon && currentTheme.showIconDarLin) &&
                   <Icon
                     src={icon}
-                    alt='app-icon'
                     onClick={onIconClick}
                   />
                 }
@@ -162,7 +110,7 @@ export default class TitleBar extends Component {
     };
 
     return (
-      <ThemeProvider theme={currentTheme}>
+      <ThemeProvider value={currentTheme}>
         {
           this.generatePlatformChildren({
             ...this.props,
@@ -216,5 +164,7 @@ TitleBar.defaultProps = {
   onTitleClick: () => {},
   onCloseClick: () => {},
   onMinimizeClick: () => {},
-  onMaximizeClick: () => {},
+  onMaximizeClick: () => {}
 };
+
+export default TitleBar;

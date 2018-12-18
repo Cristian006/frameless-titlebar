@@ -1,70 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import electron from 'electron';
-import styled from 'styled-components';
+import {
+  Button
+} from '../components';
 
 const currentWindow = electron.remote.getCurrentWindow();
 
-const Controls = styled.div`
-  flex-grow: 0;
-  flex-shrink: 0;
-  margin-left: auto;
-  height: 100%;
-`;
-
-const Button = styled.button`
-  -webkit-app-region: no-drag;
-  display: inline-block;
-  position: relative;
-  width: 45px;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  overflow: hidden;
-  border: none;
-  box-shadow: none;
-  border-radius: 0;
-  color: ${props => props.theme.windowControlsColor};
-  background-color: transparent;
-  transition: background-color 0.25s ease;
-  opacity: 0.5;
-  & svg {  
-    fill: currentColor;
+const styles = {
+  Controls: {
+    flexGrow: 0,
+    flexShrink: 0,
+    marginLeft: 'auto',
+    height: '100%'
   }
-  &:focus {
-    outline: none;
-  }
-  &:hover {
-    background-color: ${props => props.theme.windowDefaultBackground};
-    opacity: 1;
-  }
-  &:hover:active {
-    background-color: ${props => props.theme.windowDefaultActive};
-    transition: none;
-    opacity: 1;
-  }
-`;
-
-const CloseButton = styled(Button)`
-  &:hover {
-    color: ${props => props.theme.windowCloseHover};
-    background-color: ${props => props.theme.windowCloseBackground};
-    opacity: 1;
-  }
-  &:hover:active {
-    color: ${props => props.theme.windowCloseHover};
-    background-color: ${props => props.theme.windowCloseActive};
-    transition: none;
-    opacity: 1;
-  }
-`;
-
+}
 export default class WindowControls extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isMaximized: currentWindow.isMaximized(),
+      isMaximized: currentWindow.isMaximized()
     };
   }
 
@@ -78,9 +34,9 @@ export default class WindowControls extends Component {
     currentWindow.removeListener('unmaximize', () => this.setState({ isMaximized: false }));
   }
 
-  handleMaximize = (max: boolean) => {
+  handleMaximize = (max) => {
     this.setState({
-      isMaximized: max,
+      isMaximized: max
     });
   };
 
@@ -97,7 +53,7 @@ export default class WindowControls extends Component {
   render() {
     const {
       disableMaximize,
-      disableMinimize,
+      disableMinimize
     } = this.props;
 
     const {
@@ -105,9 +61,10 @@ export default class WindowControls extends Component {
     } = this.state;
 
     return (
-      <Controls>
+      <div style={styles.Controls}>
         <Button
-          aria-label="minimize"
+          key="min-button"
+          ariaLabel="minimize"
           tabIndex="-1"
           disabled={disableMinimize}
           onClick={() => currentWindow.minimize()}
@@ -124,7 +81,8 @@ export default class WindowControls extends Component {
           </svg>
         </Button>
         <Button
-          aria-label="maximize"
+          key="max-button"
+          ariaLabel="maximize"
           tabIndex="-1"
           disabled={disableMaximize}
           onClick={this.onMaximizeClicked}
@@ -153,10 +111,12 @@ export default class WindowControls extends Component {
               </svg>
           }
         </Button>
-        <CloseButton
+        <Button
+          key="close-button"
           aria-label="close"
           tabIndex="-1"
           onClick={() => currentWindow.close()}
+          close
         >
           <svg
             aria-hidden="true"
@@ -166,19 +126,18 @@ export default class WindowControls extends Component {
           >
             <path d="M 0,0 0,0.7 4.3,5 0,9.3 0,10 0.7,10 5,5.7 9.3,10 10,10 10,9.3 5.7,5 10,0.7 10,0 9.3,0 5,4.3 0.7,0 Z" />
           </svg>
-        </CloseButton>
-      </Controls>
+        </Button>
+      </div>
     );
   }
 }
 
-
 WindowControls.propTypes = {
   disableMinimize: PropTypes.bool,
-  disableMaximize: PropTypes.bool,
+  disableMaximize: PropTypes.bool
 };
 
 WindowControls.defaultProps = {
   disableMinimize: false,
-  disableMaximize: false,
+  disableMaximize: false
 };

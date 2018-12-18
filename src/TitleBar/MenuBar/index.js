@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled, { withTheme } from 'styled-components';
 import MenuButton from './MenuButton';
 import MenuList from './MenuList';
 import { reduxSet, getProperty } from '../utils';
+import ThemeContext from '../Theme';
 
 const menuIcon = (
   <svg version="1.1" width="24px" height="24px" viewBox="0 0 32 32">
@@ -11,12 +11,13 @@ const menuIcon = (
   </svg>
 );
 
-const Wrapper = styled.div`
-  display: flex;
-  -webkit-app-region: no-drag;
-  max-width: calc(100% - 163px);
-  color: ${props => props.theme.menuItemTextColor || props.theme.barColor};
-`;
+const styles = {
+  Wrapper: {
+    display: 'flex',
+    WebkitAppRegion: 'no-drag',
+    maxWidth: 'calc(100% - 163px)'
+  }
+};
 
 class MenuBar extends Component {
   constructor(props) {
@@ -207,34 +208,28 @@ class MenuBar extends Component {
   };
 
   render() {
-    if (this.props.theme.menuStyle === 'horizontal') {
-      return (
-        <Wrapper>
-          {
-            this.generateHorizontalMenu(this.state.menu)
-          }
-        </Wrapper>
-      );
-    }
+    let theme = this.context;
+    console.log(theme);
+    let color = theme.menuItemTextColor || theme.barColor;
     return (
-      <Wrapper>
-        {
-          this.generateVerticalMenu(this.state.menu)
-        }
-      </Wrapper>
+      <div style={{ ...styles.Wrapper, color }}>
+        {theme.menuStyle === 'horizontal' ? this.generateHorizontalMenu(this.state.menu) : this.generateVerticalMenu(this.state.menu)}
+      </div>
     );
   }
 }
 
 MenuBar.propTypes = {
-  menu: PropTypes.array,
+  menu: PropTypes.array
 };
 
 MenuBar.defaultProps = {
-  menu: [],
+  menu: []
 };
 
-export default withTheme(MenuBar);
+MenuBar.contextType = ThemeContext;
+
+export default MenuBar;
 
 /**
  *AA
