@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TitleBar from 'electron-titlebar';
+import TitleBar from 'frameless-titlebar';
 import signalIcon from 'assets/images/signal.png';
 import { signalTemplate } from 'utils/menus';
 import './styles.css';

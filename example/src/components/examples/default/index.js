@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TitleBar from 'electron-titlebar';
+import TitleBar from 'frameless-titlebar';
 import defaultIcon from 'assets/images/icon.png';
 import { defaultTemplate } from 'utils/menus';
 

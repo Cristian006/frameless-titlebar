@@ -2459,7 +2459,7 @@ electron-packager@^9.1.0:
     sanitize-filename "^1.6.0"
     semver "^5.3.0"
 
-"electron-titlebar@link:..":
+"frameless-titlebar@link:..":
   version "0.0.0"
   uid ""
 

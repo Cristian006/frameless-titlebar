@@ -1,6 +1,6 @@
-# Electron Titlebar #WindowsAppsNeedSomeLoveToo
+# Frameless Titlebar for Electron Applications
 
-> Customizable Electron Titlebar for frameless windows built with React
+> Customizable Titlebar for frameless windows built with React
 
 A lot of people like developing apps with the [Electron](https://electronjs.org/) framework because it's cross platform. On Windows however, Electron applications are often left untouched when it comes to the title bar. In my opinion, the default menu and title bar don't work well with some stylized applications such as Atom, VS Code or Signal. Apps would look a little more unified if they used a custom menu. This is of course hugely inspired by GitHub's desktop application. If we're going to be using Web Technologies to build desktop applications we might as well make them look dope all around, right?
 
@@ -10,9 +10,9 @@ A lot of people like developing apps with the [Electron](https://electronjs.org/
 
 ```bash
 # clone the repository
-git clone https://github.com/Cristian006/electron-titlebar.git
+git clone https://github.com/Cristian006/frameless-titlebar.git
 # move into the project directory
-cd electron-titlebar
+cd frameless-titlebar
 # install module dependancies
 yarn # or npm install
 # move into example folder
@@ -25,7 +25,7 @@ yarn dev
 
 ## Add to your own project
 
-> This project is still not on NPM but it will be soon! Probably will be renamed by the time it's uploaded since I'm pretty sure there's already an electron-titlebar library
+> This project is still not on NPM but it will be soon! Probably will be renamed by the time it's uploaded since I'm pretty sure there's already an frameless-titlebar library
 
 In your electron `app.js` file:
 
@@ -46,7 +46,7 @@ In your electron `app.js` file:
 In your app's root container render method:
 
 ```js
-import TitleBar from 'electron-titlebar';
+import TitleBar from 'frameless-titlebar';
 import menu from './AppMenu'; // import your menu file
 ...
 export default class App extends React.Component {
@@ -184,7 +184,7 @@ export const darkTheme = {
 <TitleBar
   icon={codeIcon}
   app="Code"
-  title="index.js - electron-titlebar"
+  title="index.js - frameless-titlebar"
   menu={defaultTemplate}
   theme={{
     barTheme: 'dark',

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TitleBar from 'electron-titlebar';
+import TitleBar from 'frameless-titlebar';
 import codeIcon from 'assets/images/vscode.svg';
 import { defaultTemplate } from 'utils/menus';
 import './styles.css';
@@ -15,7 +15,7 @@ class Code extends Component {
         <TitleBar
           icon={codeIcon}
           app="Code"
-          title="index.js - electron-titlebar"
+          title="index.js - frameless-titlebar"
           menu={defaultTemplate}
           theme={{
             barTheme: 'dark',

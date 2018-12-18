@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TitleBar from 'electron-titlebar';
+import TitleBar from 'frameless-titlebar';
 import gitIcon from 'assets/images/github.png';
 import { githubTemplate } from 'utils/menus';
 import './styles.css';

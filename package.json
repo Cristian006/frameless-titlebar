@@ -1,10 +1,10 @@
 {
-  "name": "electron-titlebar",
+  "name": "frameless-titlebar",
   "version": "1.0.0",
-  "description": "Electron title bar",
+  "description": "Customizable titlebar from frameless Electron desktop applications",
   "author": "Cristian006",
   "license": "MIT",
-  "repository": "Cristian006/electron-titlebar",
+  "repository": "Cristian006/frameless-titlebar",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",

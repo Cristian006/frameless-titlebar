@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TitleBar from 'electron-titlebar';
+import TitleBar from 'frameless-titlebar';
 import slackIcon from 'assets/images/slack.svg';
 import { slackTemplate } from 'utils/menus';
 import './styles.css';
