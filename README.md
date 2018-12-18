@@ -2,30 +2,17 @@
 
 > Customizable Titlebar for frameless windows built with React
 
-A lot of people like developing apps with the [Electron](https://electronjs.org/) framework because it's cross platform. On Windows however, Electron applications are often left untouched when it comes to the title bar. In my opinion, the default menu and title bar don't work well with some stylized applications such as Atom, VS Code or Signal. Apps would look a little more unified if they used a custom menu. This is of course hugely inspired by GitHub's desktop application. If we're going to be using Web Technologies to build desktop applications we might as well make them look dope all around, right?
-
-## Try the example
-
 ![Main][main]
 
+A lot of people like developing apps with the [Electron](https://electronjs.org/) framework because it's cross platform. On Windows however, Electron applications are often left untouched when it comes to the title bar. In my opinion, the default menu and title bar don't work well with some stylized applications such as Atom, VS Code or Signal. Apps would look a little more unified if they used a custom menu. This is of course hugely inspired by GitHub's desktop application. If we're going to be using Web Technologies to build desktop applications we might as well make them look dope all around, right?
+
+## Adding frameless-titlebar to your project
+
 ```bash
-# clone the repository
-git clone https://github.com/Cristian006/frameless-titlebar.git
-# move into the project directory
-cd frameless-titlebar
-# install module dependancies
-yarn # or npm install
-# move into example folder
-cd ./example
-# install example dependancies
-yarn # or npm install
-# to start the application run
-yarn dev
+yarn add frameless-titlebar
+# or
+npm install frameless-titlebar
 ```
-
-## Add to your own project
-
-> This project is still not on NPM but it will be soon! Probably will be renamed by the time it's uploaded since I'm pretty sure there's already an frameless-titlebar library
 
 In your electron `app.js` file:
 
@@ -140,6 +127,24 @@ export const darkTheme = {
 - [ ] Add position and id properties to menu item objects for ordering the menu item list
 - [ ] Add ability to change default icons with custom icons
 - [ ] Instead of just hovering over to a submenu, add ability to lock a sub menu when parent menu is clicked on
+
+
+## Try the example
+
+```bash
+# clone the repository
+git clone https://github.com/Cristian006/frameless-titlebar.git
+# move into the project directory
+cd frameless-titlebar
+# install module dependancies
+yarn # or npm install
+# move into example folder
+cd ./example
+# install example dependancies
+yarn # or npm install
+# to start the application run
+yarn dev
+```
 
 ## Examples
 
