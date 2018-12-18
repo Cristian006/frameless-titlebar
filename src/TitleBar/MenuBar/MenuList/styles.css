@@ -1,0 +1,10 @@
+.MenuListOverlay {
+  height: 100%;
+  overflow: hidden;
+}
+
+.MenuListOverlay:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}

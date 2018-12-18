@@ -1,0 +1,33 @@
+.Button {
+  -webkit-app-region: no-drag;
+  display: inline-block;
+  position: relative;
+  width: 45px;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  background-color: transparent;
+  transition: background-color 0.25s ease;
+  opacity: 0.5;
+}
+
+.Button svg {  
+  fill: currentColor;
+}
+
+.Button:focus {
+  outline: none;
+}
+
+.Button:hover {
+  opacity: 1;
+}
+
+.Button:hover:active {
+  transition: none;
+  opacity: 1;
+}

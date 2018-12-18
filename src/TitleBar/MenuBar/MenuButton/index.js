@@ -1,52 +1,32 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import css from './styles.css';
+import ThemeContext from '../../Theme';
 
-const Wrapper = styled.div`
-  min-width: 0;
-`;
-
-const ButtonWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-
-const Button = styled.button`
-  -webkit-appearance: none;
-  border: none;
-  box-shadow: none;
-  background: transparent;
-  border-radius: 0;
-  text-align: left;
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  font-size: 12px;
-  padding: 0 10px;
-
-  background-color: ${props => props.open ? props.theme.menuBackgroundColor : ((props.hovering && props.enabled) ? props.theme.menuItemHoverBackground : 'transparent')};
-  border-color: ${props => props.open ? props.theme.menuBackgroundColor : ''};
-  color: ${props => props.open ? props.theme.menuActiveTextColor : props.theme.menuItemTextColor};
-
-  & svg {
-    fill: currentColor;
-    width: 20px;
-    height: 20px;
+const styles = {
+  Wrapper: {
+    minWidth: 0
+  },
+  ButtonWrapper: {
+    width: '100%',
+    height: '100%'
+  },
+  Button: {
+    WebkitAppearance: 'none',
+    border: 'none',
+    boxShadow: 'none',
+    background: 'transparent',
+    borderRadius: 0,
+    textAlign: 'left',
+    margin: 0,
+    padding: 0,
+    height: '100%',
+    width: '100%',
+    fontSize: 12,
+    paddingLeft: 10,
+    paddingRight: 10
   }
-
-  &:focus:not(.focus-ring) {
-    outline: none;
-  }
-`;
-
-const Label = styled.div`
-  opacity: ${props => props.enabled ? (((props.open || props.hovering) || !props.theme.menuDimItems) ? 1 : props.theme.menuDimOpacity) : props.theme.menuDisabledOpacity};
-`;
-
-const Text = styled.span`
-
-`;
+};
 
 export default class MenuButton extends Component {
   render() {
@@ -62,11 +42,18 @@ export default class MenuButton extends Component {
       open,
       enabled,
       hovering,
-      rectRef,
+      rectRef
     } = this.props;
 
+    let theme = this.context;
+    let backgroundColor = open ? theme.menuBackgroundColor : ((hovering && enabled) ? theme.menuItemHoverBackground : 'transparent');
+    let borderColor = open ? theme.menuBackgroundColor : '';
+    let color = open ? theme.menuActiveTextColor : theme.menuItemTextColor;
+    let opacity = enabled ? (((open || hovering) || !theme.menuDimItems) ? 1 : theme.menuDimOpacity) : theme.menuDisabledOpacity;
+
     return (
-      <Wrapper
+      <div
+        styles={styles.Wrapper}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         onMouseOver={onMouseOver}
@@ -77,25 +64,29 @@ export default class MenuButton extends Component {
         ref={rectRef}
       >
         {this.props.children}
-        <ButtonWrapper
-          open={open}
+        <div
+          style={styles.ButtonWrapper}
         >
-          <Button
-            open={open}
-            enabled={enabled}
-            hovering={hovering}
+          <button
+            className={css.MenuButton}
+            style={{
+              ...styles.Button,
+              backgroundColor,
+              borderColor,
+              color
+            }}
             tabIndex="-1"
           >
-            <Label
-              enabled={enabled}
-              hovering={hovering}
-              open={open}
+            <div
+              style={{
+                opacity
+              }}
             >
-              <Text aria-hidden="true">{label}</Text>
-            </Label>
-          </Button>
-        </ButtonWrapper>
-      </Wrapper>
+              <span aria-hidden="true">{label}</span>
+            </div>
+          </button>
+        </div>
+      </div>
     );
   }
 }
@@ -117,8 +108,10 @@ MenuButton.propTypes = {
   onTouchStart: PropTypes.func,
   onFocus: PropTypes.func,
   onClick: PropTypes.func,
-  rectRef: PropTypes.func,
+  rectRef: PropTypes.func
 };
+
+MenuButton.contextType = ThemeContext;
 
 MenuButton.defaultProps = {
   open: false,
