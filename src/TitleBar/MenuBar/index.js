@@ -209,7 +209,6 @@ class MenuBar extends Component {
 
   render() {
     let theme = this.context;
-    console.log(theme);
     let color = theme.menuItemTextColor || theme.barColor;
     return (
       <div style={{ ...styles.Wrapper, color }}>

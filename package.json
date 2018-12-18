@@ -57,7 +57,7 @@
     "rollup-plugin-url": "^1.4.0"
   },
   "dependencies": {
-    "lodash": ">=4.17.5"
+    "lodash": "^4.17.10"
   },
   "files": [
     "dist"
