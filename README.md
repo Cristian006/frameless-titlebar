@@ -26,7 +26,7 @@ In your electron `app.js` file:
     // Remove the window frame from windows applications
     frame: false,
     // Hide the titlebar from MacOS applications while keeping the stop lights
-    titleBarStyle: 'hidden' || 'customButtonsOnHover',
+    titleBarStyle: 'hidden', // or 'customButtonsOnHover',
   });
 ```
 
