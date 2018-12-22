@@ -26,7 +26,8 @@ class TitleBar extends Component {
     onMinimizeClick,
     onMaximizeClick,
     disableMaximize,
-    disableMinimize
+    disableMinimize,
+    onBarDoubleClick
   }) => {
     switch (platform) {
       case 'win32': // win32
@@ -74,7 +75,9 @@ class TitleBar extends Component {
         );
       default:
         return (
-          <Bar>
+          <Bar
+            onDoubleClick={onBarDoubleClick}
+          >
             <ResizeHandle top />
             <ResizeHandle left />
             {
@@ -164,7 +167,8 @@ TitleBar.defaultProps = {
   onTitleClick: () => {},
   onCloseClick: () => {},
   onMinimizeClick: () => {},
-  onMaximizeClick: () => {}
+  onMaximizeClick: () => {},
+  onBarDoubleClick: () => {}
 };
 
 export default TitleBar;
