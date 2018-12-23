@@ -4,14 +4,19 @@ const { openExternal } = shell;
 
 export const defaultTemplate = [
   {
+    id: '1',
     label: 'App',
     submenu: [
       {
+        id: '1',
         label: 'Disabled',
-        enabled: false
+        enabled: false,
+        after: '2'
       },
       {
+        id: '2',
         label: 'Sub Menu',
+        icon: 'https://www.gstatic.com/images/branding/product/1x/keep_48dp.png',
         submenu: [
           {
             label: 'Color Submenu',
@@ -37,7 +42,8 @@ export const defaultTemplate = [
             ]
           },
           {
-            label: 'Random 2'
+            label: 'Random 2',
+            icon: require('../assets/images/icon.png')
           },
           {
             label: 'Random 3',
@@ -70,14 +76,18 @@ export const defaultTemplate = [
         ]
       },
       {
+        id: '4',
         label: 'Not visible',
         visible: false
       },
       {
+        id: '3',
+        icon: require('../assets/images/icon.png'),
         label: 'Arguments',
         click: (item, win, e) => { console.log(item, win, e); }
       },
       {
+        id: '5',
         label: 'Really Long Menu Label that should be truncated'
       },
       { type: 'separator' },
@@ -109,7 +119,9 @@ export const defaultTemplate = [
     ]
   },
   {
+    id: '2',
     label: 'Color',
+    before: '1',
     submenu: [
       {
         label: 'Light',
@@ -148,7 +160,7 @@ export const defaultTemplate = [
     submenu: [
       {
         label: 'Homepage',
-        click: () => { openExternal('https://github.com/KochiyaOcean/electron-react-titlebar'); }
+        click: () => { openExternal('https://github.com/Cristian006/frameless-titlebar'); }
       }
     ]
   }

@@ -1,4 +1,5 @@
 import React from 'react';
+import electron from 'electron';
 import ThemeContext from '../Theme';
 
 const styles = {
@@ -15,7 +16,21 @@ const styles = {
   }
 };
 
+const currentWindow = electron.remote.getCurrentWindow();
 class Bar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleDoubleClick = this.handleDoubleClick.bind(this);
+  }
+
+  handleDoubleClick(e) {
+    let { isWin } = this.props;
+    if (!isWin) {
+      let bounds = electron.screen.getPrimaryDisplay().workArea;
+      currentWindow.setBounds(bounds, true);
+    }
+  }
+
   render() {
     let props = this.props;
     let theme = this.context;
@@ -27,6 +42,7 @@ class Bar extends React.Component {
     return (
       <div
         style={{ ...styles.Bar, height, backgroundColor, color, borderBottom }}
+        onDoubleClick={this.handleDoubleClick}
       >
         {props.children}
       </div>
@@ -35,5 +51,9 @@ class Bar extends React.Component {
 }
 
 Bar.contextType = ThemeContext;
+
+Bar.defaultProps = {
+  isWin: false
+}
 
 export default Bar;
