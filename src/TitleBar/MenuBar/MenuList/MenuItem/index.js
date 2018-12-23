@@ -195,7 +195,7 @@ class MenuItem extends Component {
         <div
           className={css.StatusIcon}
           style={{
-            color: hovering ? theme.menuActiveTextColor : (theme.accentStatusIcon ? theme.menuHighlightColor : theme.menuActiveTextColor)
+            color: hovering ? theme.menuTextHighlightColor : (theme.accentStatusIcon ? theme.menuHighlightColor : theme.menuActiveTextColor)
           }}
         >
           {statusIcon}
