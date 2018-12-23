@@ -81,7 +81,6 @@ export default class App extends React.Component {
 
 ## Not yet supported menu item properties
 
-- `icon` - show icon to the left of the menu item text
 - `role` - default menu item roles
 - `beforeGroupContaining` and `afterGroupContaining` - order menu items based on implicit groups defined by separators
 - `registerAccelerator` - handle the registration of accelerators mapped to click functions
