@@ -4,13 +4,17 @@ const { openExternal } = shell;
 
 export const defaultTemplate = [
   {
+    id: '1',
     label: 'App',
     submenu: [
       {
+        id: '1',
         label: 'Disabled',
-        enabled: false
+        enabled: false,
+        after: '2'
       },
       {
+        id: '2',
         label: 'Sub Menu',
         submenu: [
           {
@@ -70,14 +74,17 @@ export const defaultTemplate = [
         ]
       },
       {
+        id: '4',
         label: 'Not visible',
         visible: false
       },
       {
+        id: '3',
         label: 'Arguments',
         click: (item, win, e) => { console.log(item, win, e); }
       },
       {
+        id: '5',
         label: 'Really Long Menu Label that should be truncated'
       },
       { type: 'separator' },
@@ -109,7 +116,9 @@ export const defaultTemplate = [
     ]
   },
   {
+    id: '2',
     label: 'Color',
+    before: '1',
     submenu: [
       {
         label: 'Light',
@@ -148,7 +157,7 @@ export const defaultTemplate = [
     submenu: [
       {
         label: 'Homepage',
-        click: () => { openExternal('https://github.com/KochiyaOcean/electron-react-titlebar'); }
+        click: () => { openExternal('https://github.com/Cristian006/frameless-titlebar'); }
       }
     ]
   }
