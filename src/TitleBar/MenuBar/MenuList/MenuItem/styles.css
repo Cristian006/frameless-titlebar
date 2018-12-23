@@ -1,6 +1,7 @@
 .StatusIcon {
   width: 12px;
   height: 12px;
+  flex-shrink: 0;
 }
 
 .StatusIcon svg {

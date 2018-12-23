@@ -16,6 +16,7 @@ export const defaultTemplate = [
       {
         id: '2',
         label: 'Sub Menu',
+        icon: 'https://www.gstatic.com/images/branding/product/1x/keep_48dp.png',
         submenu: [
           {
             label: 'Color Submenu',
@@ -41,7 +42,8 @@ export const defaultTemplate = [
             ]
           },
           {
-            label: 'Random 2'
+            label: 'Random 2',
+            icon: require('../assets/images/icon.png')
           },
           {
             label: 'Random 3',
@@ -80,6 +82,7 @@ export const defaultTemplate = [
       },
       {
         id: '3',
+        icon: require('../assets/images/icon.png'),
         label: 'Arguments',
         click: (item, win, e) => { console.log(item, win, e); }
       },

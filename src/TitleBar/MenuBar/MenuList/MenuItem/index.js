@@ -39,6 +39,12 @@ const styles = {
     width: '100%',
     border: 'none',
     height: 1
+  },
+  Icon: {
+    width: '100%',
+    height: '100%',
+    backgroundSize: 'contain',
+    backgroundPosition: 'center'
   }
 }
 
@@ -163,6 +169,15 @@ class MenuItem extends Component {
       statusIcon = menuItem.checked ? radioChecked : radioUnchecked;
     } else if (menuItem.type === 'checkbox') {
       statusIcon = menuItem.checked ? checked : unchecked;
+    } else if (menuItem.icon) {
+      statusIcon = (
+        <div
+          style={{
+            ...styles.Icon,
+            backgroundImage: `url(${menuItem.icon})`
+          }}
+        />
+      );
     }
 
     return (
