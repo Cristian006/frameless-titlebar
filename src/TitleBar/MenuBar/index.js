@@ -4,6 +4,7 @@ import MenuButton from './MenuButton';
 import MenuList from './MenuList';
 import { reduxSet, getProperty } from '../utils';
 import ThemeContext from '../Theme';
+import { buildMenu } from './utils';
 
 const menuIcon = (
   <svg version="1.1" width="24px" height="24px" viewBox="0 0 32 32">
@@ -26,14 +27,14 @@ class MenuBar extends Component {
       hovering: -1,
       focusing: 0,
       clicked: false,
-      menu: props.menu,
+      menu: buildMenu(props.menu)
     };
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.menu !== this.state.menu) {
       this.setState({
-        menu: nextProps.menu,
+        menu: buildMenu(nextProps.menu)
       });
     }
   }
@@ -229,10 +230,3 @@ MenuBar.defaultProps = {
 MenuBar.contextType = ThemeContext;
 
 export default MenuBar;
-
-/**
- *AA
-  Phone
-  Ice Cream
-  PopUp Tent
- */

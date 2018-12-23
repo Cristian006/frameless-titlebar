@@ -66,68 +66,25 @@ export default class App extends React.Component {
 | app | string | All | The app name shown to the left of the menu items on Windows applications. On Mac/Linux this will show in the center of the toolbar if the title property is not set | '' |
 | title | string | Mac | The title shown in the center of mac applications, this will override the app property | '' |
 | menu | array | All | The array of menu items following the [Electron Menu Object Documentation/Template](https://electronjs.org/docs/api/menu "Electron Menu Documentation") | [] |
-| theme | object | All | Theme object to customize Titlebar | See Bellow |
-
-```js
-// This is the default theme
-// Override any of these values by passing object into TitleBar Element via the theme property
-export const darkTheme = {
-  /* Title */
-  barTheme: 'dark', // light, dark
-  barHeight: '22px', // Change this value if you set 'titleBarStyle' to 'hiddenInset'
-  winBarHeight: '28px',
-  barColor: '#fff',
-  barTitleColor: 'inherit',
-  barBackgroundColor: '#24292e',
-  barShowBorder: false,
-  barBorderBottom: '1px solid #000',
-  // should the icon be shown in the center of the toolbar on Mac/Linux apps alongside the app or title property
-  showIconDarLin: true,
-
-  /* Menu */
-  menuStyle: 'horizontal', // horizontal, vertical
-  menuDimItems: true,
-  menuDimOpacity: 0.6,
-  menuDisabledOpacity: 0.3,
-  menuWidth: 240,
-  menuBackgroundColor: '#fff',
-  menuItemTextColor: '#fff',
-  menuItemHoverBackground: 'rgba(255,255,255,0.3)',
-  menuActiveTextColor: '#24292e',
-  menuTextHighlightColor: '#fff',
-  menuHighlightColor: '#0372ef',
-  accentStatusIcon: false,
-  menuSubLabelHeaders: true,
-  menuSubLabelColor: '#6a737d',
-  menuAcceleratorColor: '#6a737d',
-  menuShowBoxShadow: true,
-  menuSeparatorColor: '#e1e4e8',
-  menuBoxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
-
-  /* Menu Overlay */
-  menuOverlayBackground: 'black',
-  menuOverlayOpacity: 0.4,
-
-  /* WindowControls */
-  windowControlsColor: '#fff',
-  windowCloseHover: '#fff',
-  windowCloseBackground: '#e81123',
-  windowCloseActive: '#bf0f1d',
-  windowDefaultBackground: 'rgba(255,255,255,0.3)',
-  windowDefaultActive: 'rgba(255,255,255,0.2)',
-};
-```
+| theme | object | All | Theme object to customize Titlebar | [See Theme](src/TitleBar/Theme/index.js) |
 
 ## TODO
 
-- [ ] Set application menu for MacOS and Linux Applications
 - [x] ~~Change Menu Item states - checkmarks, radios~~
-- [ ] All menus have fixed `width` to make it easier to calculate what side to render the submenu on. Menus should have dynamic `width` with a `max-width` property.
+- [x] ~~Add `before`, `after`, and `id` properties to menu item objects to order the menu item list~~
+- [ ] Scroll menu vertically when overflowing window height
+- [ ] Add a "more" menu item to the menu bar when the menu's items overflow the width of the menu bar
 - [ ] Add default role functions to be more in-line with Electron MenuItem Documentation
-- [ ] Add position and id properties to menu item objects for ordering the menu item list
-- [ ] Add ability to change default icons with custom icons
 - [ ] Instead of just hovering over to a submenu, add ability to lock a sub menu when parent menu is clicked on
+- [ ] All menus have fixed `width` to make it easier to calculate what side to render the submenu on. Menus should have dynamic `width` with a `max-width` property.
+- [ ] Add ability to change default icons with custom icons
 
+## Not yet supported menu item properties
+
+- `icon` - show icon to the left of the menu item text
+- `role` - default menu item roles
+- `beforeGroupContaining` and `afterGroupContaining` - order menu items based on implicit groups defined by separators
+- `registerAccelerator` - handle the registration of accelerators mapped to click functions
 
 ## Try the example
 
