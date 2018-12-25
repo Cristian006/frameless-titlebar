@@ -1,4 +1,4 @@
-import { isEqual } from 'lodash';
+import isEqual from 'lodash.isequal';
 
 export const getProperty = (path, obj) => path.reduce((xs, x) => (xs && xs[x]) ? xs[x] : null, obj);
 
