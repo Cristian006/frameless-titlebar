@@ -23,8 +23,8 @@
   },
   "peerDependencies": {
     "prop-types": "^15.5.4",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3"
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0"
   },
   "devDependencies": {
     "@svgr/rollup": "^2.4.1",
@@ -57,7 +57,7 @@
     "rollup-plugin-url": "^1.4.0"
   },
   "dependencies": {
-    "lodash": "^4.17.10"
+    "lodash.isequal": "^4.5.0"
   },
   "files": [
     "dist"
