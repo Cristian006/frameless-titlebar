@@ -23,10 +23,12 @@ class Title extends React.Component {
     let padding = props.isWin ? '0px 4px' : '0 70px';
     let flex = props.flex;
     let color = theme.barTitleColor;
+    let fontFamily = theme.titleFontFamily;
+    let fontWeight = theme.titleFontWeight;
 
     return (
       <div
-        style={{ ...styles.Title, lineHeight, padding, color, flex }}
+        style={{ ...styles.Title, lineHeight, padding, color, flex, fontFamily, fontWeight }}
       >
         {props.children}
       </div>
