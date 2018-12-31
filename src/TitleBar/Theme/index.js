@@ -9,6 +9,8 @@ export const darkTheme = {
   barTitleColor: 'inherit',
   barBackgroundColor: '#24292e',
   barShowBorder: false,
+  titleFontFamily: 'inherit',
+  titleFontWeight: 'normal',
   barBorderBottom: '1px solid #000',
   // should the icon be shown in the center of the toolbar on Mac/Linux apps alongside the app or title property
   showIconDarLin: true,
