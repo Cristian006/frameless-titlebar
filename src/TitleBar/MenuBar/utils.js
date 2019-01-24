@@ -91,7 +91,31 @@ export const buildMenu = (menu) => {
   return sortMenu(menu);
 };
 
-export const getPathToMenuItem = (menu, id) => {
-  console.log(menu);
-  console.log(id);
+const findMenuItemPath = (menu, path, id) => {
+  for (var i = 0; i < menu.length; i++) {
+    if (menu[i].id && menu[i].id === id) {
+      return { found: true, path: [...path, i] };
+    } else if ((menu[i].type && menu[i].type.toLowerCase() === 'submenu') ||
+      (menu.submenu && Array.isArray(menu.submenu))) {
+      return findMenuItemPath(menu, [...path, i, 'subemenu'], id);
+    }
+  }
+  return { found: false };
+};
+
+export const getMenuItemPathById = (menu, id) => {
+  let menuPath = ['menu'];
+  for (var i = 0; i < menu.length; i++) {
+    if (menu[i].id === id) {
+      return [...menuPath, i];
+    } else if ((menu[i].type && menu[i].type.toLowerCase() === 'submenu') ||
+      (menu[i].submenu && Array.isArray(menu[i].submenu))) {
+      let { found, path } = findMenuItemPath(menu[i].submenu, [...menuPath, i, 'submenu'], id);
+      if (found) {
+        return [...path];
+      }
+    }
+  }
+  // no path was found
+  return [];
 }

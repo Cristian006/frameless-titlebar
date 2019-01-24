@@ -14,14 +14,20 @@ import {
 class TitleBar extends Component {
   constructor(props) {
     super(props);
-    this.enableMenuItemById = this.enableMenuItemById.bind(this);
+    this.setKeyById = this.setKeyById.bind(this);
+    this.getKeyById = this.getKeyById.bind(this);
+    this._generatePlatformChildren = this._generatePlatformChildren.bind(this);
   }
 
-  enableMenuItemById(id) {
-    return this.Menu.enableMenuItemById(id);
+  setKeyById(id, key, value) {
+    return this.Menu.setKeyById(id, key, value);
   }
 
-  generatePlatformChildren = ({
+  getKeyById(id, key) {
+    return this.Menu.getKeyById(id, key);
+  }
+
+  _generatePlatformChildren({
     icon,
     app,
     title,
@@ -37,7 +43,7 @@ class TitleBar extends Component {
     disableMaximize,
     disableMinimize,
     onBarDoubleClick
-  }) => {
+  }) {
     switch (platform) {
       case 'win32': // win32
         return (
@@ -47,7 +53,7 @@ class TitleBar extends Component {
             {
               currentTheme.menuStyle === 'vertical' &&
                 <MenuBar
-                  innerRef={r => this.Menu = r}
+                  ref={r => { this.Menu = r; }}
                   menu={menu}
                 />
             }
@@ -70,6 +76,7 @@ class TitleBar extends Component {
             {
               currentTheme.menuStyle === 'horizontal' &&
                 <MenuBar
+                  ref={r => { this.Menu = r; }}
                   menu={menu}
                 />
             }
@@ -125,7 +132,7 @@ class TitleBar extends Component {
     return (
       <ThemeProvider value={currentTheme}>
         {
-          this.generatePlatformChildren({
+          this._generatePlatformChildren({
             ...this.props,
             currentTheme,
             platform: platform === 'default' ? os.platform() : (platform || os.platform())

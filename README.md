@@ -4,7 +4,7 @@
 
 ![Main][main]
 
-A lot of people like developing apps with the [Electron](https://electronjs.org/) framework because it's cross platform. On Windows however, Electron applications are often left untouched when it comes to the title bar. In my opinion, the default menu and title bar don't work well with some stylized applications such as Atom, VS Code or Signal. Apps would look a little more unified if they used a custom menu. This is of course hugely inspired by GitHub's desktop application. If we're going to be using Web Technologies to build desktop applications we might as well make them look dope all around, right?
+A lot of people like developing apps with the [Electron](https://electronjs.org/) framework because it's cross platform. On Windows however, Electron applications are often left untouched when it comes to the title bar. In my opinion, the default menu and title bar don't work well with some stylized applications such as Atom, VS Code or Signal. Apps would look a little more unified if they used a custom menu. This is of course hugely inspired by GitHub's desktop application menu bar.
 
 ## Adding frameless-titlebar to your project
 
@@ -60,18 +60,68 @@ export default class App extends React.Component {
 
 ## Documentation
 
+### Menu Bar API (Windows)
+
+```js
+// create a reference to the titlebar to access api methods
+<TitleBar
+  ref={r => { this.titleBar = r; }}
+  ...
+/>
+// eg. change menu item's enabled property
+this.titleBar.setKeyById('menuItemId1', 'enabled', false);
+
+// or access the api methods via menuBar event property
+[
+  // menu item list
+  {
+    // menu item
+    ...
+    click: (item, win, e) => {
+      e.menuBar.setKeyById(item.id, 'enabled', !item.enabled);
+    }
+  }
+]
+```
+
+| Name | Params | Description |
+| :--- | :----: | :---------- |
+| `setKeyById` | (`id` : string, `key` : string, `value` : any) | Set a menu item's key properties using this method |
+| `getKeyById` | (`id` : string, `key` : string) | Get the menu item properties for the menu item with the corresponding id. If no key is specified then the function will return the entire menuItem object | 
+
+### Titlebar properties
+
 | Name | Type | Platforms | Description | Default Value |
-| :--------- | :--: | :----------: | :------- | :----: |
+| :--- | :--: | :-------: | :---------- | :-----------: |
 | icon | string | Windows | The App Icon shown on the top left | '' |
 | app | string | All | The app name shown to the left of the menu items on Windows applications. On Mac/Linux this will show in the center of the toolbar if the title property is not set | '' |
 | title | string | Mac | The title shown in the center of mac applications, this will override the app property | '' |
-| menu | array | All | The array of menu items following the [Electron Menu Object Documentation/Template](https://electronjs.org/docs/api/menu "Electron Menu Documentation") | [] |
+| menu | array | All | The array of menu items following the [Electron Menu Object Documentation/Template](https://electronjs.org/docs/api/menu "Electron Menu Documentation"). See [Supported Menu Item Properties](#supported-menu-item-properties) | [] |
 | theme | object | All | Theme object to customize Titlebar | [See Theme](src/TitleBar/Theme/index.js) |
+
+### Supported Menu Item Properties
+
+| Name | Type | Description |
+| :--- | :--: | :---------- |
+| `id` (optional) | `string` | Must be unique. If defined then it can be used as a reference to this item by the position attribute as well as the [`setKeyById`](#Menu-Bar-API-(Windows)) |
+| `type` (optional) | oneOf([`normal`, `separator`, `submenu`, `checkbox`, `radio`]) | Type of supported menu items |
+| `label` (optional) | `string` | Menu item label |
+| `click` (optional) | `function(menuItem, browserWindow, event)` | access the menu bar API with `event.menuBar.apiMethodName()` |
+| `enabled` (optional) | `bool` | Enables/disables menu item from being clicked on |
+| `visible` (optional) | `bool` | if false, hides menu item |
+| `sublabel` (optional) | `string` | Menu item sublabel |
+| `accelerator` (optional) | `string` | Accelerator string eg `CmdOrCtrl+Z`, note: as of now will only insert string literal and will not parse for proper OS. See #23 |
+| `icon` (optional) | `img` | The image shown to the left of the menu label |
+| `checked` (optional) | `bool` | Should only be specified for checkbox or radio type menu items |
+| `submenu` (optional) | `array : [MenuItems]` | Array of menu items. If `submenu` is specified, the `type: 'submenu'` can be omitted. |
+| `before` (optional) | `string` | Inserts this item before the item with the specified id. If the referenced item doesn't exist the item will be inserted at the end of the menu |
+| `after` (optional) | `string` | Inserts this item after the item with the specified id. If the referenced item doesn't exist the item will be inserted at the end of the menu |
 
 ## TODO
 
 - [x] ~~Change Menu Item states - checkmarks, radios~~
 - [x] ~~Add `before`, `after`, and `id` properties to menu item objects to order the menu item list~~
+- [ ] Change accelerator string to proper OS eg: `CmdOrCtrl+Z` should show `⌘Z` on MacOS and `Ctrl+Z` on Windows #23
 - [ ] Scroll menu vertically when overflowing window height
 - [ ] Add a "more" menu item to the menu bar when the menu's items overflow the width of the menu bar
 - [ ] Add default role functions to be more in-line with Electron MenuItem Documentation
@@ -79,9 +129,8 @@ export default class App extends React.Component {
 - [ ] All menus have fixed `width` to make it easier to calculate what side to render the submenu on. Menus should have dynamic `width` with a `max-width` property.
 - [ ] Add ability to change default icons with custom icons
 
-## Not yet supported menu item properties
+## Unsupported menu item properties
 
-- `role` - default menu item roles
 - `beforeGroupContaining` and `afterGroupContaining` - order menu items based on implicit groups defined by separators
 - `registerAccelerator` - handle the registration of accelerators mapped to click functions
 

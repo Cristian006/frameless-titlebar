@@ -54,12 +54,12 @@ class MenuItem extends Component {
     this.state = {
       hovering: false
     };
-    this.handleMouseEnter = this.handleMouseEnter.bind(this);
-    this.handleMouseLeave = this.handleMouseLeave.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this._handleMouseEnter = this._handleMouseEnter.bind(this);
+    this._handleMouseLeave = this._handleMouseLeave.bind(this);
+    this._handleClick = this._handleClick.bind(this);
   }
 
-  handleMouseEnter(e) {
+  _handleMouseEnter(e) {
     const {
       menuItem
     } = this.props;
@@ -74,7 +74,7 @@ class MenuItem extends Component {
     });
   }
 
-  handleMouseLeave(e) {
+  _handleMouseLeave(e) {
     const {
       menuItem
     } = this.props;
@@ -89,7 +89,7 @@ class MenuItem extends Component {
     });
   }
 
-  handleClick(e) {
+  _handleClick(e) {
     const {
       menuItem,
       changeCheckState,
@@ -109,7 +109,7 @@ class MenuItem extends Component {
           ...menuItem,
           checked: !menuItem.checked
         };
-        menuItem.click(newMenuItem, remote.getCurrentWindow(), e, this.props.menu);
+        menuItem.click(newMenuItem, remote.getCurrentWindow(), { ...e, menuBar: this.props.menuRef });
         // TODO: Change Checked State
         changeCheckState(path, indx, !menuItem.checked);
         break;
@@ -120,7 +120,7 @@ class MenuItem extends Component {
           ...menuItem,
           checked: true
         };
-        menuItem.click(newMenuItem, remote.getCurrentWindow(), e, this.props.menu);
+        menuItem.click(newMenuItem, remote.getCurrentWindow(), { ...e, menuBar: this.props.menuRef });
         if (!menuItem.checked) {
           // TODO: Change Checked State
           changeCheckState(path, indx, true, true);
@@ -129,7 +129,7 @@ class MenuItem extends Component {
       }
       default:
         e.persist();
-        menuItem.click(this.props.menuItem, remote.getCurrentWindow(), e, this.props.menu);
+        menuItem.click(this.props.menuItem, remote.getCurrentWindow(), { ...e, menuBar: this.props.menuRef });
         break;
     }
   }
@@ -188,9 +188,9 @@ class MenuItem extends Component {
           opacity: menuItem.enabled ? '1' : '0.3',
           backgroundColor: hovering ? theme.menuHighlightColor : ''
         }}
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
-        onClick={this.handleClick}
+        onMouseEnter={this._handleMouseEnter}
+        onMouseLeave={this._handleMouseLeave}
+        onClick={this._handleClick}
       >
         <div
           className={css.StatusIcon}
