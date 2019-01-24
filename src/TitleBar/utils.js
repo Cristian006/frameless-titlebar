@@ -25,7 +25,7 @@ export const reduxSet = (obj, path, val) => {
     } else {
       result = {
         ...obj,
-        [prop]: after,
+        [prop]: after
       };
     }
     return result;

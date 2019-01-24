@@ -7,6 +7,12 @@ const styles = {
   Wrapper: {
     minWidth: 0
   },
+  Label: {
+    whiteSpace: 'nowrap',
+    maxWidth: 100,
+    textOverflow: 'ellipsis',
+    overflow: 'hidden'
+  },
   ButtonWrapper: {
     width: '100%',
     height: '100%'
@@ -82,7 +88,9 @@ export default class MenuButton extends Component {
                 opacity
               }}
             >
-              <span aria-hidden="true">{label}</span>
+              <span style={{
+                ...styles.Label
+              }} aria-hidden="true">{label}</span>
             </div>
           </button>
         </div>

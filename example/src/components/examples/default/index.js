@@ -12,6 +12,7 @@ class Default extends Component {
     return (
       <div className="ExampleContainer">
         <TitleBar
+          ref={r => { this.titleBar = r; }}
           icon={defaultIcon}
           menu={defaultTemplate}
           app="Electron Titlebar"
@@ -20,6 +21,14 @@ class Default extends Component {
           }}
           platform={platform}
         />
+        <div onClick={() => {
+          // get the current menu item with id of 'hello'
+          let current = this.titleBar.getKeyById('hello');
+          // toggle the enabled key for menu item with id of 'hello'
+          this.titleBar.setKeyById('hello', 'enabled', !current.enabled);
+        }}>
+          Click me
+        </div>
         {children}
       </div>
     );

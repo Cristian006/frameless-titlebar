@@ -28,10 +28,10 @@ const styles = {
 class SubMenu extends Component {
   constructor(props) {
     super(props);
-    this.generateMenu = this.generateMenu.bind(this);
+    this._generateMenu = this._generateMenu.bind(this);
   }
 
-  generateMenu(menu = []) {
+  _generateMenu(menu = []) {
     const theme = this.context;
     return menu.map((menuItem, i) => {
       if (menuItem.submenu) {
@@ -61,6 +61,7 @@ class SubMenu extends Component {
             level={this.props.level + 1}
             right={right}
             renderSide={renderSide}
+            menuRef={this.props.menuRef}
             changeCheckState={this.props.changeCheckState}
             menuItem={{ ...defaultMenuItem, ...menuItem, type: 'submenu' }}
             path={[...this.props.path, i, 'submenu']}
@@ -74,6 +75,7 @@ class SubMenu extends Component {
           changeCheckState={this.props.changeCheckState}
           menuItem={{ ...defaultMenuItem, ...menuItem }}
           indx={i}
+          menuRef={this.props.menuRef}
           path={[...this.props.path]}
         />
       );
@@ -91,6 +93,7 @@ class SubMenu extends Component {
 
     return (
       <MenuItem
+        menu={this.props.menu}
         menuItem={{ ...defaultMenuItem, ...menuItem }}
       >
         <div
@@ -117,7 +120,7 @@ class SubMenu extends Component {
             </div>
           }
           {
-            this.generateMenu(menuItem.submenu)
+            this._generateMenu(menuItem.submenu)
           }
         </div>
       </MenuItem>

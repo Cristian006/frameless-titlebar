@@ -73,10 +73,9 @@ const sortMenu = (menu) => {
   // sort menu and all submenus
   const sorted = sortMenuItems(menu);
   for (const id in sorted) {
-    const item = sorted[id];
-    if (Array.isArray(item.submenu)) {
+    if (Array.isArray(sorted[id].submenu)) {
       // sort submenus
-      item.submenu = sortMenu(item.submenu);
+      sorted[id].submenu = sortMenu(sorted[id].submenu);
     }
   }
   return sorted;
@@ -91,3 +90,32 @@ export const buildMenu = (menu) => {
   }
   return sortMenu(menu);
 };
+
+const findMenuItemPath = (menu, path, id) => {
+  for (var i = 0; i < menu.length; i++) {
+    if (menu[i].id && menu[i].id === id) {
+      return { found: true, path: [...path, i] };
+    } else if ((menu[i].type && menu[i].type.toLowerCase() === 'submenu') ||
+      (menu.submenu && Array.isArray(menu.submenu))) {
+      return findMenuItemPath(menu, [...path, i, 'subemenu'], id);
+    }
+  }
+  return { found: false };
+};
+
+export const getMenuItemPathById = (menu, id) => {
+  let menuPath = ['menu'];
+  for (var i = 0; i < menu.length; i++) {
+    if (menu[i].id === id) {
+      return [...menuPath, i];
+    } else if ((menu[i].type && menu[i].type.toLowerCase() === 'submenu') ||
+      (menu[i].submenu && Array.isArray(menu[i].submenu))) {
+      let { found, path } = findMenuItemPath(menu[i].submenu, [...menuPath, i, 'submenu'], id);
+      if (found) {
+        return [...path];
+      }
+    }
+  }
+  // no path was found
+  return [];
+}

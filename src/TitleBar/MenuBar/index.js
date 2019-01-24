@@ -4,7 +4,7 @@ import MenuButton from './MenuButton';
 import MenuList from './MenuList';
 import { reduxSet, getProperty } from '../utils';
 import ThemeContext from '../Theme';
-import { buildMenu } from './utils';
+import { buildMenu, getMenuItemPathById } from './utils';
 
 const menuIcon = (
   <svg version="1.1" width="24px" height="24px" viewBox="0 0 32 32">
@@ -29,6 +29,19 @@ class MenuBar extends Component {
       clicked: false,
       menu: buildMenu(props.menu)
     };
+
+    this._onMenuButtonMouseOver = this._onMenuButtonMouseOver.bind(this);
+    this._onTouchStart = this._onTouchStart.bind(this);
+    this._onMouseMove = this._onMouseMove.bind(this);
+    this._onMenuButtonClick = this._onMenuButtonClick.bind(this);
+    this._setMenuRef = this._setMenuRef.bind(this);
+    this._changeCheckState = this._changeCheckState.bind(this);
+    this._generateHorizontalMenu = this._generateHorizontalMenu.bind(this);
+    this._generateVerticalMenu = this._generateVerticalMenu.bind(this);
+    this._setKeyByPath = this._setKeyByPath.bind(this);
+    this._getKeyByPath = this._getKeyByPath.bind(this);
+    this.setKeyById = this.setKeyById.bind(this);
+    this.getKeyById = this.getKeyById.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -39,32 +52,47 @@ class MenuBar extends Component {
     }
   }
 
+  setKeyById(id, key, val) {
+    // get path to id
+    let path = getMenuItemPathById(this.state.menu, id);
+    if (path.length > 0) {
+      this._setKeyByPath(path, key, val);
+    }
+  }
+
+  getKeyById(id, key) {
+    let path = getMenuItemPathById(this.state.menu, id);
+    if (path.length > 0) {
+      return this._getKeyByPath([...path], key);
+    }
+  }
+
   // if hovering over another button while menu is clicked; change focus
-  onMenuButtonMouseOver = (i) => {
+  _onMenuButtonMouseOver(i) {
     if (this.state.clicked) {
       this.setState({
         focusing: i
       });
     }
-  };
+  }
 
   // lock set to true to keep menu panes open
-  onTouchStart = (i) => {
+  _onTouchStart(i) {
     if (i !== this.state.focusing && this.state.clicked) {
       this.lock = true;
     }
-  };
+  }
 
   // if moving over a different menu button - select that menu button
-  onMouseMove = (i) => {
+  _onMouseMove(i) {
     if (i === this.state.focusing) return;
     this.setState({
       focusing: i
     });
-  };
+  }
 
   // when a menu button is clicked
-  onMenuButtonClick = (index) => {
+  _onMenuButtonClick(index) {
     if (this.lock) {
       this.lock = false;
       return;
@@ -73,23 +101,22 @@ class MenuBar extends Component {
       clicked: !(this.state.focusing === index && this.state.clicked),
       hovering: !(this.state.focusing === index && this.state.clicked) ? this.state.hovering : -1
     });
-  };
+  }
 
   // we need the rect's bounds for the child menu pane
-  setMenuRef = (ref, i) => {
+  _setMenuRef(ref, i) {
     if (this.menuItems) {
       this.menuItems[i] = ref;
     } else {
       this.menuItems = { [i]: ref };
     }
-  };
+  }
 
   // path: to current submenu
   // checked: new state
-  changeCheckState = (path, itemIndx, checked, isRadio = false) => {
+  _changeCheckState(path, itemIndx, checked, isRadio = false) {
     if (!isRadio) {
-      // change checked state
-      this.setState(reduxSet(this.state, [...path, itemIndx, 'checked'], checked));
+      this.changeKeyByPath([...path, itemIndx], 'checked', checked);
     } else {
       let newState = { ...this.state };
       getProperty(path, this.state).forEach((menuItem, indx) => {
@@ -99,9 +126,18 @@ class MenuBar extends Component {
       });
       this.setState(newState);
     }
-  };
+  }
 
-  generateHorizontalMenu = (menuObj = []) => {
+  _setKeyByPath(path, key, val) {
+    this.setState(reduxSet(this.state, [...path, key], val));
+  }
+
+  _getKeyByPath(path, key) {
+    // if key is undefined -> the getKeyById will just return the menu item
+    return getProperty(key ? [...path, key] : [...path], this.state);
+  }
+
+  _generateHorizontalMenu(menuObj = []) {
     return menuObj.map((menuItem, i) => {
       return (
         <MenuButton
@@ -120,24 +156,24 @@ class MenuBar extends Component {
           }}
           onMouseOver={() => {
             if (menuItem.enabled === false) return;
-            this.onMenuButtonMouseOver(i);
+            this._onMenuButtonMouseOver(i);
           }}
           onMouseMove={() => {
             if (menuItem.enabled === false) return;
-            this.onMouseMove(i);
+            this._onMouseMove(i);
           }}
           onTouchStart={() => {
             if (menuItem.enabled === false) return;
-            this.onTouchStart(i);
+            this._onTouchStart(i);
           }}
           onClick={() => {
             if (menuItem.enabled === false) return;
-            this.onMenuButtonClick(i);
+            this._onMenuButtonClick(i);
           }}
           onFocus={() => {
             // idk - linting says it needs it? it has no purpose for me
           }}
-          rectRef={(ref) => this.setMenuRef(ref, i)}
+          rectRef={(ref) => this._setMenuRef(ref, i)}
           hovering={i === this.state.hovering}
           open={this.state.clicked && i === this.state.focusing}
           closed={!this.state.clicked || i !== this.state.focusing}
@@ -147,7 +183,8 @@ class MenuBar extends Component {
           {
             (this.state.clicked && i === this.state.focusing) &&
               <MenuList
-                changeCheckState={this.changeCheckState}
+                changeCheckState={this._changeCheckState}
+                menuRef={this}
                 rect={this.menuItems[i].getBoundingClientRect()}
                 submenu={menuItem.submenu}
                 mainIndex={i}
@@ -157,9 +194,9 @@ class MenuBar extends Component {
         </MenuButton>
       );
     });
-  };
+  }
 
-  generateVerticalMenu = (menuList = []) => {
+  _generateVerticalMenu(menuList = []) {
     return (
       <MenuButton
         onMouseEnter={() => {
@@ -173,21 +210,21 @@ class MenuBar extends Component {
           });
         }}
         onMouseOver={() => {
-          this.onMenuButtonMouseOver(0);
+          this._onMenuButtonMouseOver(0);
         }}
         onMouseMove={() => {
-          this.onMouseMove(0);
+          this._onMouseMove(0);
         }}
         onTouchStart={() => {
-          this.onTouchStart(0);
+          this._onTouchStart(0);
         }}
         onClick={() => {
-          this.onMenuButtonClick(0);
+          this._onMenuButtonClick(0);
         }}
         onFocus={() => {
           // idk - linting says it needs it? it has no purpose for me
         }}
-        rectRef={(ref) => this.setMenuRef(ref, 0)}
+        rectRef={(ref) => this._setMenuRef(ref, 0)}
         hovering={this.state.hovering === 0}
         open={this.state.clicked && this.state.focusing === 0}
         closed={!this.state.clicked || this.state.focusing !== 0}
@@ -197,7 +234,8 @@ class MenuBar extends Component {
         {
           (this.state.clicked && this.state.focusing === 0) &&
             <MenuList
-              changeCheckState={this.changeCheckState}
+              changeCheckState={this._changeCheckState}
+              menuRef={this}
               rect={this.menuItems[0].getBoundingClientRect()}
               submenu={menuList}
               path={['menu']}
@@ -206,14 +244,14 @@ class MenuBar extends Component {
         }
       </MenuButton>
     );
-  };
+  }
 
   render() {
     let theme = this.context;
     let color = theme.menuItemTextColor || theme.barColor;
     return (
       <div style={{ ...styles.Wrapper, color }}>
-        {theme.menuStyle === 'horizontal' ? this.generateHorizontalMenu(this.state.menu) : this.generateVerticalMenu(this.state.menu)}
+        {theme.menuStyle === 'horizontal' ? this._generateHorizontalMenu(this.state.menu) : this._generateVerticalMenu(this.state.menu)}
       </div>
     );
   }
