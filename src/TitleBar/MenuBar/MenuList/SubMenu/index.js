@@ -61,6 +61,7 @@ class SubMenu extends Component {
             level={this.props.level + 1}
             right={right}
             renderSide={renderSide}
+            menu={this.props.menu}
             changeCheckState={this.props.changeCheckState}
             menuItem={{ ...defaultMenuItem, ...menuItem, type: 'submenu' }}
             path={[...this.props.path, i, 'submenu']}
@@ -74,6 +75,7 @@ class SubMenu extends Component {
           changeCheckState={this.props.changeCheckState}
           menuItem={{ ...defaultMenuItem, ...menuItem }}
           indx={i}
+          menu={this.props.menu}
           path={[...this.props.path]}
         />
       );
@@ -91,6 +93,7 @@ class SubMenu extends Component {
 
     return (
       <MenuItem
+        menu={this.props.menu}
         menuItem={{ ...defaultMenuItem, ...menuItem }}
       >
         <div

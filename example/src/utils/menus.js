@@ -8,10 +8,15 @@ export const defaultTemplate = [
     label: 'App',
     submenu: [
       {
-        id: '1',
+        id: 'hello',
         label: 'Disabled',
-        enabled: false,
-        after: '2'
+        enabled: true,
+        after: '2',
+        click: (item, win, e, menu) => {
+          console.log(item, menu);
+          let switchEnabled = menu.changeEnabledStateById(item.id, !item.enabled);
+          console.log(switchEnabled)
+        }
       },
       {
         id: '2',

@@ -109,7 +109,7 @@ class MenuItem extends Component {
           ...menuItem,
           checked: !menuItem.checked
         };
-        menuItem.click(newMenuItem, remote.getCurrentWindow(), e);
+        menuItem.click(newMenuItem, remote.getCurrentWindow(), e, this.props.menu);
         // TODO: Change Checked State
         changeCheckState(path, indx, !menuItem.checked);
         break;
@@ -120,7 +120,7 @@ class MenuItem extends Component {
           ...menuItem,
           checked: true
         };
-        menuItem.click(newMenuItem, remote.getCurrentWindow(), e);
+        menuItem.click(newMenuItem, remote.getCurrentWindow(), e, this.props.menu);
         if (!menuItem.checked) {
           // TODO: Change Checked State
           changeCheckState(path, indx, true, true);
@@ -129,7 +129,7 @@ class MenuItem extends Component {
       }
       default:
         e.persist();
-        menuItem.click(this.props.menuItem, remote.getCurrentWindow(), e);
+        menuItem.click(this.props.menuItem, remote.getCurrentWindow(), e, this.props.menu);
         break;
     }
   }

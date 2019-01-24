@@ -12,6 +12,15 @@ import {
 } from './components';
 
 class TitleBar extends Component {
+  constructor(props) {
+    super(props);
+    this.enableMenuItemById = this.enableMenuItemById.bind(this);
+  }
+
+  enableMenuItemById(id) {
+    return this.Menu.enableMenuItemById(id);
+  }
+
   generatePlatformChildren = ({
     icon,
     app,
@@ -38,6 +47,7 @@ class TitleBar extends Component {
             {
               currentTheme.menuStyle === 'vertical' &&
                 <MenuBar
+                  innerRef={r => this.Menu = r}
                   menu={menu}
                 />
             }

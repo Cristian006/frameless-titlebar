@@ -57,6 +57,7 @@ class MenuList extends Component {
             level={1}
             right={right}
             renderSide={renderSide}
+            menu={this.props.menu}
             changeCheckState={this.props.changeCheckState}
             menuItem={{ ...defaultMenuItem, ...menuItem, type: 'submenu' }}
             path={this.props.vertical ? [...this.props.path, i, 'submenu'] : [...this.props.path, 'submenu', i, 'submenu']}
@@ -68,6 +69,7 @@ class MenuList extends Component {
           key={`${i}${menuItem.label}`}
           menuItem={{ ...defaultMenuItem, ...menuItem }}
           changeCheckState={this.props.changeCheckState}
+          menu={this.props.menu}
           indx={i}
           path={this.props.vertical ? [...this.props.path] : [...this.props.path, 'submenu']}
         />

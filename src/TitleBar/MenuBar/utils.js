@@ -73,10 +73,9 @@ const sortMenu = (menu) => {
   // sort menu and all submenus
   const sorted = sortMenuItems(menu);
   for (const id in sorted) {
-    const item = sorted[id];
-    if (Array.isArray(item.submenu)) {
+    if (Array.isArray(sorted[id].submenu)) {
       // sort submenus
-      item.submenu = sortMenu(item.submenu);
+      sorted[id].submenu = sortMenu(sorted[id].submenu);
     }
   }
   return sorted;
@@ -91,3 +90,8 @@ export const buildMenu = (menu) => {
   }
   return sortMenu(menu);
 };
+
+export const getPathToMenuItem = (menu, id) => {
+  console.log(menu);
+  console.log(id);
+}
