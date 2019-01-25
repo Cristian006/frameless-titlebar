@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import css from './styles.css';
-import ThemeContext from '../../Theme';
 
 const styles = {
   Wrapper: {
@@ -48,10 +47,10 @@ export default class MenuButton extends Component {
       open,
       enabled,
       hovering,
-      rectRef
+      rectRef,
+      theme
     } = this.props;
 
-    let theme = this.context;
     let backgroundColor = open ? theme.menuBackgroundColor : ((hovering && enabled) ? theme.menuItemHoverBackground : 'transparent');
     let borderColor = open ? theme.menuBackgroundColor : '';
     let color = open ? theme.menuActiveTextColor : theme.menuItemTextColor;
@@ -118,8 +117,6 @@ MenuButton.propTypes = {
   onClick: PropTypes.func,
   rectRef: PropTypes.func
 };
-
-MenuButton.contextType = ThemeContext;
 
 MenuButton.defaultProps = {
   open: false,

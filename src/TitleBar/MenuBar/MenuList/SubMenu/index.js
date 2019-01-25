@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import MenuItem from '../MenuItem';
 import { defaultMenuItem } from '../../../utils';
-import ThemeContext from '../../../Theme';
 
 export const SubMenuLabelStyle = {
   height: '20px',
@@ -32,7 +31,7 @@ class SubMenu extends Component {
   }
 
   _generateMenu(menu = []) {
-    const theme = this.context;
+    const { theme } = this.props;
     return menu.map((menuItem, i) => {
       if (menuItem.submenu) {
         // create submenu item
@@ -60,6 +59,7 @@ class SubMenu extends Component {
             key={`${i}${menuItem.label}`}
             level={this.props.level + 1}
             right={right}
+            theme={theme}
             renderSide={renderSide}
             menuRef={this.props.menuRef}
             changeCheckState={this.props.changeCheckState}
@@ -71,10 +71,11 @@ class SubMenu extends Component {
 
       return (
         <MenuItem
+          indx={i}
           key={`${i}${menuItem.label}`}
+          theme={theme}
           changeCheckState={this.props.changeCheckState}
           menuItem={{ ...defaultMenuItem, ...menuItem }}
-          indx={i}
           menuRef={this.props.menuRef}
           path={[...this.props.path]}
         />
@@ -86,14 +87,14 @@ class SubMenu extends Component {
     const {
       menuItem,
       level,
-      renderSide
+      renderSide,
+      theme
     } = this.props;
-
-    const theme = this.context;
 
     return (
       <MenuItem
         menu={this.props.menu}
+        theme={theme}
         menuItem={{ ...defaultMenuItem, ...menuItem }}
       >
         <div
@@ -141,7 +142,5 @@ SubMenu.defaultProps = {
   renderSide: 'right',
   changeCheckState: () => {}
 };
-
-SubMenu.contextType = ThemeContext;
 
 export default SubMenu;

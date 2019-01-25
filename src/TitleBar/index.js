@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ThemeProvider, darkTheme, lightTheme } from './Theme';
+import { darkTheme, lightTheme } from './Theme';
 import os from 'os';
 import MenuBar from './MenuBar';
 import WindowControls from './WindowControls';
@@ -47,13 +47,17 @@ class TitleBar extends Component {
     switch (platform) {
       case 'win32': // win32
         return (
-          <Bar isWin>
+          <Bar
+            isWin
+            theme={currentTheme}
+          >
             <ResizeHandle top />
             <ResizeHandle left />
             {
               currentTheme.menuStyle === 'vertical' &&
                 <MenuBar
                   ref={r => { this.Menu = r; }}
+                  theme={currentTheme}
                   menu={menu}
                 />
             }
@@ -67,8 +71,9 @@ class TitleBar extends Component {
             {
               app &&
               <Title
-                onClick={onTitleClick}
                 isWin
+                theme={currentTheme}
+                onClick={onTitleClick}
               >
                 {app}
               </Title>
@@ -77,11 +82,13 @@ class TitleBar extends Component {
               currentTheme.menuStyle === 'horizontal' &&
                 <MenuBar
                   ref={r => { this.Menu = r; }}
+                  theme={currentTheme}
                   menu={menu}
                 />
             }
             {children}
             <WindowControls
+              theme={currentTheme}
               disableMinimize={disableMinimize}
               disableMaximize={disableMaximize}
               onCloseClick={onCloseClick}
@@ -94,12 +101,14 @@ class TitleBar extends Component {
         return (
           <Bar
             onDoubleClick={onBarDoubleClick}
+            theme={currentTheme}
           >
             <ResizeHandle top />
             <ResizeHandle left />
             {
               (title || app) &&
               <Title
+                theme={currentTheme}
                 onClick={onTitleClick}
                 flex={1}
               >
@@ -129,17 +138,11 @@ class TitleBar extends Component {
       ...theme
     };
 
-    return (
-      <ThemeProvider value={currentTheme}>
-        {
-          this._generatePlatformChildren({
-            ...this.props,
-            currentTheme,
-            platform: platform === 'default' ? os.platform() : (platform || os.platform())
-          })
-        }
-      </ThemeProvider>
-    );
+    return this._generatePlatformChildren({
+      ...this.props,
+      currentTheme,
+      platform: platform === 'default' ? os.platform() : (platform || os.platform())
+    });
   }
 }
 

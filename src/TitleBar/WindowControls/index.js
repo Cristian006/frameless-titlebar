@@ -53,7 +53,8 @@ export default class WindowControls extends Component {
   render() {
     const {
       disableMaximize,
-      disableMinimize
+      disableMinimize,
+      theme
     } = this.props;
 
     const {
@@ -63,6 +64,7 @@ export default class WindowControls extends Component {
     return (
       <div style={styles.Controls}>
         <Button
+          theme={theme}
           key="min-button"
           ariaLabel="minimize"
           tabIndex="-1"
@@ -81,6 +83,7 @@ export default class WindowControls extends Component {
           </svg>
         </Button>
         <Button
+          theme={theme}
           key="max-button"
           ariaLabel="maximize"
           tabIndex="-1"
@@ -112,6 +115,7 @@ export default class WindowControls extends Component {
           }
         </Button>
         <Button
+          theme={theme}
           key="close-button"
           aria-label="close"
           tabIndex="-1"
