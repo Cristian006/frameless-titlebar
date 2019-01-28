@@ -1,3 +1,7 @@
+import os from 'os';
+const CMD = '⌘';
+const CTRL = 'Ctrl';
+
 const topologicalSort = (original, graph) => {
   // Sort items topologically using a depth-first approach
   const sorted = [];
@@ -119,3 +123,13 @@ export const getMenuItemPathById = (menu, id) => {
   // no path was found
   return [];
 }
+
+export const parseAccelerator = (accelerator) => {
+  const cmdIndex = accelerator.indexOf('CommandOrControl');
+  if (cmdIndex > -1) {
+    const accel = [...accelerator];
+    accel.splice(cmdIndex, 16, os.platform() === 'darwin' ? CMD : CTRL);
+    return accel.join('');
+  }
+  return accelerator;
+};
