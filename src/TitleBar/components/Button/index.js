@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ThemeContext from '../../Theme';
 import styles from './styles.css';
 
 class Button extends Component {
@@ -29,7 +28,8 @@ class Button extends Component {
       tabIndex,
       disabled,
       close,
-      onClick
+      onClick,
+      theme
     } = this.props;
 
     const {
@@ -40,15 +40,15 @@ class Button extends Component {
     let backgroundColor = 'transparent';
     let opacity = 0.5;
     let transition = 'background-color 0.25s ease';
-    let color = this.context.windowControlsColor;
+    let color = theme.windowControlsColor;
     if (hovering) {
       opacity = 1;
-      color = close ? this.context.windowCloseHover : color;
-      backgroundColor = close ? this.context.windowCloseBackground : this.context.windowDefaultBackground;
+      color = close ? theme.windowCloseHover : color;
+      backgroundColor = close ? theme.windowCloseBackground : theme.windowDefaultBackground;
     } else if (focused) {
       opacity = 1;
-      color = close ? this.context.windowCloseHover : color;
-      backgroundColor = close ? this.context.windowCloseActive : this.context.windowDefaultActive;
+      color = close ? theme.windowCloseHover : color;
+      backgroundColor = close ? theme.windowCloseActive : theme.windowDefaultActive;
       transition = 'none';
     }
 
@@ -70,7 +70,5 @@ class Button extends Component {
     );
   }
 }
-
-Button.contextType = ThemeContext;
 
 export default Button;

@@ -1,6 +1,5 @@
 import React from 'react';
 import electron from 'electron';
-import ThemeContext from '../Theme';
 
 const styles = {
   Bar: {
@@ -32,9 +31,8 @@ class Bar extends React.Component {
   }
 
   render() {
-    let props = this.props;
-    let theme = this.context;
-    let height = props.isWin ? theme.winBarHeight : theme.barHeight;
+    const { theme, children, isWin } = this.props;
+    let height = isWin ? theme.winBarHeight : theme.barHeight;
     let backgroundColor = theme.barBackgroundColor;
     let color = theme.barColor;
     let borderBottom = theme.barShowBorder ? theme.barBorderBottom : '';
@@ -44,13 +42,11 @@ class Bar extends React.Component {
         style={{ ...styles.Bar, height, backgroundColor, color, borderBottom }}
         onDoubleClick={this.handleDoubleClick}
       >
-        {props.children}
+        {children}
       </div>
     );
   }
 }
-
-Bar.contextType = ThemeContext;
 
 Bar.defaultProps = {
   isWin: false

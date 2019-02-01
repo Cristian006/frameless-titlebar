@@ -12,6 +12,7 @@ class Default extends Component {
     return (
       <div className="ExampleContainer">
         <TitleBar
+          ref={r => { this.titleBar = r; }}
           icon={defaultIcon}
           menu={defaultTemplate}
           app="Electron Titlebar"
@@ -20,6 +21,17 @@ class Default extends Component {
           }}
           platform={platform}
         />
+        {
+          platform === 'win32' &&
+          <div style={{ padding: 12, textDecoration: 'underline', cursor: 'pointer' }} onClick={() => {
+            // get the current menu item with id of 'hello'
+            let current = this.titleBar.getKeyById('hello');
+            // toggle the enabled key for menu item with id of 'hello'
+            this.titleBar.setKeyById('hello', 'enabled', !current.enabled);
+          }}>
+            Click to Toggle App {`>`} Disabled Menu Item
+          </div>
+        }
         {children}
       </div>
     );

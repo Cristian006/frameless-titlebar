@@ -1,5 +1,4 @@
 import React from 'react';
-import ThemeContext from '../Theme';
 
 const styles = {
   Title: {
@@ -17,11 +16,9 @@ const styles = {
 
 class Title extends React.Component {
   render() {
-    let props = this.props;
-    let theme = this.context;
-    let lineHeight = props.isWin ? theme.winBarHeight : theme.barHeight;
-    let padding = props.isWin ? '0px 4px' : '0 70px';
-    let flex = props.flex;
+    let { theme, isWin, children, flex } = this.props;
+    let lineHeight = isWin ? theme.winBarHeight : theme.barHeight;
+    let padding = isWin ? '0px 4px' : '0 70px';
     let color = theme.barTitleColor;
     let fontFamily = theme.titleFontFamily;
     let fontWeight = theme.titleFontWeight;
@@ -30,12 +27,10 @@ class Title extends React.Component {
       <div
         style={{ ...styles.Title, lineHeight, padding, color, flex, fontFamily, fontWeight }}
       >
-        {props.children}
+        {children}
       </div>
     );
   }
 }
-
-Title.contextType = ThemeContext;
 
 export default Title;

@@ -8,10 +8,13 @@ export const defaultTemplate = [
     label: 'App',
     submenu: [
       {
-        id: '1',
+        id: 'hello',
         label: 'Disabled',
-        enabled: false,
-        after: '2'
+        enabled: true,
+        after: '2',
+        click: (item, win, e) => {
+          e.menuBar.setKeyById(item.id, 'enabled', !item.enabled);
+        }
       },
       {
         id: '2',

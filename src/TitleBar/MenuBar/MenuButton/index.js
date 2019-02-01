@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import css from './styles.css';
-import ThemeContext from '../../Theme';
 
 const styles = {
   Wrapper: {
     minWidth: 0
+  },
+  Label: {
+    whiteSpace: 'nowrap',
+    maxWidth: 100,
+    textOverflow: 'ellipsis',
+    overflow: 'hidden'
   },
   ButtonWrapper: {
     width: '100%',
@@ -42,10 +47,10 @@ export default class MenuButton extends Component {
       open,
       enabled,
       hovering,
-      rectRef
+      rectRef,
+      theme
     } = this.props;
 
-    let theme = this.context;
     let backgroundColor = open ? theme.menuBackgroundColor : ((hovering && enabled) ? theme.menuItemHoverBackground : 'transparent');
     let borderColor = open ? theme.menuBackgroundColor : '';
     let color = open ? theme.menuActiveTextColor : theme.menuItemTextColor;
@@ -82,7 +87,9 @@ export default class MenuButton extends Component {
                 opacity
               }}
             >
-              <span aria-hidden="true">{label}</span>
+              <span style={{
+                ...styles.Label
+              }} aria-hidden="true">{label}</span>
             </div>
           </button>
         </div>
@@ -110,8 +117,6 @@ MenuButton.propTypes = {
   onClick: PropTypes.func,
   rectRef: PropTypes.func
 };
-
-MenuButton.contextType = ThemeContext;
 
 MenuButton.defaultProps = {
   open: false,

@@ -4,7 +4,6 @@ import MenuItem from './MenuItem';
 import SubMenu, { SubMenuLabelStyle } from './SubMenu';
 import { defaultMenuItem } from '../../utils';
 import css from './styles.css';
-import ThemeContext from '../../Theme';
 
 const styles = {
   Wrapper: {
@@ -32,11 +31,11 @@ const styles = {
 class MenuList extends Component {
   constructor(props) {
     super(props);
-    this.generateMenu = this.generateMenu.bind(this);
+    this._generateMenu = this._generateMenu.bind(this);
   }
 
-  generateMenu(menu = []) {
-    const theme = this.context;
+  _generateMenu(menu = []) {
+    const { theme } = this.props;
     return menu.map((menuItem, i) => {
       if (menuItem.submenu || (menuItem.type && menuItem.type.toLowerCase() === 'submenu')) {
         const menuWidth = this.props.rect.left + theme.menuWidth;
@@ -57,6 +56,8 @@ class MenuList extends Component {
             level={1}
             right={right}
             renderSide={renderSide}
+            theme={theme}
+            menuRef={this.props.menuRef}
             changeCheckState={this.props.changeCheckState}
             menuItem={{ ...defaultMenuItem, ...menuItem, type: 'submenu' }}
             path={this.props.vertical ? [...this.props.path, i, 'submenu'] : [...this.props.path, 'submenu', i, 'submenu']}
@@ -68,6 +69,8 @@ class MenuList extends Component {
           key={`${i}${menuItem.label}`}
           menuItem={{ ...defaultMenuItem, ...menuItem }}
           changeCheckState={this.props.changeCheckState}
+          menuRef={this.props.menuRef}
+          theme={theme}
           indx={i}
           path={this.props.vertical ? [...this.props.path] : [...this.props.path, 'submenu']}
         />
@@ -78,10 +81,9 @@ class MenuList extends Component {
   render() {
     const {
       submenu,
-      rect
+      rect,
+      theme
     } = this.props;
-
-    const theme = this.context;
 
     return (
       <div
@@ -132,7 +134,7 @@ class MenuList extends Component {
                     Menu
                   </div>
               }
-              {this.generateMenu(submenu)}
+              {this._generateMenu(submenu)}
             </div>
           </div>
         </div>
@@ -158,7 +160,5 @@ MenuList.defaultProps = {
   path: [],
   changeCheckState: () => {}
 };
-
-MenuList.contextType = ThemeContext;
 
 export default MenuList;
