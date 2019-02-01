@@ -4,7 +4,6 @@ import MenuItem from './MenuItem';
 import SubMenu, { SubMenuLabelStyle } from './SubMenu';
 import { defaultMenuItem } from '../../utils';
 import css from './styles.css';
-import ThemeContext from '../../Theme';
 
 const styles = {
   Wrapper: {
@@ -36,7 +35,7 @@ class MenuList extends Component {
   }
 
   _generateMenu(menu = []) {
-    const theme = this.context;
+    const { theme } = this.props;
     return menu.map((menuItem, i) => {
       if (menuItem.submenu || (menuItem.type && menuItem.type.toLowerCase() === 'submenu')) {
         const menuWidth = this.props.rect.left + theme.menuWidth;
@@ -57,6 +56,7 @@ class MenuList extends Component {
             level={1}
             right={right}
             renderSide={renderSide}
+            theme={theme}
             menuRef={this.props.menuRef}
             changeCheckState={this.props.changeCheckState}
             menuItem={{ ...defaultMenuItem, ...menuItem, type: 'submenu' }}
@@ -70,6 +70,7 @@ class MenuList extends Component {
           menuItem={{ ...defaultMenuItem, ...menuItem }}
           changeCheckState={this.props.changeCheckState}
           menuRef={this.props.menuRef}
+          theme={theme}
           indx={i}
           path={this.props.vertical ? [...this.props.path] : [...this.props.path, 'submenu']}
         />
@@ -80,10 +81,9 @@ class MenuList extends Component {
   render() {
     const {
       submenu,
-      rect
+      rect,
+      theme
     } = this.props;
-
-    const theme = this.context;
 
     return (
       <div
@@ -160,7 +160,5 @@ MenuList.defaultProps = {
   path: [],
   changeCheckState: () => {}
 };
-
-MenuList.contextType = ThemeContext;
 
 export default MenuList;

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import MenuButton from './MenuButton';
 import MenuList from './MenuList';
 import { reduxSet, getProperty } from '../utils';
-import ThemeContext from '../Theme';
 import { buildMenu, getMenuItemPathById } from './utils';
 
 const menuIcon = (
@@ -116,7 +115,7 @@ class MenuBar extends Component {
   // checked: new state
   _changeCheckState(path, itemIndx, checked, isRadio = false) {
     if (!isRadio) {
-      this.changeKeyByPath([...path, itemIndx], 'checked', checked);
+      this._setKeyByPath([...path, itemIndx], 'checked', checked);
     } else {
       let newState = { ...this.state };
       getProperty(path, this.state).forEach((menuItem, indx) => {
@@ -179,12 +178,14 @@ class MenuBar extends Component {
           closed={!this.state.clicked || i !== this.state.focusing}
           enabled={menuItem.enabled}
           label={menuItem.label}
+          theme={this.props.theme}
         >
           {
             (this.state.clicked && i === this.state.focusing) &&
               <MenuList
-                changeCheckState={this._changeCheckState}
                 menuRef={this}
+                changeCheckState={this._changeCheckState}
+                theme={this.props.theme}
                 rect={this.menuItems[i].getBoundingClientRect()}
                 submenu={menuItem.submenu}
                 mainIndex={i}
@@ -224,6 +225,7 @@ class MenuBar extends Component {
         onFocus={() => {
           // idk - linting says it needs it? it has no purpose for me
         }}
+        theme={this.props.theme}
         rectRef={(ref) => this._setMenuRef(ref, 0)}
         hovering={this.state.hovering === 0}
         open={this.state.clicked && this.state.focusing === 0}
@@ -234,9 +236,10 @@ class MenuBar extends Component {
         {
           (this.state.clicked && this.state.focusing === 0) &&
             <MenuList
-              changeCheckState={this._changeCheckState}
               menuRef={this}
+              changeCheckState={this._changeCheckState}
               rect={this.menuItems[0].getBoundingClientRect()}
+              theme={this.props.theme}
               submenu={menuList}
               path={['menu']}
               vertical
@@ -247,7 +250,7 @@ class MenuBar extends Component {
   }
 
   render() {
-    let theme = this.context;
+    let { theme } = this.props;
     let color = theme.menuItemTextColor || theme.barColor;
     return (
       <div style={{ ...styles.Wrapper, color }}>
@@ -264,7 +267,5 @@ MenuBar.propTypes = {
 MenuBar.defaultProps = {
   menu: []
 };
-
-MenuBar.contextType = ThemeContext;
 
 export default MenuBar;

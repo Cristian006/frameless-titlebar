@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const darkTheme = {
   /* Title */
   barTheme: 'dark', // light, dark
@@ -64,22 +62,3 @@ export const lightTheme = {
   windowDefaultBackground: 'rgba(0, 0, 0, 0.1)',
   windowDefaultActive: 'rgba(0, 0, 0, 0.2)'
 };
-
-const ThemeContext = React.createContext(darkTheme);
-
-const ThemeConsumer = ThemeContext.Consumer;
-
-export const ThemeProvider = ThemeContext.Provider;
-
-export const withTheme = (Component) => {
-  const WithTheme = React.forwardRef((props, ref) => (
-    <ThemeConsumer>
-      {(theme) => {
-        return <Component {...props} theme={theme} ref={ref} />;
-      }}
-    </ThemeConsumer>
-  ));
-  return WithTheme;
-};
-
-export default ThemeContext;
