@@ -1,6 +1,6 @@
 {
   "name": "frameless-titlebar",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Customizable titlebar from frameless Electron desktop applications",
   "author": "Cristian006",
   "license": "MIT",
@@ -61,5 +61,21 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "keywords": [
+    "electron",
+    "titlebar",
+    "menubar",
+    "title",
+    "menu",
+    "frameless",
+    "custom",
+    "windows",
+    "mac",
+    "linux",
+    "cross-platform",
+    "crossplatform",
+    "desktop",
+    "app"
+	]
 }

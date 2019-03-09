@@ -4,7 +4,7 @@
 
 ![Main][main]
 
-A lot of people like developing apps with the [Electron](https://electronjs.org/) framework because it's cross platform. On Windows however, Electron applications are often left untouched when it comes to the title bar. In my opinion, the default menu and title bar don't work well with some stylized applications such as Atom, VS Code or Signal. Apps would look a little more unified if they used a custom menu. This is of course hugely inspired by GitHub's desktop application menu bar.
+A lot of people like developing apps with the [Electron](https://electronjs.org/) framework because it's cross platform. On Windows however, Electron applications are often left untouched when it comes to the title bar. In my opinion, the default menu and title bar don't exaclty work well with some stylized applications such as Atom, VS Code or Signal. Apps would look a little more unified if they used a custom stylized menu. This is of course hugely inspired by the GitHub desktop application's menu bar.
 
 ## Adding frameless-titlebar to your project
 
@@ -21,6 +21,7 @@ In your electron `app.js` file:
   mainWindow = new BrowserWindow({
     width: 1024,
     height: 728,
+    // this is important since currently there is no support for scrollable menus
     minWidth: 600, // set a min width!
     minHeight: 300, // and a min height!
     // Remove the window frame from windows applications
@@ -121,6 +122,7 @@ this.titleBar.setKeyById('menuItemId1', 'enabled', false);
 
 - [x] ~~Change Menu Item states - checkmarks, radios~~
 - [x] ~~Add `before`, `after`, and `id` properties to menu item objects to order the menu item list~~
+- [x] ~~Add stacked menu bar style where the menu bar is placed below the titlebar~~
 - [ ] Change accelerator string to proper OS eg: `CmdOrCtrl+Z` should show `⌘Z` on MacOS and `Ctrl+Z` on Windows #23
 - [ ] Scroll menu vertically when overflowing window height
 - [ ] Add a "more" menu item to the menu bar when the menu's items overflow the width of the menu bar
@@ -163,6 +165,21 @@ yarn dev
   icon={defaultIcon}
   app="Electron Title Bar"
   menu={defaultTemplate}
+/>
+```
+
+### Stacked Menu Bar
+
+![DefaultStacked][winDefaultStacked]
+
+```js
+<TitleBar
+  icon={defaultIcon}
+  app="Electron Title Bar"
+  menu={defaultTemplate}
+  theme={{
+    menuStyle: 'stacked'
+  }}
 />
 ```
 
@@ -272,6 +289,7 @@ If you see the example for [VSCode](#VSCode) you'll see the app name can be set 
 
 [main]: ./example/src/assets/Main.png "Main"
 [winDefault]: ./example/src/assets/win/Default.png "Default"
+[winDefaultStacked]: ./example/src/assets/win/Default_Stacked.png "DefaultStacked"
 [winGithub]: ./example/src/assets/win/Github.png "GitHub"
 [winSlack]: ./example/src/assets/win/Slack.png "Slack"
 [winSignal]: ./example/src/assets/win/Signal.png "Signal"

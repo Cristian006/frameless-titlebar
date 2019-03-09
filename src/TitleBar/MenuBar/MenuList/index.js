@@ -113,7 +113,7 @@ class MenuList extends Component {
             style={{
               ...styles.MenuFoldOut,
               background: theme.menuBackgroundColor,
-              boxShadow: theme.showBoxShadow ? theme.menuBoxShadow : ''
+              boxShadow: theme.menuShowBoxShadow ? theme.menuBoxShadow : ''
             }}
           >
             <div

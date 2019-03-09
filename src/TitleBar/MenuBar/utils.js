@@ -1,7 +1,11 @@
 import os from 'os';
+
+const modifiers = [
+  'CommandOrControl',
+  'CmdOrCtrl'
+];
 const CMD = '⌘';
 const CTRL = 'Ctrl';
-const CMDORCTRL = 'CommandOrControl';
 
 const topologicalSort = (original, graph) => {
   // Sort items topologically using a depth-first approach
@@ -126,11 +130,8 @@ export const getMenuItemPathById = (menu, id) => {
 }
 
 export const parseAccelerator = (accelerator) => {
-  const cmdIndex = accelerator.indexOf(CMDORCTRL);
-  if (cmdIndex > -1) {
-    const accel = [...accelerator];
-    accel.splice(cmdIndex, CMDORCTRL.length, os.platform() === 'darwin' ? CMD : CTRL);
-    return accel.join('');
-  }
-  return accelerator;
+  let re = new RegExp(modifiers.join('|'), 'gi');
+  return accelerator.replace(re, (matched) => {
+    return os.platform() === 'darwin' ? CMD : CTRL;
+  });
 };
