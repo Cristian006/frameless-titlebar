@@ -1,7 +1,7 @@
 export const darkTheme = {
   /* Title */
   barTheme: 'dark', // light, dark
-  barHeight: '22px', // Change this value if you set 'titleBarStyle' to 'hiddenInset'
+  barHeight: '22px', // defines the bar height for mac os
   winBarHeight: '28px',
   barColor: '#fff',
   barTitleColor: 'inherit',
@@ -14,7 +14,7 @@ export const darkTheme = {
   showIconDarLin: true,
 
   /* Menu */
-  menuStyle: 'horizontal', // horizontal, vertical
+  menuStyle: 'horizontal', // horizontal, vertical, stacked
   menuDimItems: true,
   menuDimOpacity: 0.6,
   menuDisabledOpacity: 0.3,

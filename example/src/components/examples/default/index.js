@@ -17,7 +17,8 @@ class Default extends Component {
           menu={defaultTemplate}
           app="Electron Titlebar"
           theme={{
-            barTheme: 'dark'
+            barTheme: 'dark',
+            menuStyle: 'stacked'
           }}
           platform={platform}
         />
