@@ -15,7 +15,6 @@ const styles = {
   Wrapper: {
     display: 'flex',
     WebkitAppRegion: 'no-drag',
-    maxWidth: 'calc(100% - 163px)'
   }
 };
 
@@ -252,8 +251,9 @@ class MenuBar extends Component {
   render() {
     let { theme } = this.props;
     let color = theme.menuItemTextColor || theme.barColor;
+    let maxWidth = theme.menuStyle === 'stacked' ? '100%' : 'calc(100% - 163px)';
     return (
-      <div style={{ ...styles.Wrapper, color }}>
+      <div style={{ ...styles.Wrapper, maxWidth, color }}>
         {
           (theme.menuStyle === 'vertical')
             ? this._generateVerticalMenu(this.state.menu)
