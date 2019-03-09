@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { darkTheme, lightTheme } from './Theme';
 import os from 'os';
@@ -45,7 +45,56 @@ class TitleBar extends Component {
     onBarDoubleClick
   }) {
     switch (platform) {
-      case 'win32': // win32
+      case 'win32': {
+        if (currentTheme.menuStyle === 'stacked') {
+          return (
+            <Fragment>
+              <Bar
+                isWin
+                theme={currentTheme}
+              >
+                <ResizeHandle top />
+                <ResizeHandle left />
+                {
+                  icon &&
+                  <Icon
+                    src={icon}
+                    onClick={onIconClick}
+                  />
+                }
+                {
+                  app &&
+                  <Title
+                    isWin
+                    theme={currentTheme}
+                    onClick={onTitleClick}
+                  >
+                    {app}
+                  </Title>
+                }
+                {children}
+                <WindowControls
+                  theme={currentTheme}
+                  disableMinimize={disableMinimize}
+                  disableMaximize={disableMaximize}
+                  onCloseClick={onCloseClick}
+                  onMinimizeClick={onMinimizeClick}
+                  onMaximizeClick={onMaximizeClick}
+                />
+              </Bar>
+              <Bar
+                isWin
+                theme={currentTheme}
+              >
+                <MenuBar
+                  ref={r => { this.Menu = r; }}
+                  theme={currentTheme}
+                  menu={menu}
+                />
+              </Bar>
+            </Fragment>
+          );
+        }
         return (
           <Bar
             isWin
@@ -97,6 +146,7 @@ class TitleBar extends Component {
             />
           </Bar>
         );
+      }
       default:
         return (
           <Bar

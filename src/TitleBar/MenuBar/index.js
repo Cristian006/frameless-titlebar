@@ -254,7 +254,11 @@ class MenuBar extends Component {
     let color = theme.menuItemTextColor || theme.barColor;
     return (
       <div style={{ ...styles.Wrapper, color }}>
-        {theme.menuStyle === 'horizontal' ? this._generateHorizontalMenu(this.state.menu) : this._generateVerticalMenu(this.state.menu)}
+        {
+          (theme.menuStyle === 'vertical')
+            ? this._generateVerticalMenu(this.state.menu)
+            : this._generateHorizontalMenu(this.state.menu)
+        }
       </div>
     );
   }
