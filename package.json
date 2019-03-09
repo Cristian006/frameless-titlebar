@@ -61,5 +61,21 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "keywords": [
+    "electron",
+    "titlebar",
+    "menubar",
+    "title",
+    "menu",
+    "frameless",
+    "custom",
+    "windows",
+    "mac",
+    "linux",
+    "cross-platform",
+    "crossplatform",
+    "desktop",
+    "app"
+	]
 }
