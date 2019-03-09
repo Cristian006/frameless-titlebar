@@ -25,8 +25,8 @@ export default class WindowControls extends Component {
   }
 
   componentDidMount() {
-    currentWindow.addListener('maximize', () => this.setState({ isMaximized: true }));
-    currentWindow.addListener('unmaximize', () => this.setState({ isMaximized: false }));
+    currentWindow.on('maximize', () => this.setState({ isMaximized: true }));
+    currentWindow.on('unmaximize', () => this.setState({ isMaximized: false }));
   }
 
   componentWillUnmount() {
