@@ -25,8 +25,9 @@ class Bar extends React.Component {
   handleDoubleClick(e) {
     let { isWin } = this.props;
     if (!isWin) {
-      let bounds = electron.screen.getPrimaryDisplay().workArea;
-      currentWindow.setBounds(bounds, true);
+      let winRect = currentWindow.getBounds();
+      let { workArea } = electron.screen.getDisplayNearestPoint({ x: winRect.x, y: winRect.y });
+      currentWindow.setBounds(workArea, true);
     }
   }
 
