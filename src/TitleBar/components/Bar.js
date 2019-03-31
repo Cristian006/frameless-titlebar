@@ -16,6 +16,7 @@ const styles = {
 };
 
 const currentWindow = electron.remote.getCurrentWindow();
+
 class Bar extends React.Component {
   constructor(props) {
     super(props);
@@ -23,12 +24,9 @@ class Bar extends React.Component {
   }
 
   handleDoubleClick(e) {
-    let { isWin } = this.props;
-    if (!isWin) {
-      let winRect = currentWindow.getBounds();
-      let { workArea } = electron.screen.getDisplayNearestPoint({ x: winRect.x, y: winRect.y });
-      currentWindow.setBounds(workArea, true);
-    }
+    let winRect = currentWindow.getBounds();
+    let { workArea } = electron.screen.getDisplayNearestPoint({ x: winRect.x, y: winRect.y });
+    currentWindow.setBounds(workArea, true);
   }
 
   render() {
