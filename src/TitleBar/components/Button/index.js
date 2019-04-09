@@ -29,7 +29,13 @@ class Button extends Component {
       disabled,
       close,
       onClick,
-      theme
+      theme,
+      backgroundColor,
+      color,
+      backgroundHover,
+      colorHover,
+      colorActive,
+      backgroundActive,
     } = this.props;
 
     const {
@@ -37,25 +43,25 @@ class Button extends Component {
       focused
     } = this.state;
 
-    let backgroundColor = 'transparent';
+    let bgColor = backgroundColor || 'transparent';
     let opacity = 0.5;
     let transition = 'background-color 0.25s ease';
-    let color = theme.windowControlsColor;
+    let buttonColor = color || theme.windowControlsColor;
     if (hovering) {
       opacity = 1;
-      color = close ? theme.windowCloseHover : color;
-      backgroundColor = close ? theme.windowCloseBackground : theme.windowDefaultBackground;
+      buttonColor = colorHover || (close ? theme.windowCloseHover : color);
+      bgColor = backgroundHover || (close ? theme.windowCloseBackground : theme.windowDefaultBackground);
     } else if (focused) {
       opacity = 1;
-      color = close ? theme.windowCloseHover : color;
-      backgroundColor = close ? theme.windowCloseActive : theme.windowDefaultActive;
+      buttonColor = colorActive || (close ? theme.windowCloseHover : color);
+      bgColor = backgroundActive || (close ? theme.windowCloseActive : theme.windowDefaultActive);
       transition = 'none';
     }
 
     return (
       <button
         className={styles.Button}
-        style={{ backgroundColor, opacity, transition, color }}
+        style={{ backgroundColor: bgColor, opacity, transition, color: buttonColor }}
         onFocus={this.toggleFocus}
         onBlur={this.toggleFocus}
         onMouseEnter={this.toggleHover}

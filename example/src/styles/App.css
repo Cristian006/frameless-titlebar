@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Dosis');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
 html, body, #root {
   font-family: 'Dosis', monospace, sans-serif;
   margin: 0;

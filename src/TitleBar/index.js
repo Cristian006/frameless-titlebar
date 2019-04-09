@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { darkTheme, lightTheme } from './Theme';
+import electron from 'electron';
 import os from 'os';
 import MenuBar from './MenuBar';
 import WindowControls from './WindowControls';
@@ -11,12 +12,43 @@ import {
   Icon
 } from './components';
 
+const currentWindow = electron.remote.getCurrentWindow();
+
 class TitleBar extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      inActive: !currentWindow.isFocused()
+    };
     this.setKeyById = this.setKeyById.bind(this);
     this.getKeyById = this.getKeyById.bind(this);
     this._generatePlatformChildren = this._generatePlatformChildren.bind(this);
+    this._handleBlur = this._handleBlur.bind(this);
+    this._handleFocus = this._handleFocus.bind(this);
+  }
+
+  componentDidMount() {
+    currentWindow.on('focus', this._handleFocus);
+    currentWindow.on('blur', this._handleBlur);
+  }
+
+  componentWillUnmount() {
+    currentWindow.removeListener('focus', this._handleFocus);
+    currentWindow.removeListener('blur', this._handleBlur);
+  }
+
+  _handleBlur() {
+    this._setInActive(true);
+  }
+
+  _handleFocus() {
+    this._setInActive(false);
+  }
+
+  _setInActive(inActive) {
+    this.setState({
+      inActive
+    });
   }
 
   setKeyById(id, key, value) {
@@ -35,145 +67,137 @@ class TitleBar extends Component {
     menu,
     children,
     currentTheme,
-    onIconClick,
-    onTitleClick,
-    onCloseClick,
-    onMinimizeClick,
-    onMaximizeClick,
     disableMaximize,
     disableMinimize,
-    onBarDoubleClick
+    windowActions,
+    inActive,
   }) {
-    switch (platform) {
-      case 'win32': {
-        if (currentTheme.menuStyle === 'stacked') {
-          return (
-            <Fragment>
-              <Bar
-                isWin
-                theme={currentTheme}
-              >
-                <ResizeHandle top />
-                <ResizeHandle left />
-                {
-                  icon &&
-                  <Icon
-                    src={icon}
-                    onClick={onIconClick}
-                  />
-                }
-                {
-                  app &&
-                  <Title
-                    isWin
-                    theme={currentTheme}
-                    onClick={onTitleClick}
-                  >
-                    {app}
-                  </Title>
-                }
-                {children}
-                <WindowControls
-                  theme={currentTheme}
-                  disableMinimize={disableMinimize}
-                  disableMaximize={disableMaximize}
-                  onCloseClick={onCloseClick}
-                  onMinimizeClick={onMinimizeClick}
-                  onMaximizeClick={onMaximizeClick}
-                />
-              </Bar>
-              <Bar
-                isWin
-                theme={currentTheme}
-              >
-                <MenuBar
-                  ref={r => { this.Menu = r; }}
-                  theme={currentTheme}
-                  menu={menu}
-                />
-              </Bar>
-            </Fragment>
-          );
-        }
+    if (platform === 'win32') {
+      if (currentTheme.menuStyle === 'stacked') {
         return (
-          <Bar
-            isWin
-            theme={currentTheme}
-          >
-            <ResizeHandle top />
-            <ResizeHandle left />
-            {
-              currentTheme.menuStyle === 'vertical' &&
-                <MenuBar
-                  ref={r => { this.Menu = r; }}
-                  theme={currentTheme}
-                  menu={menu}
-                />
-            }
-            {
-              icon &&
-              <Icon
-                src={icon}
-                onClick={onIconClick}
-              />
-            }
-            {
-              app &&
-              <Title
-                isWin
-                theme={currentTheme}
-                onClick={onTitleClick}
-              >
-                {app}
-              </Title>
-            }
-            {
-              currentTheme.menuStyle === 'horizontal' &&
-                <MenuBar
-                  ref={r => { this.Menu = r; }}
-                  theme={currentTheme}
-                  menu={menu}
-                />
-            }
-            {children}
-            <WindowControls
+          <Fragment>
+            <Bar
+              isWin
+              inActive={inActive}
               theme={currentTheme}
-              disableMinimize={disableMinimize}
-              disableMaximize={disableMaximize}
-              onCloseClick={onCloseClick}
-              onMinimizeClick={onMinimizeClick}
-              onMaximizeClick={onMaximizeClick}
-            />
-          </Bar>
+            >
+              <ResizeHandle top />
+              <ResizeHandle left />
+              {
+                icon &&
+                <Icon
+                  src={icon}
+                />
+              }
+              {
+                app &&
+                <Title
+                  isWin
+                  inActive={inActive}
+                  theme={currentTheme}
+                >
+                  {app}
+                </Title>
+              }
+              {children}
+              <WindowControls
+                theme={currentTheme}
+                disableMinimize={disableMinimize}
+                disableMaximize={disableMaximize}
+                windowActions={windowActions}
+              />
+            </Bar>
+            <Bar
+              isWin
+              inActive={inActive}
+              theme={currentTheme}
+            >
+              <MenuBar
+                ref={r => { this.Menu = r; }}
+                inActive={inActive}
+                theme={currentTheme}
+                menu={menu}
+              />
+            </Bar>
+          </Fragment>
         );
       }
-      default:
-        return (
-          <Bar
-            onDoubleClick={onBarDoubleClick}
-            theme={currentTheme}
-          >
-            <ResizeHandle top />
-            <ResizeHandle left />
-            {
-              (title || app) &&
-              <Title
+      return (
+        <Bar
+          isWin
+          inActive={inActive}
+          theme={currentTheme}
+        >
+          <ResizeHandle top />
+          <ResizeHandle left />
+          {
+            currentTheme.menuStyle === 'vertical' &&
+              <MenuBar
+                ref={r => { this.Menu = r; }}
                 theme={currentTheme}
-                onClick={onTitleClick}
-                flex={1}
-              >
-                {
-                  (icon && currentTheme.showIconDarLin) &&
-                  <Icon
-                    src={icon}
-                    onClick={onIconClick}
-                  />
-                }
-                {(title || app)}
-              </Title>
-            }
-          </Bar>
-        );
+                inActive={inActive}
+                menu={menu}
+              />
+          }
+          {
+            icon &&
+            <Icon
+              src={icon}
+            />
+          }
+          {
+            app &&
+            <Title
+              isWin
+              theme={currentTheme}
+              inActive={inActive}
+            >
+              {app}
+            </Title>
+          }
+          {
+            currentTheme.menuStyle === 'horizontal' &&
+              <MenuBar
+                ref={r => { this.Menu = r; }}
+                theme={currentTheme}
+                inActive={inActive}
+                menu={menu}
+              />
+          }
+          {children}
+          <WindowControls
+            theme={currentTheme}
+            disableMinimize={disableMinimize}
+            disableMaximize={disableMaximize}
+            windowActions={windowActions}
+          />
+        </Bar>
+      );
+    } else {
+      return (
+        <Bar
+          theme={currentTheme}
+        >
+          <ResizeHandle top />
+          <ResizeHandle left />
+          {
+            (title || app) &&
+            <Title
+              theme={currentTheme}
+              inActive={inActive}
+              flex={1}
+            >
+              {
+                (icon && currentTheme.showIconDarLin) &&
+                <Icon
+                  src={icon}
+                />
+              }
+              {(title || app)}
+            </Title>
+          }
+        </Bar>
+      );
     }
   }
 
@@ -183,6 +207,10 @@ class TitleBar extends Component {
       platform
     } = this.props;
 
+    const {
+      inActive
+    } = this.state;
+
     const currentTheme = {
       ...(theme.barTheme === 'light' ? lightTheme : darkTheme),
       ...theme
@@ -191,6 +219,7 @@ class TitleBar extends Component {
     return this._generatePlatformChildren({
       ...this.props,
       currentTheme,
+      inActive,
       platform: platform === 'default' ? os.platform() : (platform || os.platform())
     });
   }
@@ -206,13 +235,7 @@ TitleBar.propTypes = {
   menu: PropTypes.array,
   /* Window */
   disableMinimize: PropTypes.bool,
-  disableMaximize: PropTypes.bool,
-  /* Functions */
-  onIconClick: PropTypes.func,
-  onTitleClick: PropTypes.func,
-  onCloseClick: PropTypes.func,
-  onMinimizeClick: PropTypes.func,
-  onMaximizeClick: PropTypes.func,
+  disableMaximize: PropTypes.bool
 };
 
 TitleBar.defaultProps = {
@@ -230,15 +253,7 @@ TitleBar.defaultProps = {
   disableMaximize: false,
 
   /* Menu */
-  menu: [],
-
-  /* Click Listeners */
-  onIconClick: () => {},
-  onTitleClick: () => {},
-  onCloseClick: () => {},
-  onMinimizeClick: () => {},
-  onMaximizeClick: () => {},
-  onBarDoubleClick: () => {}
+  menu: []
 };
 
 export default TitleBar;

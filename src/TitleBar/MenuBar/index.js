@@ -4,12 +4,7 @@ import MenuButton from './MenuButton';
 import MenuList from './MenuList';
 import { reduxSet, getProperty } from '../utils';
 import { buildMenu, getMenuItemPathById } from './utils';
-
-const menuIcon = (
-  <svg version="1.1" width="24px" height="24px" viewBox="0 0 32 32">
-    <path d="M 4 7 L 4 9 L 28 9 L 28 7 Z M 4 15 L 4 17 L 28 17 L 28 15 Z M 4 23 L 4 25 L 28 25 L 28 23 Z "/>
-  </svg>
-);
+import { MenuIcon } from '../utils/icons';
 
 const styles = {
   Wrapper: {
@@ -229,7 +224,7 @@ class MenuBar extends Component {
         hovering={this.state.hovering === 0}
         open={this.state.clicked && this.state.focusing === 0}
         closed={!this.state.clicked || this.state.focusing !== 0}
-        label={menuIcon}
+        label={<MenuIcon />}
         enabled
       >
         {
@@ -249,11 +244,12 @@ class MenuBar extends Component {
   }
 
   render() {
-    let { theme } = this.props;
+    let { theme, inActive } = this.props;
     let color = theme.menuItemTextColor || theme.barColor;
+    let opacity = inActive ? theme.inActiveOpacity : 1;
     let maxWidth = theme.menuStyle === 'stacked' ? '100%' : 'calc(100% - 163px)';
     return (
-      <div style={{ ...styles.Wrapper, maxWidth, color }}>
+      <div style={{ ...styles.Wrapper, maxWidth, color, opacity }}>
         {
           (theme.menuStyle === 'vertical')
             ? this._generateVerticalMenu(this.state.menu)

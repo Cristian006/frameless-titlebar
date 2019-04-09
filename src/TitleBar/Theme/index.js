@@ -2,7 +2,7 @@ export const darkTheme = {
   /* Title */
   barTheme: 'dark', // light, dark
   barHeight: '22px', // defines the bar height for mac os
-  winBarHeight: '28px',
+  winBarHeight: '28px', // defines the bar height for windows os
   barColor: '#fff',
   barTitleColor: 'inherit',
   barBackgroundColor: '#24292e',
@@ -10,9 +10,9 @@ export const darkTheme = {
   titleFontFamily: 'inherit',
   titleFontWeight: 'normal',
   barBorderBottom: '1px solid #000',
+  inActiveOpacity: 0.6, // dim menu bar & title color when window is not in focus
   // should the icon be shown in the center of the toolbar on Mac/Linux apps alongside the app or title property
   showIconDarLin: true,
-
   /* Menu */
   menuStyle: 'horizontal', // horizontal, vertical, stacked
   menuDimItems: true,
@@ -35,7 +35,6 @@ export const darkTheme = {
   menuOverlayBackground: 'black',
   menuOverlayOpacity: 0.4,
   menuSeparatorColor: '#e1e4e8',
-
   /* WindowControls */
   windowControlsColor: '#fff',
   windowCloseHover: '#fff',
