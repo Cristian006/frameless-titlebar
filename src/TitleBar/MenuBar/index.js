@@ -8,8 +8,13 @@ import { MenuIcon } from '../utils/icons';
 
 const styles = {
   Wrapper: {
+    height: '100%',
     display: 'flex',
     WebkitAppRegion: 'no-drag',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    flexShrink: 1,
+    boxSizing: 'border-box'
   }
 };
 
@@ -247,9 +252,8 @@ class MenuBar extends Component {
     let { theme, inActive } = this.props;
     let color = theme.menuItemTextColor || theme.barColor;
     let opacity = inActive ? theme.inActiveOpacity : 1;
-    let maxWidth = theme.menuStyle === 'stacked' ? '100%' : 'calc(100% - 163px)';
     return (
-      <div style={{ ...styles.Wrapper, maxWidth, color, opacity }}>
+      <div style={{ ...styles.Wrapper, color, opacity }}>
         {
           (theme.menuStyle === 'vertical')
             ? this._generateVerticalMenu(this.state.menu)
@@ -261,7 +265,8 @@ class MenuBar extends Component {
 }
 
 MenuBar.propTypes = {
-  menu: PropTypes.array
+  menu: PropTypes.array,
+  inActive: PropTypes.bool
 };
 
 MenuBar.defaultProps = {

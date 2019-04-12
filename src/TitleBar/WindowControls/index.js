@@ -9,7 +9,7 @@ import {
   MaximizeIcon,
   RestoreIcon,
   CloseIcon
-} from './icons';
+} from '../utils/icons';
 
 const currentWindow = electron.remote.getCurrentWindow();
 

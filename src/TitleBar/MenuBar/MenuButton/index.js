@@ -4,7 +4,9 @@ import css from './styles.css';
 
 const styles = {
   Wrapper: {
-    minWidth: 0
+    minWidth: 0,
+    flexShrink: 0,
+    height: '100%'
   },
   Label: {
     whiteSpace: 'nowrap',

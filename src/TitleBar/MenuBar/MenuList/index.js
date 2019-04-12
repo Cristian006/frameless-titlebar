@@ -9,15 +9,18 @@ const styles = {
   Wrapper: {
     zIndex: 8,
     position: 'absolute',
-    width: '100%',
     overflow: 'hidden',
-    left: 0
+    left: 0,
+    right: 0,
+    bottom: 0
   },
   FoldOut: {
     background: 'transparent',
     pointerEvents: 'none',
     position: 'absolute',
-    top: 0
+    top: 0,
+    bottom: 0,
+    left: 0
   },
   MenuPane: {
     pointerEvents: 'all'
@@ -89,13 +92,17 @@ class MenuList extends Component {
       <div
         style={{
           ...styles.Wrapper,
-          height: `calc(100% - ${rect.bottom}px)`,
           top: `${rect.bottom}px`
         }}
       >
         <div
           className={css.MenuListOverlay}
           style={{
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
             background: theme.menuOverlayBackground,
             opacity: theme.menuOverlayOpacity
           }}
@@ -105,8 +112,8 @@ class MenuList extends Component {
           style={{
             ...styles.FoldOut,
             marginLeft: rect.left,
-            maxWidth: `calc(100% - ${rect.left}px)`,
-            color: theme.menuActiveTextColor
+            // maxWidth: `calc(100% - ${rect.left}px)`,
+            color: theme.menuActiveTextColor,
           }}
         >
           <div

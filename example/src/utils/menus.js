@@ -166,6 +166,71 @@ export const defaultTemplate = [
         click: () => { openExternal('https://github.com/Cristian006/frameless-titlebar'); }
       }
     ]
+  },
+  {
+    label: 'Scrollable',
+    submenu: [
+      {
+        label: 'Random 1'
+      },
+      {
+        label: 'Random 2'
+      },
+      {
+        label: 'Random 3'
+      },
+      {
+        label: 'Random 4'
+      },
+      {
+        label: 'Random 5'
+      },
+      {
+        label: 'Random 6'
+      },
+      {
+        label: 'Random 7'
+      },
+      {
+        label: 'Random 8'
+      },
+      {
+        label: 'Random 9'
+      },
+      {
+        label: 'Random 10'
+      },
+      {
+        label: 'Random 11'
+      },
+      {
+        label: 'Random 12'
+      },
+      {
+        label: 'Random 13'
+      },
+      {
+        label: 'Random 14'
+      },
+      {
+        label: 'Random 15'
+      },
+      {
+        label: 'Random 16'
+      },
+      {
+        label: 'Random 17'
+      },
+      {
+        label: 'Random 18'
+      },
+      {
+        label: 'Random 19'
+      },
+      {
+        label: 'Random 20'
+      }
+    ]
   }
 ];
 
