@@ -6,7 +6,9 @@ const styles = {
   Wrapper: {
     minWidth: 0,
     flexShrink: 0,
-    height: '100%'
+    height: '100%',
+    boxSizing: 'border-box',
+    outline: 'none'
   },
   Label: {
     whiteSpace: 'nowrap',
@@ -69,6 +71,8 @@ export default class MenuButton extends Component {
         onFocus={onFocus}
         onClick={onClick}
         ref={rectRef}
+        tabIndex="-1"
+        aria-haspopup={true}
       >
         {this.props.children}
         <div
@@ -89,9 +93,14 @@ export default class MenuButton extends Component {
                 opacity
               }}
             >
-              <span style={{
-                ...styles.Label
-              }} aria-hidden="true">{label}</span>
+              <span
+                style={{
+                  ...styles.Label
+                }}
+                aria-hidden="true"
+              >
+                {label}
+              </span>
             </div>
           </button>
         </div>

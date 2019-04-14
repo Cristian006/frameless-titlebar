@@ -11,16 +11,25 @@ const radioChecked = <svg width="1792" height="1792" viewBox="0 0 1792 1792" xml
 const arrow = <svg version="1.1" width="24px" height="24px"><g id="Rounded"><path d="M9.29,6.71L9.29,6.71c-0.39,0.39-0.39,1.02,0,1.41L13.17,12l-3.88,3.88c-0.39,0.39-0.39,1.02,0,1.41l0,0c0.39,0.39,1.02,0.39,1.41,0l4.59-4.59c0.39-0.39,0.39-1.02,0-1.41l-4.59-4.59C10.32,6.32,9.68,6.32,9.29,6.71z" /></g></svg>;
 
 const styles = {
-  Wrapper: {
-    position: 'relative',
+  Container: {
+    position: 'static',
+    overflow: 'visible',
+    padding: 0,
+    transform: 'none',
     display: 'flex',
-    alignItems: 'center',
-    minWidth: 0,
+    cursor: 'default',
+  },
+  Wrapper: {
     fontSize: 12,
     padding: '0px 10px',
-    height: 30,
+    height: '30px',
     color: 'inherit',
-    cursor: 'default'
+    flex: '1 1 auto',
+    display: 'flex',
+    alignItems: 'center',
+    position: 'relative',
+    textDecoration: 'none',
+    cursor: 'default',
   },
   Label: {
     flexGrow: 1,
@@ -28,7 +37,8 @@ const styles = {
     marginRight: 10,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
+    cursor: 'default',
   },
   Accelerator: {
     flexShrink: 0,
@@ -180,9 +190,10 @@ class MenuItem extends Component {
     }
 
     return (
-      <div
+      <li
+        ref={r => { this.item = r; }}
         style={{
-          ...styles.Wrapper,
+          ...styles.Contianer,
           color: hovering ? theme.menuTextHighlightColor : '',
           opacity: menuItem.enabled ? '1' : '0.3',
           backgroundColor: hovering ? theme.menuHighlightColor : ''
@@ -190,36 +201,39 @@ class MenuItem extends Component {
         onMouseEnter={this._handleMouseEnter}
         onMouseLeave={this._handleMouseLeave}
         onClick={this._handleClick}
+        role="option"
       >
-        <div
-          className={css.StatusIcon}
-          style={{
-            color: hovering ? theme.menuTextHighlightColor : (theme.accentStatusIcon ? theme.menuHighlightColor : theme.menuActiveTextColor)
-          }}
-        >
-          {statusIcon}
-        </div>
-        <span style={styles.Label}>
-          {menuItem.label}
-        </span>
-        <span
-          style={{
-            ...styles.Accelerator,
-            color: hovering ? theme.menuTextHighlightColor : theme.menuAcceleratorColor
-          }}
-        >
-          {parseAccelerator(menuItem.accelerator)}
-        </span>
-        {
-          (isSubMenu) &&
+        <a style={styles.Wrapper}>
           <div
-            className={css.SubMenuArrow}
+            className={css.StatusIcon}
+            style={{
+              color: hovering ? theme.menuTextHighlightColor : (theme.accentStatusIcon ? theme.menuHighlightColor : theme.menuActiveTextColor)
+            }}
           >
-            {arrow}
+            {statusIcon}
           </div>
-        }
+          <span style={styles.Label}>
+            {menuItem.label}
+          </span>
+          <span
+            style={{
+              ...styles.Accelerator,
+              color: hovering ? theme.menuTextHighlightColor : theme.menuAcceleratorColor
+            }}
+          >
+            {parseAccelerator(menuItem.accelerator)}
+          </span>
+          {
+            (isSubMenu) &&
+            <div
+              className={css.SubMenuArrow}
+            >
+              {arrow}
+            </div>
+          }
+        </a>
         {(isSubMenu && this.state.hovering) && children}
-      </div>
+      </li>
     );
   }
 }

@@ -4,6 +4,7 @@ import MenuItem from './MenuItem';
 import SubMenu, { SubMenuLabelStyle } from './SubMenu';
 import { defaultMenuItem } from '../../utils';
 import css from './styles.css';
+import MenuListContainer from './MenuListContainer';
 
 const styles = {
   Wrapper: {
@@ -16,14 +17,16 @@ const styles = {
   },
   FoldOut: {
     background: 'transparent',
-    pointerEvents: 'none',
     position: 'absolute',
     top: 0,
     bottom: 0,
     left: 0
   },
   MenuPane: {
-    pointerEvents: 'all'
+    pointerEvents: 'all',
+    listStyleType: 'none',
+    margin: 0,
+    padding: 0,
   },
   MenuFoldOut: {
     paddingTop: 5,
@@ -108,43 +111,24 @@ class MenuList extends Component {
           }}
           tabIndex="-1"
         />
-        <div
-          style={{
-            ...styles.FoldOut,
-            marginLeft: rect.left,
-            // maxWidth: `calc(100% - ${rect.left}px)`,
-            color: theme.menuActiveTextColor,
-          }}
+        <MenuListContainer
+          theme={theme}
+          rect={{left: rect.left, top: 0}}
         >
-          <div
-            style={{
-              ...styles.MenuFoldOut,
-              background: theme.menuBackgroundColor,
-              boxShadow: theme.menuShowBoxShadow ? theme.menuBoxShadow : ''
-            }}
-          >
-            <div
-              style={{
-                ...styles.MenuPane,
-                width: theme.menuWidth
-              }}
-            >
-              {
-                (theme.menuStyle === 'vertical' && theme.menuSubLabelHeaders) &&
-                  <div
-                    style={{
-                      ...SubMenuLabelStyle,
-                      color: theme.menuSubLabelColor
-                    }}
-                    key="main-menu-sublabel"
-                  >
-                    Menu
-                  </div>
-              }
-              {this._generateMenu(submenu)}
-            </div>
-          </div>
-        </div>
+          {
+            (theme.menuStyle === 'vertical' && theme.menuSubLabelHeaders) &&
+              <div
+                style={{
+                  ...SubMenuLabelStyle,
+                  color: theme.menuSubLabelColor
+                }}
+                key="main-menu-sublabel"
+              >
+                Menu
+              </div>
+          }
+          {this._generateMenu(submenu)}
+        </MenuListContainer>
       </div>
     );
   }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import MenuItem from '../MenuItem';
 import { defaultMenuItem } from '../../../utils';
+import MenuListContainer from '../MenuListContainer';
 
 export const SubMenuLabelStyle = {
   height: '20px',
@@ -13,14 +14,13 @@ export const SubMenuLabelStyle = {
   whiteSpace: 'nowrap',
   direction: 'rtl',
   fontSize: '1em',
-  textAlign: 'left'
+  textAlign: 'left',
+  cursor: 'default',
 };
 
 const styles = {
   SubMenuWrapper: {
     position: 'absolute',
-    width: '100%',
-    padding: '5px 0px'
   }
 };
 
@@ -94,20 +94,13 @@ class SubMenu extends Component {
     return (
       <MenuItem
         menu={this.props.menu}
+        ref={r => this.item = r}
         theme={theme}
         menuItem={{ ...defaultMenuItem, ...menuItem }}
       >
-        <div
-          style={{
-            ...styles.SubMenuWrapper,
-            top: theme.menuSubLabelHeaders ? '-25px' : '-5px',
-            left: renderSide === 'left' ? '-100%' : '100%',
-            maxWidth: theme.menuWidth,
-            backgroundColor: theme.menuBackgroundColor,
-            color: theme.menuActiveTextColor,
-            zIndex: level + 8,
-            boxShadow: theme.menuShowBoxShadow ? theme.menuBoxShadow : ''
-          }}
+        <MenuListContainer
+          theme={theme}
+          rect={{left: renderSide === 'left' ? '-100%' : '100%', top: '0px'}}
         >
           {
             theme.menuSubLabelHeaders &&
@@ -123,7 +116,7 @@ class SubMenu extends Component {
           {
             this._generateMenu(menuItem.submenu)
           }
-        </div>
+        </MenuListContainer>
       </MenuItem>
     );
   }

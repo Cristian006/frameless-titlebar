@@ -253,7 +253,10 @@ class MenuBar extends Component {
     let color = theme.menuItemTextColor || theme.barColor;
     let opacity = inActive ? theme.inActiveOpacity : 1;
     return (
-      <div style={{ ...styles.Wrapper, color, opacity }}>
+      <div
+        style={{ ...styles.Wrapper, color, opacity }}
+        role="menubar"
+      >
         {
           (theme.menuStyle === 'vertical')
             ? this._generateVerticalMenu(this.state.menu)
