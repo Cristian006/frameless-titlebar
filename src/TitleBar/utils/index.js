@@ -1,5 +1,19 @@
 import isEqual from 'lodash.isequal';
 
+export const debounce = (func, wait, immediate) => {
+  var timeout;
+  return function() {
+    var context = this, args = arguments;
+    var later = function() {
+      if (!immediate) func.apply(context, args);
+    };
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
+};
+
 export const getProperty = (path, obj) => path.reduce((xs, x) => (xs && xs[x]) ? xs[x] : null, obj);
 
 export const reduxSet = (obj, path, val) => {
@@ -64,7 +78,7 @@ export const darkTheme = {
   menuDimItems: true,
   menuDimOpacity: 0.6,
   menuDisabledOpacity: 0.3,
-  menuWidth: 240,
+  menuMinWidth: 240,
   menuBackgroundColor: '#fff',
   menuItemTextColor: '#fff',
   menuItemHoverBackground: 'rgba(255,255,255,0.3)',

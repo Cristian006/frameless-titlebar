@@ -37,18 +37,18 @@ class SubMenu extends Component {
         // create submenu item
         const windowWidth = window.innerWidth;
         let renderSide = 'right';
-        let right = this.props.right + theme.menuWidth;
+        let right = this.props.right + theme.menuMinWidth;
 
         // Render menu to the left if the right side of the
         // current menu is greater than the current window width
         if (right > windowWidth) {
-          if (theme.menuWidth < (this.props.right - theme.menuWidth)) {
+          if (theme.menuMinWidth < (this.props.right - theme.menuMinWidth)) {
             renderSide = 'left';
-            right = this.props.right - theme.menuWidth;
+            right = this.props.right - theme.menuMinWidth;
           } else {
             // check wich side has more space and zero it out to the right or left
             const rightDiff = windowWidth - right;
-            const leftDiff = this.props.right - theme.menuWidth;
+            const leftDiff = this.props.right - theme.menuMinWidth;
             if (rightDiff < leftDiff) {
               // zero out to the right
             }
@@ -86,7 +86,6 @@ class SubMenu extends Component {
   render() {
     const {
       menuItem,
-      level,
       renderSide,
       theme
     } = this.props;
@@ -94,7 +93,6 @@ class SubMenu extends Component {
     return (
       <MenuItem
         menu={this.props.menu}
-        ref={r => this.item = r}
         theme={theme}
         menuItem={{ ...defaultMenuItem, ...menuItem }}
       >

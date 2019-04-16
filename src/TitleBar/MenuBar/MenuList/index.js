@@ -12,8 +12,16 @@ const styles = {
     position: 'absolute',
     overflow: 'hidden',
     left: 0,
+    top: 0,
     right: 0,
     bottom: 0
+  },
+  Overlay: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
   FoldOut: {
     background: 'transparent',
@@ -41,19 +49,20 @@ class MenuList extends Component {
   }
 
   _generateMenu(menu = []) {
-    const { theme } = this.props;
+    const { theme, parentRef } = this.props;
+    const rect = parentRef.getBoundingClientRect();
     return menu.map((menuItem, i) => {
       if (menuItem.submenu || (menuItem.type && menuItem.type.toLowerCase() === 'submenu')) {
-        const menuWidth = this.props.rect.left + theme.menuWidth;
+        const menuMinWidth = rect.left + theme.menuMinWidth;
         const windowWidth = window.innerWidth;
         let renderSide = 'right';
-        let right = menuWidth + theme.menuWidth;
+        let right = menuMinWidth + theme.menuMinWidth;
 
         // Render menu to the left if the right side of the
         // current menu is greater than the current window width
-        if (right > windowWidth && theme.menuWidth < this.props.rect.left) {
+        if (right > windowWidth && theme.menuMinWidth < rect.left) {
           renderSide = 'left';
-          right = menuWidth - theme.menuWidth;
+          right = menuMinWidth - theme.menuMinWidth;
         }
 
         return (
@@ -87,25 +96,22 @@ class MenuList extends Component {
   render() {
     const {
       submenu,
-      rect,
       theme
     } = this.props;
+
+    const rect = this.props.parentRef.getBoundingClientRect();
 
     return (
       <div
         style={{
           ...styles.Wrapper,
-          top: `${rect.bottom}px`
+          top: rect.bottom
         }}
       >
         <div
           className={css.MenuListOverlay}
           style={{
-            position: 'absolute',
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
+            ...styles.Overlay,
             background: theme.menuOverlayBackground,
             opacity: theme.menuOverlayOpacity
           }}
@@ -137,12 +143,6 @@ class MenuList extends Component {
 MenuList.propTypes = {
   submenu: PropTypes.array,
   path: PropTypes.array,
-  rect: PropTypes.shape({
-    height: PropTypes.number,
-    width: PropTypes.number,
-    x: PropTypes.number,
-    y: PropTypes.number
-  }).isRequired,
   changeCheckState: PropTypes.func
 };
 

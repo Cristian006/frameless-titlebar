@@ -63,12 +63,12 @@ export default class WindowControls extends Component {
 
   get isMinimizable() {
     const { disableMinimize } = this.props;
-    return (disableMinimize || !currentWindow.isMinimizable());
+    return (!disableMinimize || !currentWindow.isMinimizable());
   }
 
   get isMaximizable() {
     const { disableMaximize } = this.props;
-    return (disableMaximize || !currentWindow.isResizable() || !currentWindow.isMaximizable());
+    return (!disableMaximize || !currentWindow.isResizable() || !currentWindow.isMaximizable());
   }
 
   handleUnMaximize() {
@@ -100,7 +100,7 @@ export default class WindowControls extends Component {
   }
 
   onCloseClicked(e) {
-    currentWindow.minimize();
+    currentWindow.close();
   }
 
   render() {
@@ -122,7 +122,7 @@ export default class WindowControls extends Component {
             key="min-button"
             ariaLabel="minimize"
             tabIndex="-1"
-            disabled={this.isMinimizable}
+            disabled={!this.isMinimizable}
             onClick={this.onMinimizeClicked}
           >
             <MimimizeIcon />
@@ -132,7 +132,7 @@ export default class WindowControls extends Component {
             key="max-button"
             ariaLabel="maximize"
             tabIndex="-1"
-            disabled={this.isMaximizable}
+            disabled={!this.isMaximizable}
             onClick={this.onMaximizeClicked}
           >
             {

@@ -22,7 +22,6 @@ const styles = {
   },
   Items: {
     tabIndex: 0,
-    minWidth: 240,
     display: 'block',
     margin: '0 auto',
     padding: 0,
@@ -70,14 +69,15 @@ class MenuListContainer extends Component {
 
     if (isDeltaPositive && wheelDelta > scrollHeight - height - scrollTop) {
       this.content.scrollTop = scrollHeight;
-      this.stopScrolling(e);
+      return this.stopScrolling(e);
     }
     else if (!isDeltaPositive && -wheelDelta > scrollTop) {
       this.content.scrollTop = 0;
-      this.stopScrolling(e);
+      return this.stopScrolling(e);
+    } else {
+      this.content.scrollTop += wheelDelta > 0 ? step : -step;
+      return this.stopScrolling(e);
     }
-
-    this.content.scrollTop += wheelDelta > 0 ? step : -step;
   };
 
   stopScrolling = (e) => {
@@ -92,14 +92,15 @@ class MenuListContainer extends Component {
       theme,
       rect
     } = this.props;
-    const maxHeight = Math.max(10, window.innerHeight - (this.item && this.item.getBoundingClientRect().top || 0) - 30);
+    const maxHeight = Math.max(10, window.innerHeight - (this.item && this.item.getBoundingClientRect().top || 0) - theme.menuMarginBottom);
+    const maxWidth = Math.max(theme.menuMinWidth, window.innerWidth - (this.item && this.item.getBoundingClientRect().right));
     return (
       <div
         ref={r => { this.item = r; }}
         style={{
           ...styles.Container,
           left: rect.left,
-          top: rect.top,
+          top: 0,
           color: theme.menuActiveTextColor
         }}
         //onFocus={this.handleFocus}
@@ -122,7 +123,13 @@ class MenuListContainer extends Component {
             <div
               style={styles.Vertical}
             >
-              <ul style={styles.Items}>
+              <ul
+                style={{
+                  ...styles.Items,
+                  minWidth: theme.menuMinWidth,
+                  maxWidth: theme.menuMaxWidth,
+                }}
+              >
                 {this.props.children}
               </ul>
             </div>

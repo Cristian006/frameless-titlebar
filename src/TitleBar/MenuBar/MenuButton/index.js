@@ -62,7 +62,7 @@ export default class MenuButton extends Component {
 
     return (
       <div
-        style={styles.Wrapper}
+        style={{...styles.Wrapper, ...this.props.style}}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         onMouseOver={onMouseOver}

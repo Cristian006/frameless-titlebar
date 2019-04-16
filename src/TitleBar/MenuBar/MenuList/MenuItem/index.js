@@ -113,6 +113,10 @@ class MenuItem extends Component {
     }
 
     switch (menuItem.type) {
+      case 'submenu': {
+        e.stopPropagation();
+        break;
+      }
       case 'checkbox': {
         e.persist();
         const newMenuItem = {
