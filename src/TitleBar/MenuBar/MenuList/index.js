@@ -53,24 +53,24 @@ class MenuList extends Component {
     const rect = parentRef.getBoundingClientRect();
     return menu.map((menuItem, i) => {
       if (menuItem.submenu || (menuItem.type && menuItem.type.toLowerCase() === 'submenu')) {
-        const menuMinWidth = rect.left + theme.menuMinWidth;
-        const windowWidth = window.innerWidth;
-        let renderSide = 'right';
-        let right = menuMinWidth + theme.menuMinWidth;
+        // const menuMinWidth = rect.left + theme.menuMinWidth;
+        // const windowWidth = window.innerWidth;
+        // let renderSide = 'right';
+        // let right = menuMinWidth + theme.menuMinWidth;
 
         // Render menu to the left if the right side of the
         // current menu is greater than the current window width
-        if (right > windowWidth && theme.menuMinWidth < rect.left) {
-          renderSide = 'left';
-          right = menuMinWidth - theme.menuMinWidth;
-        }
+        // if (right > windowWidth && theme.menuMinWidth < rect.left) {
+          // renderSide = 'left';
+          // right = menuMinWidth - theme.menuMinWidth;
+        // }
 
         return (
           <SubMenu
             key={`${i}${menuItem.label}`}
-            level={1}
-            right={right}
-            renderSide={renderSide}
+            // level={1}
+            // right={right}
+            // renderSide={renderSide}
             theme={theme}
             menuRef={this.props.menuRef}
             changeCheckState={this.props.changeCheckState}
@@ -119,7 +119,7 @@ class MenuList extends Component {
         />
         <MenuListContainer
           theme={theme}
-          rect={{left: rect.left, top: 0}}
+          rect={rect}
         >
           {
             (theme.menuStyle === 'vertical' && theme.menuSubLabelHeaders) &&

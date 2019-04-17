@@ -195,7 +195,7 @@ class MenuItem extends Component {
 
     return (
       <li
-        ref={r => { this.item = r; }}
+        ref={this.props.rectRef}
         style={{
           ...styles.Contianer,
           color: hovering ? theme.menuTextHighlightColor : '',

@@ -90,17 +90,22 @@ class MenuListContainer extends Component {
   render() {
     const {
       theme,
-      rect
+      rect,
+      submenu
     } = this.props;
     const maxHeight = Math.max(10, window.innerHeight - (this.item && this.item.getBoundingClientRect().top || 0) - theme.menuMarginBottom);
-    const maxWidth = Math.max(theme.menuMinWidth, window.innerWidth - (this.item && this.item.getBoundingClientRect().right));
+    // const maxWidth = Math.max(theme.menuMinWidth, window.innerWidth - (this.item && this.item.getBoundingClientRect().right));
+    const WontFit = submenu && (window.innerWidth <= (rect.right + (this.item && this.item.getBoundingClientRect().width || 0)));
+    let top = (submenu && WontFit) ? rect.height : 0;
+    let left = submenu ? (WontFit ? 10 : rect.offsetWidth) : rect.left;
+
     return (
       <div
         ref={r => { this.item = r; }}
         style={{
           ...styles.Container,
-          left: rect.left,
-          top: 0,
+          left: left,
+          top: top,
           color: theme.menuActiveTextColor
         }}
         //onFocus={this.handleFocus}
@@ -125,9 +130,7 @@ class MenuListContainer extends Component {
             >
               <ul
                 style={{
-                  ...styles.Items,
-                  minWidth: theme.menuMinWidth,
-                  maxWidth: theme.menuMaxWidth,
+                  ...styles.Items
                 }}
               >
                 {this.props.children}

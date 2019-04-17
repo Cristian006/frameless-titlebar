@@ -57,8 +57,8 @@ class SubMenu extends Component {
         return (
           <SubMenu
             key={`${i}${menuItem.label}`}
-            level={this.props.level + 1}
-            right={right}
+            // level={this.props.level + 1}
+            // right={right}
             theme={theme}
             renderSide={renderSide}
             menuRef={this.props.menuRef}
@@ -86,19 +86,21 @@ class SubMenu extends Component {
   render() {
     const {
       menuItem,
-      renderSide,
+      // renderSide,
       theme
     } = this.props;
 
     return (
       <MenuItem
+        rectRef={r => { this.item = r; }}
         menu={this.props.menu}
         theme={theme}
         menuItem={{ ...defaultMenuItem, ...menuItem }}
       >
         <MenuListContainer
           theme={theme}
-          rect={{left: renderSide === 'left' ? '-100%' : '100%', top: '0px'}}
+          rect={this.item && this.item.getBoundingClientRect()}
+          submenu
         >
           {
             theme.menuSubLabelHeaders &&
