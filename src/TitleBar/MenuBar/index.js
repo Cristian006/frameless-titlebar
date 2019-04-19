@@ -57,6 +57,13 @@ class MenuBar extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.inActive !== this.props.inActive) {
+      // on blur
+      this.setState({
+        clicked: false,
+        focusing: -1,
+      });
+    }
     if (nextProps.menu !== this.state.menu) {
       this.setState({
         menu: buildMenu(nextProps.menu)
@@ -177,6 +184,12 @@ class MenuBar extends Component {
 
   updateMenu = () => {
     requestAnimationFrame(() => {
+      if (this.state.clicked || this.state.focusing >= 0) {
+        this.setState({
+          clicked: false,
+          focusing: -1,
+        })
+      }
       if (!this.menuItems || !this.menuItems.length) {
         return;
       }

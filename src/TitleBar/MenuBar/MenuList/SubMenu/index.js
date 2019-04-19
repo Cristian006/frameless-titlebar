@@ -18,12 +18,6 @@ export const SubMenuLabelStyle = {
   cursor: 'default',
 };
 
-const styles = {
-  SubMenuWrapper: {
-    position: 'absolute',
-  }
-};
-
 class SubMenu extends Component {
   constructor(props) {
     super(props);

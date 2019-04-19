@@ -19,8 +19,7 @@ export const darkTheme = {
   menuDimOpacity: 0.6,
   menuDisabledOpacity: 0.3,
   menuMarginBottom: 10, // margin from bottom for max height
-  stackedMenuMarginRight: 200,
-  menuMinWidth: 240,
+  stackedMenuMarginRight: 200, // margin from right for max width
   menuMaxWidth: 350,
   menuBackgroundColor: '#fff',
   menuItemTextColor: '#fff',
