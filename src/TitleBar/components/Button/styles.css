@@ -14,7 +14,8 @@
   flex: 1;
 }
 
-.Button svg {  
+.Button svg {
+  pointer-events: none;
   fill: currentColor;
 }
 

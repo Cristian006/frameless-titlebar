@@ -84,23 +84,32 @@ export default class WindowControls extends Component {
   }
 
   onMaximizeClicked(e) {
-    if (this.isMaximizable) {
-      if (currentWindow.isMaximized()) {
-        currentWindow.unmaximize();
-      } else {
-        currentWindow.maximize();
+    e.target.blur();
+    requestAnimationFrame(() => {
+      if (this.isMaximizable) {
+        if (currentWindow.isMaximized()) {
+          currentWindow.unmaximize();
+        } else {
+          currentWindow.maximize();
+        }
       }
-    }
+    });
   };
 
   onMinimizeClicked(e) {
-    if (this.isMinimizable) {
-      currentWindow.minimize();
-    }
+    e.target.blur();
+    requestAnimationFrame(() => {
+      if (this.isMinimizable) {
+        currentWindow.minimize();
+      }
+    });
   }
 
   onCloseClicked(e) {
-    currentWindow.close();
+    e.target.blur();
+    requestAnimationFrame(() => {
+      currentWindow.close();
+    });
   }
 
   render() {

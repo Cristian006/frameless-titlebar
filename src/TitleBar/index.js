@@ -72,108 +72,8 @@ class TitleBar extends Component {
     windowActions,
     inActive,
   }) {
-    if (platform === 'win32') {
-      if (currentTheme.menuStyle === 'stacked') {
-        return (
-          <Fragment>
-            <Bar
-              isWin
-              inActive={inActive}
-              theme={currentTheme}
-            >
-              <ResizeHandle top />
-              <ResizeHandle left />
-              {
-                icon &&
-                <Icon
-                  src={icon}
-                />
-              }
-              {
-                app &&
-                <Title
-                  isWin
-                  inActive={inActive}
-                  theme={currentTheme}
-                >
-                  {app}
-                </Title>
-              }
-              {children}
-              <WindowControls
-                theme={currentTheme}
-                disableMinimize={disableMinimize}
-                disableMaximize={disableMaximize}
-                windowActions={windowActions}
-              />
-            </Bar>
-            <Bar
-              isWin
-              inActive={inActive}
-              theme={currentTheme}
-            >
-              <MenuBar
-                ref={r => { this.Menu = r; }}
-                inActive={inActive}
-                theme={currentTheme}
-                menu={menu}
-              />
-            </Bar>
-          </Fragment>
-        );
-      }
-      return (
-        <Bar
-          isWin
-          inActive={inActive}
-          theme={currentTheme}
-        >
-          <ResizeHandle top />
-          <ResizeHandle left />
-          {
-            currentTheme.menuStyle === 'vertical' &&
-              <MenuBar
-                ref={r => { this.Menu = r; }}
-                theme={currentTheme}
-                inActive={inActive}
-                menu={menu}
-              />
-          }
-          {
-            icon &&
-            <Icon
-              src={icon}
-            />
-          }
-          {
-            app &&
-            <Title
-              isWin
-              theme={currentTheme}
-              inActive={inActive}
-            >
-              {app}
-            </Title>
-          }
-          {
-            currentTheme.menuStyle === 'horizontal' &&
-              <MenuBar
-                ref={r => { this.Menu = r; }}
-                theme={currentTheme}
-                inActive={inActive}
-                menu={menu}
-              />
-          }
-          {children}
-          <WindowControls
-            theme={currentTheme}
-            disableMinimize={disableMinimize}
-            disableMaximize={disableMaximize}
-            windowActions={windowActions}
-          />
-        </Bar>
-      );
-    } else {
+
+    if (platform === 'darwin') {
       return (
         <Bar
           theme={currentTheme}
@@ -199,6 +99,108 @@ class TitleBar extends Component {
         </Bar>
       );
     }
+
+    if (currentTheme.menuStyle === 'stacked') {
+      return (
+        <Fragment>
+          <Bar
+            isWin
+            inActive={inActive}
+            theme={currentTheme}
+          >
+            <ResizeHandle top />
+            <ResizeHandle left />
+            {
+              icon &&
+              <Icon
+                src={icon}
+              />
+            }
+            {
+              app &&
+              <Title
+                isWin
+                inActive={inActive}
+                theme={currentTheme}
+              >
+                {app}
+              </Title>
+            }
+            {children}
+            <WindowControls
+              theme={currentTheme}
+              disableMinimize={disableMinimize}
+              disableMaximize={disableMaximize}
+              windowActions={windowActions}
+            />
+          </Bar>
+          <Bar
+            isWin
+            inActive={inActive}
+            theme={currentTheme}
+          >
+            <MenuBar
+              ref={r => { this.Menu = r; }}
+              inActive={inActive}
+              theme={currentTheme}
+              menu={menu}
+            />
+          </Bar>
+        </Fragment>
+      );
+    }
+
+    return (
+      <Bar
+        isWin
+        inActive={inActive}
+        theme={currentTheme}
+      >
+        <ResizeHandle top />
+        <ResizeHandle left />
+        {
+          currentTheme.menuStyle === 'vertical' &&
+            <MenuBar
+              ref={r => { this.Menu = r; }}
+              theme={currentTheme}
+              inActive={inActive}
+              menu={menu}
+            />
+        }
+        {
+          icon &&
+          <Icon
+            src={icon}
+          />
+        }
+        {
+          app &&
+          <Title
+            isWin
+            theme={currentTheme}
+            inActive={inActive}
+          >
+            {app}
+          </Title>
+        }
+        {
+          currentTheme.menuStyle === 'horizontal' &&
+            <MenuBar
+              ref={r => { this.Menu = r; }}
+              theme={currentTheme}
+              inActive={inActive}
+              menu={menu}
+            />
+        }
+        {children}
+        <WindowControls
+          theme={currentTheme}
+          disableMinimize={disableMinimize}
+          disableMaximize={disableMaximize}
+          windowActions={windowActions}
+        />
+      </Bar>
+    );
   }
 
   render() {
