@@ -37,16 +37,57 @@ class MenuListContainer extends Component {
     super(props);
     this.state = {
       activeDescendant: null,
+      top: 0,
+      left: 0,
     };
     this.handleFocus = this.handleFocus.bind(this);
+    this.setRef = this.setRef.bind(this);
+    this.setContent = this.setContent.bind(this);
+    this.onLayout = this.onLayout.bind(this);
   }
   
   componentDidMount() {
     if (this.state.activeDescendant) {
       return;
     }
-
     this.focusFirstItem();
+    this.onLayout();
+  }
+
+  onLayout() {
+    const {
+      parentRef,
+      rect,
+      submenu
+    } = this.props;
+    let boundingRect = this.itemRef.getBoundingClientRect();
+    let top = 0;
+    let left = rect.left;
+
+    if (submenu) {
+      let parentRect = parentRef.getBoundingClientRect();    
+      // scroll view > scroll content > ul > li > this
+      var scrollTop = parentRef.parentNode.parentNode.parentNode.scrollTop; // get parent menu's scroll offset
+      top = parentRef.offsetTop - scrollTop;
+      left = parentRect.width;
+      if (window.innerWidth <= (parentRect.right + boundingRect.width)) {
+        top = parentRef.offsetTop + (parentRect.height / 3);
+        left = 10;
+      }
+    }
+
+    this.setState({
+      top,
+      left
+    });
+  }
+
+  setRef(ref) {
+    this.itemRef = ref;
+  }
+
+  setContent(ref) {
+    this.contentRef = ref;
   }
 
   handleFocus(e) {
@@ -60,22 +101,22 @@ class MenuListContainer extends Component {
   };
 
   handleScroll = (e) => {
-    var scrollTop = this.content.scrollTop;
-    var scrollHeight = this.content.scrollHeight;
-    var height = this.content.clientHeight;
+    var scrollTop = this.contentRef.scrollTop;
+    var scrollHeight = this.contentRef.scrollHeight;
+    var height = this.contentRef.clientHeight;
     var wheelDelta = e.deltaY;
     var isDeltaPositive = wheelDelta > 0;
     const step = 10; // scroll speed
 
     if (isDeltaPositive && wheelDelta > scrollHeight - height - scrollTop) {
-      this.content.scrollTop = scrollHeight;
+      this.contentRef.scrollTop = scrollHeight;
       return this.stopScrolling(e);
     }
     else if (!isDeltaPositive && -wheelDelta > scrollTop) {
-      this.content.scrollTop = 0;
+      this.contentRef.scrollTop = 0;
       return this.stopScrolling(e);
     } else {
-      this.content.scrollTop += wheelDelta > 0 ? step : -step;
+      this.contentRef.scrollTop += wheelDelta > 0 ? step : -step;
       return this.stopScrolling(e);
     }
   };
@@ -88,27 +129,23 @@ class MenuListContainer extends Component {
   };
 
   render() {
+    const { theme } = this.props;
+    const maxHeight = Math.max(10, window.innerHeight - (this.itemRef && this.itemRef.getBoundingClientRect().top || 0) - theme.menuMarginBottom);
+    const maxWidth = Math.min(window.innerHeight, window.innerWidth - (this.itemRef && this.itemRef.getBoundingClientRect().left || 0));
     const {
-      theme,
-      rect,
-      submenu
-    } = this.props;
-    const maxHeight = Math.max(10, window.innerHeight - (this.item && this.item.getBoundingClientRect().top || 0) - theme.menuMarginBottom);
-    // const maxWidth = Math.max(theme.menuMinWidth, window.innerWidth - (this.item && this.item.getBoundingClientRect().right));
-    const WontFit = submenu && (window.innerWidth <= (rect.right + (this.item && this.item.getBoundingClientRect().width || 0)));
-    let top = (submenu && WontFit) ? rect.height : 0;
-    let left = submenu ? (WontFit ? 10 : rect.offsetWidth) : rect.left;
+      top,
+      left
+    } = this.state;
 
     return (
       <div
-        ref={r => { this.item = r; }}
+        ref={this.setRef}
         style={{
           ...styles.Container,
           left: left,
           top: top,
           color: theme.menuActiveTextColor
         }}
-        //onFocus={this.handleFocus}
       >
         <div
           style={{
@@ -119,10 +156,11 @@ class MenuListContainer extends Component {
         >
           <div
             onWheel={this.handleScroll}
-            ref={r => this.content = r}
+            ref={this.setContent}
             style={{
               ...styles.Menu,
               maxHeight,
+              maxWidth,
             }}
           >
             <div

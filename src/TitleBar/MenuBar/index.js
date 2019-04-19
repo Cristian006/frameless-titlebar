@@ -397,10 +397,11 @@ class MenuBar extends Component {
     let { theme, inActive } = this.props;
     let color = theme.menuItemTextColor || theme.barColor;
     let opacity = inActive ? theme.inActiveOpacity : 1;
+    let marginRight = theme.menuStyle === 'stacked' ? theme.stackedMenuMarginRight : undefined;
     return (
       <div
         ref={r => this.menuBar = r}
-        style={{ ...styles.Wrapper, color, opacity }}
+        style={{ ...styles.Wrapper, color, opacity, marginRight }}
         role="menubar"
       >
         {
