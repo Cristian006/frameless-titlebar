@@ -111,6 +111,16 @@ class TitleBar extends Component {
             <ResizeHandle top />
             <ResizeHandle left />
             {
+              (platform !== 'win32' && currentTheme.controlsLayout === 'left') &&
+              <WindowControls
+                isWin={platform === 'win32'}
+                theme={currentTheme}
+                disableMinimize={disableMinimize}
+                disableMaximize={disableMaximize}
+                windowActions={windowActions}
+              />
+            }
+            {
               icon &&
               <Icon
                 src={icon}
@@ -127,12 +137,16 @@ class TitleBar extends Component {
               </Title>
             }
             {children}
-            <WindowControls
-              theme={currentTheme}
-              disableMinimize={disableMinimize}
-              disableMaximize={disableMaximize}
-              windowActions={windowActions}
-            />
+            {
+              (platform === 'win32' || (platform !== 'win32' && currentTheme.controlsLayout === 'right')) &&
+              <WindowControls
+                isWin={platform === 'win32'}
+                theme={currentTheme}
+                disableMinimize={disableMinimize}
+                disableMaximize={disableMaximize}
+                windowActions={windowActions}
+              />
+            }
           </Bar>
           <Bar
             isWin
@@ -158,6 +172,16 @@ class TitleBar extends Component {
       >
         <ResizeHandle top />
         <ResizeHandle left />
+        {
+          (platform !== 'win32' && currentTheme.controlsLayout === 'left') &&
+          <WindowControls
+            isWin={platform === 'win32'}
+            theme={currentTheme}
+            disableMinimize={disableMinimize}
+            disableMaximize={disableMaximize}
+            windowActions={windowActions}
+          />
+        }
         {
           currentTheme.menuStyle === 'vertical' &&
             <MenuBar
@@ -193,12 +217,16 @@ class TitleBar extends Component {
             />
         }
         {children}
-        <WindowControls
-          theme={currentTheme}
-          disableMinimize={disableMinimize}
-          disableMaximize={disableMaximize}
-          windowActions={windowActions}
-        />
+        {
+          (platform === 'win32' || (platform !== 'win32' && currentTheme.controlsLayout === 'right')) &&
+          <WindowControls
+            isWin={platform === 'win32'}
+            theme={currentTheme}
+            disableMinimize={disableMinimize}
+            disableMaximize={disableMaximize}
+            windowActions={windowActions}
+          />
+        }
       </Bar>
     );
   }

@@ -43,7 +43,8 @@ export const darkTheme = {
   windowCloseBackground: '#e81123',
   windowCloseActive: '#bf0f1d',
   windowDefaultBackground: 'rgba(255,255,255,0.3)',
-  windowDefaultActive: 'rgba(255,255,255,0.2)'
+  windowDefaultActive: 'rgba(255,255,255,0.2)',
+  controlsLayout: 'right', // window control placement for linux systems
 };
 
 export const lightTheme = {

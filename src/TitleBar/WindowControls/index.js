@@ -113,11 +113,11 @@ export default class WindowControls extends Component {
   }
 
   render() {
-    const { theme } = this.props;
+    const { theme, isWin } = this.props;
     const { isMaximized } = this.state;
 
     return (
-      <div style={styles.Container}>
+      <div style={{...styles.Container, marginLeft: (isWin || (!isWin && theme.controlsLayout) === 'right') ? 'auto' : 0}}>
         {
           this.props.windowActions && (
             <div style={styles.ActionsContainer}>
@@ -134,7 +134,7 @@ export default class WindowControls extends Component {
             disabled={!this.isMinimizable}
             onClick={this.onMinimizeClicked}
           >
-            <MimimizeIcon />
+            <MimimizeIcon isWin={isWin} />
           </Button>
           <Button
             theme={theme}
@@ -145,7 +145,7 @@ export default class WindowControls extends Component {
             onClick={this.onMaximizeClicked}
           >
             {
-              isMaximized ? <RestoreIcon /> : <MaximizeIcon />
+              isMaximized ? <RestoreIcon isWin={isWin} /> : <MaximizeIcon isWin={isWin} />
             }
           </Button>
           <Button
@@ -156,7 +156,7 @@ export default class WindowControls extends Component {
             onClick={this.onCloseClicked}
             close
           >
-            <CloseIcon />
+            <CloseIcon isWin={isWin} />
           </Button>
         </div>
       </div>

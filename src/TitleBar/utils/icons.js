@@ -8,7 +8,7 @@ const MenuIcon = (props) => (
 
 
 const MimimizeIcon = (props) => {
-  return props.platform === 'win32' ? (
+  return props.isWin ? (
     <svg
       version="1.1"
       aria-hidden="true"
@@ -39,7 +39,7 @@ const MimimizeIcon = (props) => {
 };
 
 const RestoreIcon = (props) => {
-  return props.platform === 'win32' ? (
+  return props.isWin ? (
     <svg
       version="1.1"
       aria-hidden="true"
@@ -60,7 +60,7 @@ const RestoreIcon = (props) => {
 };
 
 const MaximizeIcon = (props) => {
-  return props.platform === 'win32' ? (
+  return props.isWin ? (
     <svg
       version="1.1"
       aria-hidden="true"
@@ -79,7 +79,7 @@ const MaximizeIcon = (props) => {
 };
 
 const CloseIcon = (props) => {
-  return props.platform === 'win32' ? (
+  return props.isWin ? (
     <svg
       aria-hidden="true"
       version="1.1"
