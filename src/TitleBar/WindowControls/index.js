@@ -31,7 +31,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     height: '100%',
-    width: 138,
+    alignItems: 'center'
   },
   ActionsContainer: {
     position: 'relative',
