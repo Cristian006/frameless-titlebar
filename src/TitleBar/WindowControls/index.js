@@ -22,12 +22,15 @@ const styles = {
     position: 'relative',
     display: 'flex',
     flexDirection: 'row',
-    zIndex: 2000
+    zIndex: 2000,
+    alignItems: 'center',
+    height: '100%',
   },
   ControlsContainer: {
     position: 'relative',
     display: 'flex',
     flexDirection: 'row',
+    height: '100%',
     width: 138,
   },
   ActionsContainer: {
@@ -133,6 +136,7 @@ export default class WindowControls extends Component {
             tabIndex="-1"
             disabled={!this.isMinimizable}
             onClick={this.onMinimizeClicked}
+            isWin={isWin}
           >
             <MimimizeIcon isWin={isWin} />
           </Button>
@@ -143,6 +147,7 @@ export default class WindowControls extends Component {
             tabIndex="-1"
             disabled={!this.isMaximizable}
             onClick={this.onMaximizeClicked}
+            isWin={isWin}
           >
             {
               isMaximized ? <RestoreIcon isWin={isWin} /> : <MaximizeIcon isWin={isWin} />
@@ -154,6 +159,7 @@ export default class WindowControls extends Component {
             aria-label="close"
             tabIndex="-1"
             onClick={this.onCloseClicked}
+            isWin={isWin}
             close
           >
             <CloseIcon isWin={isWin} />

@@ -1,6 +1,37 @@
 import React, { Component } from 'react';
 import styles from './styles.css';
 
+const style = {
+  Container: {
+    WebkitAppRegion: 'no-drag',
+    position: 'relative',
+    padding: 0,
+    margin: 0,
+    overflow: 'hidden',
+    border: 'none',
+    boxShadow: 'none',
+    borderRadius: 0,
+    backgroundColor: 'transparent',
+    transition: 'background-color 0.25s ease',
+    opacity: 0.5,
+  },
+  WindowsContainer: {
+    maxWidth: '46px',
+    flex: 1,
+    height: '100%',
+  },
+  LinuxContainer: {
+    marginLeft: '6px',
+    width: '18px',
+    height: '18px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignContent: 'center',
+    borderWidth: '1px solid rgba(0,0,0,0.2)',
+    borderRadius: '50%',
+  }
+}
+
 class Button extends Component {
   constructor(props) {
     super(props);
@@ -36,6 +67,7 @@ class Button extends Component {
       colorHover,
       colorActive,
       backgroundActive,
+      isWin,
     } = this.props;
 
     const {
@@ -61,7 +93,7 @@ class Button extends Component {
     return (
       <button
         className={styles.Button}
-        style={{ backgroundColor: bgColor, opacity, transition, color: buttonColor }}
+        style={{ ...style.Container, ...(isWin ? style.WindowsContainer : style.LinuxContainer), backgroundColor: bgColor, opacity, transition, color: buttonColor }}
         onFocus={this.toggleFocus}
         onBlur={this.toggleFocus}
         onMouseEnter={this.toggleHover}
