@@ -10,7 +10,6 @@ const styles = {
   },
   ResizeLeft: {
     width: '3px',
-    height: '28px'
   },
   ResizeTop: {
     width: '100%',
@@ -20,9 +19,10 @@ const styles = {
 
 class ResizeHandle extends React.Component {
   render() {
+    const { height, left } = this.props;
     return (
       <div
-        style={{ ...styles.ResizeHandle, ...(this.props.left ? styles.ResizeLeft : styles.ResizeTop) }}
+        style={{ ...styles.ResizeHandle, ...(left ? styles.ResizeLeft : styles.ResizeTop), height }}
       />
     );
   }

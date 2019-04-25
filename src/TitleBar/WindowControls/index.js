@@ -22,13 +22,17 @@ const styles = {
     position: 'relative',
     display: 'flex',
     flexDirection: 'row',
-    zIndex: 2000
+    zIndex: 2000,
+    alignItems: 'center',
+    boxSizing: 'border-box',
+    height: '100%',
   },
   ControlsContainer: {
     position: 'relative',
     display: 'flex',
     flexDirection: 'row',
-    width: 138,
+    height: '100%',
+    alignItems: 'center'
   },
   ActionsContainer: {
     position: 'relative',
@@ -84,31 +88,40 @@ export default class WindowControls extends Component {
   }
 
   onMaximizeClicked(e) {
-    if (this.isMaximizable) {
-      if (currentWindow.isMaximized()) {
-        currentWindow.unmaximize();
-      } else {
-        currentWindow.maximize();
+    e.target.blur();
+    requestAnimationFrame(() => {
+      if (this.isMaximizable) {
+        if (currentWindow.isMaximized()) {
+          currentWindow.unmaximize();
+        } else {
+          currentWindow.maximize();
+        }
       }
-    }
+    });
   };
 
   onMinimizeClicked(e) {
-    if (this.isMinimizable) {
-      currentWindow.minimize();
-    }
+    e.target.blur();
+    requestAnimationFrame(() => {
+      if (this.isMinimizable) {
+        currentWindow.minimize();
+      }
+    });
   }
 
   onCloseClicked(e) {
-    currentWindow.close();
+    e.target.blur();
+    requestAnimationFrame(() => {
+      currentWindow.close();
+    });
   }
 
   render() {
-    const { theme } = this.props;
+    const { theme, isWin } = this.props;
     const { isMaximized } = this.state;
 
     return (
-      <div style={styles.Container}>
+      <div style={{...styles.Container, marginLeft: (isWin || (!isWin && theme.controlsLayout) === 'right') ? 'auto' : 0}}>
         {
           this.props.windowActions && (
             <div style={styles.ActionsContainer}>
@@ -124,8 +137,9 @@ export default class WindowControls extends Component {
             tabIndex="-1"
             disabled={!this.isMinimizable}
             onClick={this.onMinimizeClicked}
+            isWin={isWin}
           >
-            <MimimizeIcon />
+            <MimimizeIcon isWin={isWin} />
           </Button>
           <Button
             theme={theme}
@@ -134,9 +148,10 @@ export default class WindowControls extends Component {
             tabIndex="-1"
             disabled={!this.isMaximizable}
             onClick={this.onMaximizeClicked}
+            isWin={isWin}
           >
             {
-              isMaximized ? <RestoreIcon /> : <MaximizeIcon />
+              isMaximized ? <RestoreIcon isWin={isWin} /> : <MaximizeIcon isWin={isWin} />
             }
           </Button>
           <Button
@@ -145,9 +160,10 @@ export default class WindowControls extends Component {
             aria-label="close"
             tabIndex="-1"
             onClick={this.onCloseClicked}
+            isWin={isWin}
             close
           >
-            <CloseIcon />
+            <CloseIcon isWin={isWin} />
           </Button>
         </div>
       </div>

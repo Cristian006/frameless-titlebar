@@ -7,7 +7,7 @@ const styles = {
     minWidth: 0,
     flexShrink: 0,
     height: '100%',
-    boxSizing: 'border-box',
+    boxSizing: 'content-box',
     outline: 'none'
   },
   Label: {

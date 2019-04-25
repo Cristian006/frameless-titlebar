@@ -8,9 +8,9 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     fontSize: '12px',
-    width: '100%',
     WebkitAppRegion: 'drag',
     userSelect: 'none',
+    alignItems: 'center',
     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif'
   }
 };
@@ -34,11 +34,12 @@ class Bar extends React.Component {
     let height = isWin ? theme.winBarHeight : theme.barHeight;
     let backgroundColor = theme.barBackgroundColor;
     let color = theme.barColor;
+    let padding = !isWin ? '0 70px' : 0;
     let borderBottom = theme.barShowBorder ? theme.barBorderBottom : '';
 
     return (
       <div
-        style={{ ...styles.Bar, height, backgroundColor, color, borderBottom }}
+        style={{ ...styles.Bar, height, backgroundColor, color, borderBottom, padding }}
         onDoubleClick={this.handleDoubleClick}
       >
         {children}

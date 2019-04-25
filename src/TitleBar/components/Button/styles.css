@@ -1,20 +1,5 @@
-.Button {
-  -webkit-app-region: no-drag;
-  position: relative;
-  padding: 0;
-  margin: 0;
-  overflow: hidden;
-  border: none;
-  box-shadow: none;
-  border-radius: 0;
-  background-color: transparent;
-  transition: background-color 0.25s ease;
-  opacity: 0.5;
-  max-width: 46px;
-  flex: 1;
-}
-
-.Button svg {  
+.Button svg {
+  pointer-events: none;
   fill: currentColor;
 }
 
