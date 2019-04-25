@@ -61,7 +61,6 @@ class Button extends Component {
       close,
       onClick,
       theme,
-      color,
       isWin,
     } = this.props;
 
@@ -70,17 +69,17 @@ class Button extends Component {
       focused
     } = this.state;
 
-    let bgColor = (!isWin && close) ? theme.windowsCloseBackground : 'transparent';
-    let opacity = 0.5;
+    let bgColor = (!isWin && close) ? theme.linuxCloseBackground : 'transparent';
+    let opacity = (!isWin && close) ? 1 : 0.5;
     let transition = 'background-color 0.25s ease';
-    let buttonColor = theme.windowControlsColor;
+    let color = (!isWin && close) ? theme.linuxCloseColor : theme.windowControlsColor;
     if (hovering) {
       opacity = 1;
-      buttonColor = (close ? theme.windowCloseHover : color);
+      color = (close ? theme.windowCloseHover : undefined);
       bgColor = (close ? theme.windowCloseBackground : theme.windowDefaultBackground);
     } else if (focused) {
       opacity = 1;
-      buttonColor = (close ? theme.windowCloseHover : color);
+      color = (close ? theme.windowCloseHover : undefined);
       bgColor = (close ? theme.windowCloseActive : theme.windowDefaultActive);
       transition = 'none';
     }
@@ -88,7 +87,7 @@ class Button extends Component {
     return (
       <button
         className={styles.Button}
-        style={{ ...style.Container, ...(isWin ? style.WindowsContainer : style.LinuxContainer), backgroundColor: bgColor, opacity, transition, color: buttonColor }}
+        style={{ ...style.Container, ...(isWin ? style.WindowsContainer : style.LinuxContainer), backgroundColor: bgColor, opacity, transition, color }}
         onFocus={this.toggleFocus}
         onBlur={this.toggleFocus}
         onMouseEnter={this.toggleHover}

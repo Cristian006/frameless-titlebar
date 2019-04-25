@@ -24,6 +24,7 @@ const styles = {
     flexDirection: 'row',
     zIndex: 2000,
     alignItems: 'center',
+    boxSizing: 'border-box',
     height: '100%',
   },
   ControlsContainer: {

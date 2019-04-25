@@ -204,7 +204,7 @@ class MenuItem extends Component {
         onClick={this._handleClick}
         role="option"
       >
-        <a style={styles.Wrapper}>
+        <a style={{...styles.Wrapper, height: theme.menuItemHeight}}>
           <div
             className={css.StatusIcon}
             style={{

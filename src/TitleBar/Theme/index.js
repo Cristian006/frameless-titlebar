@@ -22,6 +22,7 @@ export const darkTheme = {
   stackedMenuMarginRight: 200, // margin from right for max width
   menuMaxWidth: 350,
   menuBackgroundColor: '#fff',
+  menuItemHeight: '30px',
   menuItemTextColor: '#fff',
   menuItemHoverBackground: 'rgba(255,255,255,0.3)',
   menuActiveTextColor: '#24292e',
@@ -45,6 +46,8 @@ export const darkTheme = {
   windowDefaultBackground: 'rgba(255,255,255,0.3)',
   windowDefaultActive: 'rgba(255,255,255,0.2)',
   controlsLayout: 'right', // window control placement for linux systems
+  linuxCloseBackground: '#c85458',
+  linuxCloseColor: '#3b383d'
 };
 
 export const lightTheme = {

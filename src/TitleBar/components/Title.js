@@ -7,24 +7,24 @@ const styles = {
     overflow: 'hidden',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
-    marginLeft: 'auto',
-    marginRight: 'auto'
   }
 };
 
 class Title extends React.Component {
   render() {
-    let { theme, isWin, children, flex, inActive } = this.props;
+    let { theme, isWin, children, flex, inActive, align } = this.props;
     let lineHeight = isWin ? theme.winBarHeight : theme.barHeight;
-    let padding = isWin ? '0px 4px' : '0 70px';
+    let padding = isWin ? '0px 4px' : 0;
     let color = theme.barTitleColor;
     let fontFamily = theme.titleFontFamily;
     let fontWeight = theme.titleFontWeight;
     let opacity = inActive ? theme.inActiveOpacity : 1;
+    let marginLeft = (!isWin && theme.showIconDarLin) ? 0 : (align === 'left' ? 0 : 'auto');
+    let marginRight = align === 'center' ? 'auto' : 0;
 
     return (
       <div
-        style={{ ...styles.Title, lineHeight, padding, color, flex, fontFamily, fontWeight, opacity }}
+        style={{ ...styles.Title, marginLeft, marginRight, lineHeight, color, flex, fontFamily, fontWeight, opacity, padding }}
       >
         {children}
       </div>

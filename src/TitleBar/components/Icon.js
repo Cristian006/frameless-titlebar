@@ -5,20 +5,20 @@ const styles = {
   Icon: {
     height: '16px',
     width: '16px',
-    margin: '6px'
+    margin: '0px 6px'
   }
 };
 
 class Icon extends React.Component {
   render() {
-    let { src, onIconClick } = this.props;
-
+    let { src, onIconClick, notWin } = this.props;
+    let marginLeft = notWin ? 'auto' : '6px';
     return (
       <img
         src={src}
         alt='app-icon'
         onClick={onIconClick}
-        style={styles.Icon}
+        style={{...styles.Icon, marginLeft}}
       />
     );
   }

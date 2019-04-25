@@ -79,23 +79,25 @@ class TitleBar extends Component {
           theme={currentTheme}
         >
           <ResizeHandle top />
-          <ResizeHandle left />
+          <ResizeHandle height={currentTheme.barHeight} left />
+          {
+            (icon && currentTheme.showIconDarLin) &&
+            <Icon
+              notWin
+              src={icon}
+            />
+          }
           {
             (title || app) &&
             <Title
               theme={currentTheme}
               inActive={inActive}
-              flex={1}
+              align="center"
             >
-              {
-                (icon && currentTheme.showIconDarLin) &&
-                <Icon
-                  src={icon}
-                />
-              }
               {(title || app)}
             </Title>
           }
+          {children}
         </Bar>
       );
     }
@@ -109,7 +111,7 @@ class TitleBar extends Component {
             theme={currentTheme}
           >
             <ResizeHandle top />
-            <ResizeHandle left />
+            <ResizeHandle height={currentTheme.winBarHeight} left />
             {
               (platform !== 'win32' && currentTheme.controlsLayout === 'left') &&
               <WindowControls
@@ -132,8 +134,20 @@ class TitleBar extends Component {
                 isWin
                 inActive={inActive}
                 theme={currentTheme}
+                align="left"
               >
                 {app}
+              </Title>
+            }
+            {
+              title &&
+              <Title
+                isWin
+                inActive={inActive}
+                theme={currentTheme}
+                align="center"
+              >
+                {title}
               </Title>
             }
             {children}
@@ -171,7 +185,7 @@ class TitleBar extends Component {
         theme={currentTheme}
       >
         <ResizeHandle top />
-        <ResizeHandle left />
+        <ResizeHandle height={currentTheme.winBarHeight} left />
         {
           (platform !== 'win32' && currentTheme.controlsLayout === 'left') &&
           <WindowControls
@@ -203,6 +217,7 @@ class TitleBar extends Component {
             isWin
             theme={currentTheme}
             inActive={inActive}
+            align="left"
           >
             {app}
           </Title>
@@ -215,6 +230,17 @@ class TitleBar extends Component {
               inActive={inActive}
               menu={menu}
             />
+        }
+        {
+          title &&
+          <Title
+            isWin
+            theme={currentTheme}
+            inActive={inActive}
+            align="center"
+          >
+            {title}
+          </Title>
         }
         {children}
         {
