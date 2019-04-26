@@ -73,16 +73,16 @@ class Button extends Component {
     let opacity = (!isWin && close) ? 1 : 0.5;
     let transition = 'background-color 0.25s ease';
     let color = (!isWin && close) ? theme.linuxCloseColor : theme.windowControlsColor;
-    if (hovering) {
+    if (focused) {
       opacity = 1;
       color = (close ? theme.windowCloseHover : undefined);
-      bgColor = (close ? theme.windowCloseBackground : theme.windowDefaultBackground);
-    } else if (focused) {
-      opacity = 1;
-      color = (close ? theme.windowCloseHover : undefined);
-      bgColor = (close ? theme.windowCloseActive : theme.windowDefaultActive);
+      bgColor = (close ? (isWin ? theme.windowCloseActive : theme.linuxCloseActive) : theme.windowDefaultActive);
       transition = 'none';
-    }
+    } else if (hovering) {
+      opacity = 1;
+      color = (close ? theme.windowCloseHover : undefined);
+      bgColor = (close ? (isWin ? theme.windowCloseBackground : theme.linuxCloseBackground) : theme.windowDefaultBackground);
+    } 
 
     return (
       <button
