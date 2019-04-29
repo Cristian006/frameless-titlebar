@@ -1,17 +1,17 @@
-.Button svg {
+.FramelessTitlebarButton svg {
   pointer-events: none;
   fill: currentColor;
 }
 
-.Button:focus {
+.FramelessTitlebarButton:focus {
   outline: none;
 }
 
-.Button:hover {
+.FramelessTitlebarButton:hover {
   opacity: 1;
 }
 
-.Button:hover:active {
+.FramelessTitlebarButton:hover:active {
   transition: none;
   opacity: 1;
 }

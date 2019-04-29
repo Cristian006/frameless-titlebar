@@ -33,7 +33,8 @@ const styles = {
     width: '100%',
     fontSize: 12,
     paddingLeft: 10,
-    paddingRight: 10
+    paddingRight: 10,
+    boxSizing: 'border-box',
   }
 };
 

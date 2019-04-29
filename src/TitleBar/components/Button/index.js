@@ -85,7 +85,7 @@ class Button extends Component {
 
     return (
       <button
-        className={styles.Button}
+        className={styles.FramelessTitlebarButton}
         style={{
           ...style.Container,
           ...(isWin ? style.WindowsContainer : style.LinuxContainer),
