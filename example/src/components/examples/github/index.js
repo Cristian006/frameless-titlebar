@@ -20,7 +20,7 @@ class GitHub extends Component {
             barTheme: 'dark',
             barShowBorder: true,
             menuDimItems: false,
-            showIconDarLin: false
+            showIconDarwin: false
           }}
           platform={platform}
         />

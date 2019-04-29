@@ -19,7 +19,7 @@ class Title extends React.Component {
     let fontFamily = theme.titleFontFamily;
     let fontWeight = theme.titleFontWeight;
     let opacity = inActive ? theme.inActiveOpacity : 1;
-    let marginLeft = (!isWin && theme.showIconDarLin) ? 0 : (align === 'left' ? 0 : 'auto');
+    let marginLeft = (!isWin && theme.showIconDarwin) ? 0 : (align === 'left' ? 0 : 'auto');
     let marginRight = align === 'center' ? 'auto' : 0;
 
     return (

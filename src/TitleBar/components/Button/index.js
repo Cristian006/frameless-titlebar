@@ -8,7 +8,6 @@ const style = {
     padding: 0,
     margin: 0,
     overflow: 'hidden',
-    border: 'none',
     boxShadow: 'none',
     borderRadius: 0,
     backgroundColor: 'transparent',
@@ -27,7 +26,6 @@ const style = {
     display: 'flex',
     justifyContent: 'center',
     alignContent: 'center',
-    border: '1px solid rgba(0,0,0,0.06)',
     borderRadius: '50%',
   }
 }
@@ -69,25 +67,34 @@ class Button extends Component {
       focused
     } = this.state;
 
-    let bgColor = (!isWin && close) ? theme.linuxCloseBackground : 'transparent';
+    let backgroundColor = (!isWin && close) ? theme.linuxCloseBackground : 'transparent';
     let opacity = (!isWin && close) ? 1 : 0.5;
+    let border = (!isWin) ? theme.linuxBorder : 'none';
     let transition = 'background-color 0.25s ease';
     let color = (!isWin && close) ? theme.linuxCloseColor : theme.windowControlsColor;
     if (focused) {
       opacity = 1;
       color = (close ? theme.windowCloseHover : undefined);
-      bgColor = (close ? (isWin ? theme.windowCloseActive : theme.linuxCloseActive) : theme.windowDefaultActive);
+      backgroundColor = (close ? (isWin ? theme.windowCloseActive : theme.linuxCloseActive) : theme.windowDefaultActive);
       transition = 'none';
     } else if (hovering) {
       opacity = 1;
       color = (close ? theme.windowCloseHover : undefined);
-      bgColor = (close ? (isWin ? theme.windowCloseBackground : theme.linuxCloseBackground) : theme.windowDefaultBackground);
-    } 
+      backgroundColor = (close ? (isWin ? theme.windowCloseBackground : theme.linuxCloseBackground) : theme.windowDefaultBackground);
+    }
 
     return (
       <button
         className={styles.Button}
-        style={{ ...style.Container, ...(isWin ? style.WindowsContainer : style.LinuxContainer), backgroundColor: bgColor, opacity, transition, color }}
+        style={{
+          ...style.Container,
+          ...(isWin ? style.WindowsContainer : style.LinuxContainer),
+          backgroundColor,
+          opacity,
+          transition,
+          color,
+          border
+        }}
         onFocus={this.toggleFocus}
         onBlur={this.toggleFocus}
         onMouseEnter={this.toggleHover}

@@ -71,7 +71,7 @@ export const darkTheme = {
   barShowBorder: false,
   barBorderBottom: '1px solid #000',
   // should the icon be shown in the center of the toolbar on Mac/Linux apps alongside the app or title property
-  showIconDarLin: true,
+  showIconDarwin: true,
 
   /* Menu */
   menuStyle: 'horizontal', // horizontal, vertical

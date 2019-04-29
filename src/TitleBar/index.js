@@ -81,7 +81,7 @@ class TitleBar extends Component {
           <ResizeHandle top />
           <ResizeHandle height={currentTheme.barHeight} left />
           {
-            (icon && currentTheme.showIconDarLin) &&
+            (icon && currentTheme.showIconDarwin) &&
             <Icon
               notWin
               src={icon}
