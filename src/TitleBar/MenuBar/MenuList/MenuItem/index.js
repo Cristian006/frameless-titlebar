@@ -3,24 +3,28 @@ import PropTypes from 'prop-types';
 import { remote } from 'electron';
 import css from './styles.css';
 import { parseAccelerator } from '../../utils';
-
-const checked = <svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1671 566q0 40-28 68l-724 724-136 136q-28 28-68 28t-68-28l-136-136-362-362q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 295 656-657q28-28 68-28t68 28l136 136q28 28 28 68z" /></svg>;
-const unchecked = <span />;
-const radioUnchecked = <svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M896 352q-148 0-273 73t-198 198-73 273 73 273 198 198 273 73 273-73 198-198 73-273-73-273-198-198-273-73zm768 544q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z" /></svg>;
-const radioChecked = <svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1152 896q0 106-75 181t-181 75-181-75-75-181 75-181 181-75 181 75 75 181zm-256-544q-148 0-273 73t-198 198-73 273 73 273 198 198 273 73 273-73 198-198 73-273-73-273-198-198-273-73zm768 544q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z" /></svg>;
-const arrow = <svg version="1.1" width="24px" height="24px"><g id="Rounded"><path d="M9.29,6.71L9.29,6.71c-0.39,0.39-0.39,1.02,0,1.41L13.17,12l-3.88,3.88c-0.39,0.39-0.39,1.02,0,1.41l0,0c0.39,0.39,1.02,0.39,1.41,0l4.59-4.59c0.39-0.39,0.39-1.02,0-1.41l-4.59-4.59C10.32,6.32,9.68,6.32,9.29,6.71z" /></g></svg>;
+import { checked, unchecked, radioChecked, radioUnchecked, arrow } from '../../../utils/icons';
 
 const styles = {
-  Wrapper: {
-    position: 'relative',
+  Container: {
+    position: 'static',
+    overflow: 'visible',
+    padding: 0,
+    transform: 'none',
     display: 'flex',
-    alignItems: 'center',
-    minWidth: 0,
+    cursor: 'default',
+  },
+  Wrapper: {
     fontSize: 12,
     padding: '0px 10px',
-    height: 30,
+    height: '30px',
     color: 'inherit',
-    cursor: 'default'
+    flex: '1 1 auto',
+    display: 'flex',
+    alignItems: 'center',
+    position: 'relative',
+    textDecoration: 'none',
+    cursor: 'default',
   },
   Label: {
     flexGrow: 1,
@@ -28,7 +32,9 @@ const styles = {
     marginRight: 10,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
+    cursor: 'default',
+    pointerEvents: 'none',
   },
   Accelerator: {
     flexShrink: 0,
@@ -103,6 +109,11 @@ class MenuItem extends Component {
     }
 
     switch (menuItem.type) {
+      case 'submenu': {
+        // stop propagation only when initial target is this item specifically
+        // e.stopPropagation(); 
+        break;
+      }
       case 'checkbox': {
         e.persist();
         const newMenuItem = {
@@ -180,9 +191,10 @@ class MenuItem extends Component {
     }
 
     return (
-      <div
+      <li
+        ref={this.props.rectRef}
         style={{
-          ...styles.Wrapper,
+          ...styles.Contianer,
           color: hovering ? theme.menuTextHighlightColor : '',
           opacity: menuItem.enabled ? '1' : '0.3',
           backgroundColor: hovering ? theme.menuHighlightColor : ''
@@ -190,36 +202,39 @@ class MenuItem extends Component {
         onMouseEnter={this._handleMouseEnter}
         onMouseLeave={this._handleMouseLeave}
         onClick={this._handleClick}
+        role="option"
       >
-        <div
-          className={css.StatusIcon}
-          style={{
-            color: hovering ? theme.menuTextHighlightColor : (theme.accentStatusIcon ? theme.menuHighlightColor : theme.menuActiveTextColor)
-          }}
-        >
-          {statusIcon}
-        </div>
-        <span style={styles.Label}>
-          {menuItem.label}
-        </span>
-        <span
-          style={{
-            ...styles.Accelerator,
-            color: hovering ? theme.menuTextHighlightColor : theme.menuAcceleratorColor
-          }}
-        >
-          {parseAccelerator(menuItem.accelerator)}
-        </span>
-        {
-          (isSubMenu) &&
+        <a style={{...styles.Wrapper, height: theme.menuItemHeight}}>
           <div
-            className={css.SubMenuArrow}
+            className={css.StatusIcon}
+            style={{
+              color: hovering ? theme.menuTextHighlightColor : (theme.accentStatusIcon ? theme.menuHighlightColor : theme.menuActiveTextColor)
+            }}
           >
-            {arrow}
+            {statusIcon}
           </div>
-        }
+          <span style={styles.Label}>
+            {menuItem.label}
+          </span>
+          <span
+            style={{
+              ...styles.Accelerator,
+              color: hovering ? theme.menuTextHighlightColor : theme.menuAcceleratorColor
+            }}
+          >
+            {parseAccelerator(menuItem.accelerator)}
+          </span>
+          {
+            (isSubMenu) &&
+            <div
+              className={css.SubMenuArrow}
+            >
+              {arrow}
+            </div>
+          }
+        </a>
         {(isSubMenu && this.state.hovering) && children}
-      </div>
+      </li>
     );
   }
 }

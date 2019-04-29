@@ -2,30 +2,29 @@ import React from 'react';
 
 const styles = {
   Title: {
-    margin: '0px 6px 0px 0px',
-    textAlign: 'center',
-    display: 'flex',
+    flex: '0 1 auto',
+    fontSize: '12px',
+    overflow: 'hidden',
     whiteSpace: 'nowrap',
-    justifyContent: 'center',
-    alignContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    WebkitAppRegion: 'drag'
+    textOverflow: 'ellipsis',
   }
 };
 
 class Title extends React.Component {
   render() {
-    let { theme, isWin, children, flex } = this.props;
+    let { theme, isWin, children, flex, inActive, align } = this.props;
     let lineHeight = isWin ? theme.winBarHeight : theme.barHeight;
-    let padding = isWin ? '0px 4px' : '0 70px';
+    let padding = isWin ? '0px 4px' : 0;
     let color = theme.barTitleColor;
     let fontFamily = theme.titleFontFamily;
     let fontWeight = theme.titleFontWeight;
+    let opacity = inActive ? theme.inActiveOpacity : 1;
+    let marginLeft = (!isWin && theme.showIconDarwin) ? 0 : (align === 'left' ? 0 : 'auto');
+    let marginRight = align === 'center' ? 'auto' : 0;
 
     return (
       <div
-        style={{ ...styles.Title, lineHeight, padding, color, flex, fontFamily, fontWeight }}
+        style={{ ...styles.Title, marginLeft, marginRight, lineHeight, color, flex, fontFamily, fontWeight, opacity, padding }}
       >
         {children}
       </div>

@@ -1,6 +1,35 @@
 import React, { Component } from 'react';
 import styles from './styles.css';
 
+const style = {
+  Container: {
+    WebkitAppRegion: 'no-drag',
+    position: 'relative',
+    padding: 0,
+    margin: 0,
+    overflow: 'hidden',
+    boxShadow: 'none',
+    borderRadius: 0,
+    backgroundColor: 'transparent',
+    transition: 'background-color 0.25s ease',
+    opacity: 0.5,
+    boxSizing: 'content-box',
+  },
+  WindowsContainer: {
+    width: '46px',
+    height: '100%',
+  },
+  LinuxContainer: {
+    marginRight: '5px',
+    width: '16px',
+    height: '16px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignContent: 'center',
+    borderRadius: '50%',
+  }
+}
+
 class Button extends Component {
   constructor(props) {
     super(props);
@@ -29,7 +58,8 @@ class Button extends Component {
       disabled,
       close,
       onClick,
-      theme
+      theme,
+      isWin,
     } = this.props;
 
     const {
@@ -37,25 +67,34 @@ class Button extends Component {
       focused
     } = this.state;
 
-    let backgroundColor = 'transparent';
-    let opacity = 0.5;
+    let backgroundColor = (!isWin && close) ? theme.linuxCloseBackground : 'transparent';
+    let opacity = (!isWin && close) ? 1 : 0.5;
+    let border = (!isWin) ? theme.linuxBorder : 'none';
     let transition = 'background-color 0.25s ease';
-    let color = theme.windowControlsColor;
-    if (hovering) {
+    let color = (!isWin && close) ? theme.linuxCloseColor : theme.windowControlsColor;
+    if (focused) {
       opacity = 1;
-      color = close ? theme.windowCloseHover : color;
-      backgroundColor = close ? theme.windowCloseBackground : theme.windowDefaultBackground;
-    } else if (focused) {
-      opacity = 1;
-      color = close ? theme.windowCloseHover : color;
-      backgroundColor = close ? theme.windowCloseActive : theme.windowDefaultActive;
+      color = (close ? theme.windowCloseHover : undefined);
+      backgroundColor = (close ? (isWin ? theme.windowCloseActive : theme.linuxCloseActive) : theme.windowDefaultActive);
       transition = 'none';
+    } else if (hovering) {
+      opacity = 1;
+      color = (close ? theme.windowCloseHover : undefined);
+      backgroundColor = (close ? (isWin ? theme.windowCloseBackground : theme.linuxCloseBackground) : theme.windowDefaultBackground);
     }
 
     return (
       <button
         className={styles.Button}
-        style={{ backgroundColor, opacity, transition, color }}
+        style={{
+          ...style.Container,
+          ...(isWin ? style.WindowsContainer : style.LinuxContainer),
+          backgroundColor,
+          opacity,
+          transition,
+          color,
+          border
+        }}
         onFocus={this.toggleFocus}
         onBlur={this.toggleFocus}
         onMouseEnter={this.toggleHover}

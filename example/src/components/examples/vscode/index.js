@@ -23,7 +23,7 @@ class Code extends Component {
             barColor: 'rgb(230, 230, 230)',
             menuHighlightColor: '#373277',
             menuDimItems: false,
-            showIconDarLin: false
+            showIconDarwin: false
           }}
           platform={platform}
         />

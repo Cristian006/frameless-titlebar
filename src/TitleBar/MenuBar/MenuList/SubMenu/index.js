@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import MenuItem from '../MenuItem';
 import { defaultMenuItem } from '../../../utils';
+import MenuListContainer from '../MenuListContainer';
 
 export const SubMenuLabelStyle = {
   height: '20px',
@@ -13,54 +14,29 @@ export const SubMenuLabelStyle = {
   whiteSpace: 'nowrap',
   direction: 'rtl',
   fontSize: '1em',
-  textAlign: 'left'
-};
-
-const styles = {
-  SubMenuWrapper: {
-    position: 'absolute',
-    width: '100%',
-    padding: '5px 0px'
-  }
+  textAlign: 'left',
+  cursor: 'default',
 };
 
 class SubMenu extends Component {
   constructor(props) {
     super(props);
     this._generateMenu = this._generateMenu.bind(this);
+    this.setRef = this.setRef.bind(this);
+  }
+
+  setRef(ref) {
+    this.itemRef = ref;
   }
 
   _generateMenu(menu = []) {
     const { theme } = this.props;
     return menu.map((menuItem, i) => {
       if (menuItem.submenu) {
-        // create submenu item
-        const windowWidth = window.innerWidth;
-        let renderSide = 'right';
-        let right = this.props.right + theme.menuWidth;
-
-        // Render menu to the left if the right side of the
-        // current menu is greater than the current window width
-        if (right > windowWidth) {
-          if (theme.menuWidth < (this.props.right - theme.menuWidth)) {
-            renderSide = 'left';
-            right = this.props.right - theme.menuWidth;
-          } else {
-            // check wich side has more space and zero it out to the right or left
-            const rightDiff = windowWidth - right;
-            const leftDiff = this.props.right - theme.menuWidth;
-            if (rightDiff < leftDiff) {
-              // zero out to the right
-            }
-          }
-        }
         return (
           <SubMenu
             key={`${i}${menuItem.label}`}
-            level={this.props.level + 1}
-            right={right}
             theme={theme}
-            renderSide={renderSide}
             menuRef={this.props.menuRef}
             changeCheckState={this.props.changeCheckState}
             menuItem={{ ...defaultMenuItem, ...menuItem, type: 'submenu' }}
@@ -86,28 +62,22 @@ class SubMenu extends Component {
   render() {
     const {
       menuItem,
-      level,
-      renderSide,
+      // renderSide,
       theme
     } = this.props;
 
     return (
       <MenuItem
+        rectRef={this.setRef}
         menu={this.props.menu}
         theme={theme}
         menuItem={{ ...defaultMenuItem, ...menuItem }}
       >
-        <div
-          style={{
-            ...styles.SubMenuWrapper,
-            top: theme.menuSubLabelHeaders ? '-25px' : '-5px',
-            left: renderSide === 'left' ? '-100%' : '100%',
-            maxWidth: theme.menuWidth,
-            backgroundColor: theme.menuBackgroundColor,
-            color: theme.menuActiveTextColor,
-            zIndex: level + 8,
-            boxShadow: theme.menuShowBoxShadow ? theme.menuBoxShadow : ''
-          }}
+        <MenuListContainer
+          theme={theme}
+          parentRef={this.itemRef}
+          rect={this.itemRef && this.itemRef.getBoundingClientRect()}
+          submenu
         >
           {
             theme.menuSubLabelHeaders &&
@@ -123,7 +93,7 @@ class SubMenu extends Component {
           {
             this._generateMenu(menuItem.submenu)
           }
-        </div>
+        </MenuListContainer>
       </MenuItem>
     );
   }

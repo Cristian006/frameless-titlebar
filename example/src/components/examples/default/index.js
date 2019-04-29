@@ -4,6 +4,13 @@ import defaultIcon from 'assets/images/icon.png';
 import { defaultTemplate } from 'utils/menus';
 
 class Default extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hasNotifications: true
+    };
+  }
+
   render() {
     const {
       children,
@@ -40,3 +47,16 @@ class Default extends Component {
 }
 
 export default Default;
+
+/*windowActions={
+  <Button
+    backgroundColor={this.state.hasNotifications ? 'yellow' : 'transparent'}
+    backgroundHover="yellow"
+    color={this.state.hasNotifications ? 'black' : 'white'}
+    onClick={() => this.setState({ hasNotifications: false })}
+  >
+    <i className="material-icons">
+      notifications_active
+    </i>
+  </Button>
+}*/
