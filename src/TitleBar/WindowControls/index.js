@@ -72,7 +72,7 @@ export default class WindowControls extends Component {
 
   get isMaximizable() {
     const { disableMaximize } = this.props;
-    return (!disableMaximize || !currentWindow.isResizable() || !currentWindow.isMaximizable());
+    return (!disableMaximize && (!currentWindow.isResizable() || !currentWindow.isMaximizable()));
   }
 
   handleUnMaximize() {
@@ -159,6 +159,7 @@ export default class WindowControls extends Component {
             key="close-button"
             aria-label="close"
             tabIndex="-1"
+            disabled={false}
             onClick={this.onCloseClicked}
             isWin={isWin}
             close

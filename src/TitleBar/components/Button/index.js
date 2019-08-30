@@ -17,7 +17,7 @@ const style = {
   },
   WindowsContainer: {
     width: '46px',
-    height: '100%',
+    height: '100%'
   },
   LinuxContainer: {
     marginRight: '5px',
@@ -26,7 +26,7 @@ const style = {
     display: 'flex',
     justifyContent: 'center',
     alignContent: 'center',
-    borderRadius: '50%',
+    borderRadius: '50%'
   }
 }
 
@@ -39,17 +39,29 @@ class Button extends Component {
     };
   }
 
-  toggleHover = () => {
+  onMouseEnter = () => {
     this.setState({
-      hovering: !this.state.hovering
+      hovering: true
     });
-  }
+  };
 
-  toggleFocus = () => {
+  onMouseLeave = () => {
     this.setState({
-      focused: !this.state.focused
+      hovering: false
     });
-  }
+  };
+
+  onFocus = () => {
+    this.setState({
+      focused: true
+    });
+  };
+
+  onBlur = () => {
+    this.setState({
+      focused: false
+    });
+  };
 
   render() {
     const {
@@ -59,7 +71,7 @@ class Button extends Component {
       close,
       onClick,
       theme,
-      isWin,
+      isWin
     } = this.props;
 
     const {
@@ -67,20 +79,30 @@ class Button extends Component {
       focused
     } = this.state;
 
+    let buttonProps = {};
     let backgroundColor = (!isWin && close) ? theme.linuxCloseBackground : 'transparent';
-    let opacity = (!isWin && close) ? 1 : 0.5;
+    var opacity = 0.2;
     let border = (!isWin) ? theme.linuxBorder : 'none';
-    let transition = 'background-color 0.25s ease';
+    let transition = '0s ease 0s';
     let color = (!isWin && close) ? theme.linuxCloseColor : theme.windowControlsColor;
-    if (focused) {
-      opacity = 1;
-      color = (close ? theme.windowCloseHover : undefined);
-      backgroundColor = (close ? (isWin ? theme.windowCloseActive : theme.linuxCloseActive) : theme.windowDefaultActive);
-      transition = 'none';
-    } else if (hovering) {
-      opacity = 1;
-      color = (close ? theme.windowCloseHover : undefined);
-      backgroundColor = (close ? (isWin ? theme.windowCloseBackground : theme.linuxCloseBackground) : theme.windowDefaultBackground);
+    if (!disabled) {
+      if (focused) {
+        opacity = 1;
+        color = (close ? theme.windowCloseHover : undefined);
+        backgroundColor = (close ? (isWin ? theme.windowCloseActive : theme.linuxCloseActive) : theme.windowDefaultActive);
+        transition = 'none';
+      } else if (hovering) {
+        opacity = 1;
+        color = (close ? theme.windowCloseHover : undefined);
+        backgroundColor = (close ? (isWin ? theme.windowCloseBackground : theme.linuxCloseBackground) : theme.windowDefaultBackground);
+      }
+      buttonProps['onFocus'] = this.onFocus;
+      buttonProps['onBlur'] = this.onBlur;
+      buttonProps['onMouseEnter'] = this.onMouseEnter;
+      buttonProps['onMouseLeave'] = this.onMouseLeave;
+      buttonProps['onClick'] = onClick;
+      transition = 'background-color 0.25s ease';
+      opacity = !isWin && close ? 1 : 0.5;
     }
 
     return (
@@ -95,14 +117,10 @@ class Button extends Component {
           color,
           border
         }}
-        onFocus={this.toggleFocus}
-        onBlur={this.toggleFocus}
-        onMouseEnter={this.toggleHover}
-        onMouseLeave={this.toggleHover}
-        onClick={onClick}
+        disabled={disabled}
         aria-label={ariaLabel}
         tabIndex={tabIndex}
-        disabled={disabled}
+        {...buttonProps}
       >
         {this.props.children}
       </button>
