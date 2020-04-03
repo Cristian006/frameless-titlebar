@@ -9,6 +9,7 @@ export const darkTheme = {
   barTitleColor: 'inherit',
   barBackgroundColor: '#24292e',
   barShowBorder: false,
+  align: 'center',
   titleFontFamily: 'inherit',
   titleFontWeight: 'normal',
   barBorderBottom: '1px solid #000',

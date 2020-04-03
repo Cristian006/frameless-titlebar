@@ -38,7 +38,7 @@ const TitleBar = ({
           {
             !vertical && icon && <img className={styles.Logo} src={icon} />
           }
-          {!stacked && (
+          {isWin && !stacked && (
             <MenuBar
               focused={focused}
               menu={menu}
@@ -63,7 +63,7 @@ const TitleBar = ({
             />
           )}
         </Bar>
-        {stacked && (
+        {isWin && stacked && (
           <Bar isWin={isWin} bottomBar>
             <MenuBar
               focused={focused}

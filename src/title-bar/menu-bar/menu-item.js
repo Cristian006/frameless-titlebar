@@ -50,8 +50,8 @@ const getIconColor = (item, hovering, theme) => {
   return theme.menuActiveTextColor;
 };
 
-const getAcceleratorColor = (hovering, theme) => {
-  return hovering ? theme.menuTextHighlightColor : theme.menuAcceleratorColor;
+const getAcceleratorColor = (item, hovering, theme) => {
+  return hovering && !item.disabled ? theme.menuTextHighlightColor : theme.menuAcceleratorColor;
 };
 
 const getBackgroundColor = (hovering, item, theme) => {
@@ -94,7 +94,7 @@ const MenuItem = ({
     selected && currentSelected(selectedPath, depth + 1) !== null;
   const textColor = getTextColor(item, selected, theme);
   const iconColor = getIconColor(item, selected, theme);
-  const acceleratedColor = getAcceleratorColor(selected, theme);
+  const acceleratedColor = getAcceleratorColor(item, selected, theme);
   const backgroundColor = getBackgroundColor(selected, item, theme);
   return (
     <li

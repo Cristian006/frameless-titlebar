@@ -2,6 +2,9 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { ThemeContext } from '../theme';
 import styles from '../style.css';
+import classNames from 'classnames/bind';
+
+const cx = classNames.bind(styles);
 
 const Bar = ({
   isWin,
@@ -17,7 +20,7 @@ const Bar = ({
 
   return (
     <div
-      className={styles.Bar}
+      className={cx(styles.Bar)}
       style={{
         padding: !isWin ? '0 70px' : 0,
         borderBottom: showBorder ? theme.barBorderBottom : '',

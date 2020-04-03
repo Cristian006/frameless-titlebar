@@ -4,10 +4,6 @@ import styles from '../style.css';
 import { ThemeContext } from '../theme';
 
 const getMargin = (margin, align) => {
-  if (align === 'center') {
-    return 'auto';
-  }
-
   if (align === 'left') {
     return margin === 'left' ? '0px' : 'auto';
   }
@@ -15,15 +11,17 @@ const getMargin = (margin, align) => {
   if (align === 'right') {
     return margin === 'right' ? '0px' : 'auto';
   }
+
+  return 'auto';
 };
 
 const Title = ({
   isWin,
   focused,
-  children
+  children,
+  hasIcon
 }) => {
   const {
-    showIconDarwin,
     align,
     winBarHeight,
     barHeight,
@@ -32,14 +30,14 @@ const Title = ({
     titleFontFamily,
     titleFontWeight
   } = useContext(ThemeContext);
-  const marginLeft = !isWin && showIconDarwin ? 0 : getMargin('left', align);
+  const marginLeft = getMargin('left', align);
   const marginRight = getMargin('right', align);
-
+  const padding = (isWin || (!hasIcon && marginLeft === '0px')) ? '0px 8px' : 0;
   return (
     <div
       className={styles.Title}
       style={{
-        padding: (isWin ? '0px 4px' : 0),
+        padding: padding,
         lineHeight: isWin ? winBarHeight : barHeight,
         opacity: focused ? 1 : inActiveOpacity,
         marginLeft: marginLeft,

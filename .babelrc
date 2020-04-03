@@ -1,14 +1,4 @@
 {
-  "env": {
-    "test": {
-      "presets": [
-        [
-          "@babel/preset-env"
-        ],
-        "@babel/preset-react"
-      ]
-    }
-  },
   "presets": [
     [
       "@babel/preset-env",
@@ -18,7 +8,7 @@
     ],
     "@babel/preset-react"
   ],
-  "ignore": [
-    "node_modules/**"
+  "plugins": [
+    "@babel/plugin-proposal-class-properties"
   ]
 }

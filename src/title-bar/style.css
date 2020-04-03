@@ -93,6 +93,12 @@
   color: inherit;
 }
 
+.MenuButtonLabelWrapper > svg {
+  fill: currentColor;
+  width: 20px;
+  height: 20px;
+}
+
 .MenuButton {
   -webkit-appearance: none;
   border: none;
@@ -136,8 +142,8 @@
 }
 
 .MenuListVertical {
-  padding: 5px 0;
-  margin-left: 0;
+  padding: 5px 0px;
+  margin-left: 0px;
   overflow: visible;
   text-align: left;
   white-space: nowrap;
@@ -159,7 +165,7 @@
 
 .MenuItemContainer {
   overflow: visible;
-  padding: 0;
+  padding: 0px;
   transform: none;
   display: flex;
   cursor: default;
@@ -182,13 +188,13 @@
 
 .Accelerator {
   flex-shrink: 0;
-  margin-right: 10;
+  margin-right: 10px;
 }
 
 .MenuItemLabel {
   flex-grow: 1;
-  margin-left: 10;
-  margin-right: 10;
+  margin-left: 10px;
+  margin-right: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

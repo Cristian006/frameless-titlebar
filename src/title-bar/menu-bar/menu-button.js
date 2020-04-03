@@ -165,7 +165,7 @@ const MenuButton = ({
           onClick={onClick}
           tabIndex="-1"
         >
-          <div style={{ opacity }}>
+          <div className={styles.MenuButtonLabelWrapper} style={{ opacity }}>
             {icon}
             {!icon && (
               // eslint-disable-next-line react/jsx-fragments
