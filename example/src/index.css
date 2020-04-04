@@ -11,7 +11,7 @@ body {
 .Container {
   width: 100vw;
   height: 100vh;
-  background: #e0e0e0;
+  overflow: hidden;
 }
 
 .Content {
@@ -19,9 +19,6 @@ body {
   margin: 36px auto;
   display: flex;
   flex-direction: column;
-  padding: 24px;
-  border-radius: 6px;
-  background-color: white;
 }
 
 .Dropdown {
@@ -59,6 +56,13 @@ body {
 
 .OptionContainer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  display: block;
   justify-content: space-between;
+}
+
+.OptionLabel {
+  font-size: 12px;
+  text-transform: uppercase;
+  display: block;
 }

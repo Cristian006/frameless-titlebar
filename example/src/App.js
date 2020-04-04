@@ -1,32 +1,122 @@
 import React, { useState } from 'react'
+import {
+  AppBar,
+  Toolbar,
+  Card,
+  CardContent,
+  Typography,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  makeStyles
+} from '@material-ui/core'
+import { withTheme } from '@material-ui/core/styles'
 import TitleBar from 'frameless-titlebar'
 import Dropdown from './components/dropdown'
 import defaultMenu from './menu'
 
-const App = () => {
-  const [platform, setPlatform] = useState('win32')
-  const [menuStyle, setMenuStyle] = useState('default')
-  const [align, setAlign] = useState('center')
+const selections = [
+  {
+    option: 'platform',
+    label: 'Platform Type',
+    options: ['win32', 'darwin', 'linux']
+  },
+  {
+    option: 'menuStyle',
+    label: 'Menu Style',
+    options: ['default', 'stacked', 'vertical']
+  },
+  {
+    option: 'align',
+    label: 'Title Align',
+    options: ['center', 'left', 'right']
+  }
+]
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    marginTop: '12px',
+    width: '100%'
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2)
+  }
+}))
+
+const App = ({ theme }) => {
+  const [state, setState] = useState({
+    platform: 'win32',
+    menuStyle: 'default',
+    align: 'center'
+  })
 
   const currentTheme = {
-    menuStyle,
-    platform,
-    align
+    ...state,
+    barBackgroundColor: theme.palette.primary.dark,
+    menuHighlightColor: theme.palette.secondary.main
+  }
+  const classes = useStyles()
+  const handleChange = (type) => (event) => {
+    let { value } = event.target
+    let newState = {}
+    if (type === 'menuStyle') {
+      newState['platform'] = 'win32'
+      if (value === 'stacked') {
+        newState['align'] = 'left'
+      }
+    }
+    setState({ ...state, ...newState, [type]: value })
   }
 
   return (
-    <div className='Container'>
+    <div className='Container' style={{ background: theme.palette.background.default }}>
       <TitleBar
         menu={defaultMenu}
         theme={{ ...currentTheme }}
-        platform={platform}
+        platform={state.platform}
         title='frameless-titlebar'
         onClose={() => { console.log('close clicked') }}
         onMinimize={() => { console.log('minimized clicked') }}
         onMaximize={() => { console.log('maximized clicked') }}
       />
+      <AppBar position='static'>
+        <Toolbar >Frameless Titlebar</Toolbar>
+      </AppBar>
       <div className='Content'>
-        <div className='OptionContainer'>
+        <Card variant='outlined'>
+          <CardContent>
+            <Typography>Title Bar Styles</Typography>
+            {selections.map((item) => {
+              return (
+                <FormControl className={classes.formControl}>
+                  <InputLabel id={`${item.option}-label`}>{item.label}</InputLabel>
+                  <Select
+                    key={`${item.option}-key`}
+                    labelId={`${item.option}-label`}
+                    id={item.option}
+                    value={state[item.option]}
+                    onChange={handleChange(item.option)}
+                    variant='outlined'
+                  >
+                    {
+                      item.options.map((opt) => <MenuItem key={opt} value={opt}>{opt}</MenuItem>)
+                    }
+                  </Select>
+                </FormControl>
+              )
+            })}
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  )
+}
+
+export default withTheme(App)
+
+/*
+
+<div className='OptionContainer'>
           <div className='OptionLabel'>
             Platform
           </div>
@@ -61,9 +151,4 @@ const App = () => {
             onChange={setAlign}
           />
         </div>
-      </div>
-    </div>
-  )
-}
-
-export default App
+        */

@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 
 export default function useHover() {
   // Reference to the element we're listen for events from
-  const ref = useRef(null);
+  const ref = useRef();
 
   // Hover state management
   const [hovered, setHovered] = useState(false);

@@ -13,12 +13,14 @@ import { currentSelected, isItemSubMenu } from '../utils';
 import styles from '../style.css';
 
 const getBackgroundColor = (item, selected, hovering, theme) => {
-  if (selected && !item.disabled) {
-    return theme.menuBackgroundColor;
-  }
+  if (!item.disabled) {
+    if (selected) {
+      return theme.menuBackgroundColor;
+    }
 
-  if (!selected && hovering && !item.disabled) {
-    return theme.menuItemHoverBackground;
+    if (hovering) {
+      return theme.menuItemHoverBackground;
+    }
   }
 
   return 'transparent';
@@ -90,7 +92,9 @@ const MenuButton = ({
     dispatch({ type: 'set', depth, selected: -1 });
   }, [hoverRef.current]);
   const onClick = useCallback(() => {
-    dispatch({ type: 'button-set', depth, selected: idx });
+    if (!item.disabled) {
+      dispatch({ type: 'button-set', depth, selected: idx });
+    }
   }, [idx]);
 
   useEffect(() => {
@@ -158,7 +162,6 @@ const MenuButton = ({
         <button
           className={styles.MenuButton}
           style={{
-            // backgroundColor,
             borderColor,
             color
           }}

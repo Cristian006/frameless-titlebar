@@ -5,6 +5,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.9.8",
     "frameless-titlebar": "link:..",
     "prop-types": "^15.6.2",
     "react": "link:../node_modules/react",

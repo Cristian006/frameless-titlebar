@@ -72,6 +72,39 @@ const defaultMenu = [
     ]
   },
   {
+    label: 'Test',
+    submenu: [
+      {
+        label: 'Test One'
+      },
+      {
+        label: 'Test Two'
+      },
+      {
+        label: 'Test Three',
+        submenu: [
+          {
+            label: 'Depth 2',
+            submenu: [
+              {
+                label: 'Depth 3'
+              },
+              {
+                label: 'Test Five'
+              }
+            ]
+          },
+          {
+            label: 'Test Six'
+          },
+          {
+            label: 'Test Seven'
+          }
+        ]
+      }
+    ]
+  },
+  {
     label: 'Help',
     submenu: [
       {
@@ -82,6 +115,23 @@ const defaultMenu = [
       },
       {
         label: 'About Frameless Titlebar'
+      }
+    ]
+  },
+  {
+    label: 'Random',
+    disabled: true,
+    subemnu: [
+      {
+        label: 'Single Item'
+      }
+    ]
+  },
+  {
+    label: 'Overflow',
+    subemnu: [
+      {
+        label: 'Random 1'
       }
     ]
   }

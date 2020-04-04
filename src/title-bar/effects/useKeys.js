@@ -25,6 +25,10 @@ const useKeys = () => {
 
   useEffect(() => {
     const captureKeyCode = e => {
+      if (e.altKey) {
+        e.preventDefault();
+      }
+
       if (
         e.charCode !== keys.charCode ||
         e.which !== keys.which ||
