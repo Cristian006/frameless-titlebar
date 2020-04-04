@@ -6,8 +6,7 @@ import {
   useWidth,
   usePrevious,
   useOverflow,
-  useAccessibility,
-  useKeys
+  useAccessibility
 } from '../effects';
 import { immutableSplice } from '../utils';
 import reducer, { initialState } from './reducer';
@@ -22,7 +21,6 @@ const overflowItem = menu => {
 const depth = 0;
 const HorizontalMenu = ({ menu, focused, currentWindow, menuBar }) => {
   const overflowRef = useRef();
-  const keys = useKeys();
   const childRefs = useChildRefs(menu);
   const overflow = useOverflow(menu, menuBar, childRefs, overflowRef);
   const [fixedMenu, updateFixedMenu] = useState(
@@ -30,7 +28,7 @@ const HorizontalMenu = ({ menu, focused, currentWindow, menuBar }) => {
   );
   const width = useWidth();
   const prevWidth = usePrevious(width);
-  const [selectedPath, dispatch] = useReducer(reducer, initialState);
+  const [{ selectedPath, altKey }, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     updateFixedMenu(
@@ -79,7 +77,7 @@ const HorizontalMenu = ({ menu, focused, currentWindow, menuBar }) => {
         depth={depth}
         selectedPath={selectedPath}
         dispatch={dispatch}
-        keys={keys}
+        altKey={altKey}
       />
     );
   });

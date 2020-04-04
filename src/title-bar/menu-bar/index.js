@@ -6,10 +6,10 @@ import VerticalMenu from './vertical';
 import { useMenu } from '../effects';
 import styles from '../style.css';
 
-const MenuBar = ({ menu, focused, currentWindow }) => {
+const MenuBar = ({ menu, focused, currentWindow, platform }) => {
   const currentTheme = useContext(ThemeContext);
   const menuBar = useRef();
-  const currentMenu = useMenu(menu);
+  const currentMenu = useMenu(menu, platform);
 
   return (
     <div className={styles.MenuBar} role="menubar" ref={menuBar}>

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import os from 'os';
 
 const modifiers = ['CommandOrControl', 'CmdOrCtrl'];
 const CMD = '⌘';
@@ -74,16 +73,16 @@ const sortMenuItems = menu => {
   return sortedOrder.map(i => menu[i]);
 };
 
-const parseAccelerator = accelerator => {
+const parseAccelerator = (accelerator, platform) => {
   if (accelerator && accelerator !== '') {
     const re = new RegExp(modifiers.join('|'), 'gi');
     return accelerator.replace(re, () => {
-      return os.platform() === 'darwin' ? CMD : CTRL;
+      return platform === 'darwin' ? CMD : CTRL;
     });
   }
 };
 
-const sortMenu = menu => {
+const sortMenu = (menu, platform) => {
   // sort menu and all submenus
   return sortMenuItems(menu).map(item => {
     if (!validate(item)) {
@@ -95,24 +94,24 @@ const sortMenu = menu => {
       // sort submenus
       return { ...item, submenu: sortMenu(item.submenu) };
     }
-    return { ...item, accelerator: parseAccelerator(item.accelerator) };
+    return { ...item, accelerator: parseAccelerator(item.accelerator, platform) };
   });
 };
 
-const buildMenu = menu => {
+const buildMenu = (menu, platform) => {
   if (!Array.isArray(menu)) {
     throw new TypeError('Menu must be an array');
   }
 
-  return sortMenu(menu);
+  return sortMenu(menu, platform);
 };
 
-const useMenu = menu => {
-  const [currentMenu, setMenu] = useState(buildMenu([...(menu || [])]));
+const useMenu = (menu, platform) => {
+  const [currentMenu, setMenu] = useState(buildMenu([...(menu || [])], platform));
 
   useEffect(() => {
-    setMenu(buildMenu([...(menu || [])]));
-  }, [menu]);
+    setMenu(buildMenu([...(menu || [])], platform));
+  }, [menu, platform]);
 
   return currentMenu;
 };

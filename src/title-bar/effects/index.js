@@ -1,6 +1,5 @@
 import useChildRefs from './useChildRefs';
 import useHover from './useHover';
-import useKeys from './useKeys';
 import useMenu from './useMenu';
 import usePrevious from './usePrevious';
 import useRect from './useRect';
@@ -15,7 +14,6 @@ import useAccessibility from './useAccessibility';
 export {
   useChildRefs,
   useHover,
-  useKeys,
   useMenu,
   usePrevious,
   useRect,

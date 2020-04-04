@@ -129,7 +129,7 @@ const defaultMenu = [
   },
   {
     label: 'Overflow',
-    subemnu: [
+    submenu: [
       {
         label: 'Random 1'
       }

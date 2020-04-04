@@ -5,8 +5,7 @@ import {
   useChildRefs,
   useWidth,
   usePrevious,
-  useAccessibility,
-  useKeys
+  useAccessibility
 } from '../effects';
 import reducer, { initialState } from './reducer';
 import { MenuIcon } from './icons';
@@ -22,11 +21,10 @@ const menuButton = menu => {
 const depth = 0;
 const VerticalMenu = ({ menu, focused, currentWindow }) => {
   const [fixedMenu, updateFixedMenu] = useState([menuButton(menu)]);
-  const keys = useKeys();
   const childRefs = useChildRefs(fixedMenu);
   const width = useWidth();
   const prevWidth = usePrevious(width);
-  const [selectedPath, dispatch] = useReducer(reducer, initialState);
+  const [{ selectedPath, altKey }, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     // close menu when focused away from window
@@ -62,7 +60,7 @@ const VerticalMenu = ({ menu, focused, currentWindow }) => {
       selectedPath={selectedPath}
       dispatch={dispatch}
       icon={<MenuIcon />}
-      keys={keys}
+      altKey={false}
     />
   );
 };

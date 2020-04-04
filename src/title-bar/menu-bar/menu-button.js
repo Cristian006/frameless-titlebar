@@ -15,7 +15,7 @@ import styles from '../style.css';
 const getBackgroundColor = (item, selected, hovering, theme) => {
   if (!item.disabled) {
     if (selected) {
-      return theme.menuBackgroundColor;
+      return theme.menuButtonActiveBackground ?? theme.menuBackgroundColor;
     }
 
     if (hovering) {
@@ -49,10 +49,6 @@ const getOpacity = (item, focused, theme) => {
   return 1;
 };
 
-const altKeyCodeMatch = (keys, str) => {
-  return !!keys.altKey && keys.keyCode === str.charCodeAt(0);
-};
-
 const useAltLabel = l => {
   const [label, setLabel] = useState({
     first: l.slice(0, 1),
@@ -72,7 +68,7 @@ const MenuButton = ({
   focused,
   currentWindow,
   item,
-  keys,
+  altKey,
   myRef,
   style,
   overflowed,
@@ -103,12 +99,6 @@ const MenuButton = ({
     }
   }, [hovering]);
 
-  useEffect(() => {
-    if (!overflowed && altKeyCodeMatch(keys, label.first)) {
-      onClick();
-    }
-  }, [keys, label]);
-
   const selected = currentSelected(selectedPath, depth) === idx;
   const selectedSub =
     selected && currentSelected(selectedPath, depth + 1) !== null;
@@ -118,12 +108,7 @@ const MenuButton = ({
   const color = getColor(item, selected, theme);
   const opacity = getOpacity(item, focused, theme);
   const isSubMenu = isItemSubMenu(item);
-
-  const setRefs = c => {
-    // eslint-disable-next-line no-param-reassign
-    myRef.current = c;
-    hoverRef.current = c;
-  };
+  const textDecoration = !item.disabled && altKey ? 'underline' : 'none';
 
   return (
     <div
@@ -132,7 +117,7 @@ const MenuButton = ({
         ...style,
         backgroundColor
       }}
-      ref={setRefs}
+      ref={myRef}
       tabIndex="0"
       aria-haspopup
     >
@@ -160,6 +145,7 @@ const MenuButton = ({
       )}
       <div className={styles.MenuButtonWrapper}>
         <button
+          ref={hoverRef}
           className={styles.MenuButton}
           style={{
             borderColor,
@@ -176,7 +162,7 @@ const MenuButton = ({
                 <span
                   className={styles.MenuButtonLabel}
                   style={{
-                    textDecoration: keys.altKey ? 'underline' : 'none'
+                    textDecoration
                   }}
                   aria-hidden="true"
                   tabIndex="-1"
@@ -204,7 +190,7 @@ MenuButton.propTypes = {
   focused: PropTypes.bool,
   currentWindow: PropTypes.object,
   item: PropTypes.object,
-  keys: PropTypes.object,
+  altKey: PropTypes.bool,
   myRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.any })

@@ -30,9 +30,9 @@ export const toggleCheckedState = (menu, index, radio = false) => {
 export const calcMaximums = (bounds, theme) => {
   return [
     /* Max Height */ Math.max(
-      10,
-      window.innerHeight - bounds.top - theme.menuMarginBottom
-    ),
+    10,
+    window.innerHeight - bounds.top - theme.menuMarginBottom
+  ),
     /* Max Width */ Math.min(window.innerWidth, window.innerWidth - bounds.left)
   ];
 };
@@ -87,10 +87,11 @@ export const getSelectedItem = (menu, selected) => {
   return [m[selected[d]], selected[d], m, d];
 };
 
-export const validNext = (menu, start) => {
+export const validNext = (menu, start, maxIndex = null) => {
   const current = start + 1;
-  for (let index = 0; index < menu.length; index += 1) {
-    const i = (current + index) % menu.length;
+  const max = maxIndex ?? menu.length;
+  for (let index = 0; index < max; index += 1) {
+    const i = (current + index) % max;
     if (!menu[i].disabled && !isItemSeparator(menu[i])) {
       return i;
     }
@@ -98,10 +99,11 @@ export const validNext = (menu, start) => {
   return start;
 };
 
-const validPrevious = (menu, start) => {
+export const validPrevious = (menu, start, maxIndex = null) => {
   const current = start - 1;
-  for (let index = menu.length; index >= 0; index -= 1) {
-    const i = (index + current) % menu.length;
+  const max = maxIndex ?? menu.length;
+  for (let index = max; index >= 0; index -= 1) {
+    const i = (index + current) % max;
     if (!menu[i].disabled && !isItemSeparator(menu[i])) {
       return i;
     }
