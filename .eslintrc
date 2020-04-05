@@ -1,7 +1,6 @@
 {
   "parser": "babel-eslint",
   "extends": [
-    "react",
     "standard",
     "standard-react"
   ],
@@ -19,8 +18,6 @@
     "space-before-function-paren": 0,
 
     // allow specifying true explicitly for boolean props
-    "react/jsx-boolean-value": 0,
-    "semi": 0,
-    "jsx-quotes": ["error", "prefer-double"],
+    "react/jsx-boolean-value": 0
   }
 }
