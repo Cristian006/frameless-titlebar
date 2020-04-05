@@ -1,9 +1,27 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 import styles from '../style.css';
 import { MinimizeIcon, MaximizeIcon, CloseIcon } from './icons';
 import { ThemeContext } from '../theme';
+import WindowButton from './button';
+
+const buttons = (isWin, onMinimize, onMaximize, onClose) => ([
+  {
+    type: 'minimize',
+    onClick: onMinimize,
+    icon: <MinimizeIcon isWin={isWin} />
+  },
+  {
+    type: 'maximize',
+    onClick: onMaximize,
+    icon: <MaximizeIcon isWin={isWin} />
+  },
+  {
+    type: 'close',
+    onClick: onClose,
+    icon: <CloseIcon isWin={isWin} />
+  }
+])
 
 const WindowControls = ({
   onMinimize,
@@ -11,25 +29,28 @@ const WindowControls = ({
   onClose,
   focused
 }) => {
-  const { inActiveOpacity } = useContext(ThemeContext);
+  const {
+    platform,
+    bar: {
+      inActiveOpacity
+    },
+    controls
+  } = useContext(ThemeContext);
+  const isWin = platform === 'win32';
   return (
     <div
       className={styles.ControlsWrapper}
-      style={{ opacity: focused ? 1 : inActiveOpacity }}
+      style={{ opacity: focused ? 1 : inActiveOpacity, color: controls.color }}
     >
-      <div className={styles.ControlsButton} key="minimize" onClick={onMinimize}>
-        <MinimizeIcon isWin />
-      </div>
-      <div className={styles.ControlsButton} key="maximize" onClick={onMaximize}>
-        <MaximizeIcon isWin />
-      </div>
-      <div
-        className={cx(styles.ControlsButton, {
-          [styles.Close]: true
-        })} key="close" onClick={onClose}
-      >
-        <CloseIcon isWin />
-      </div>
+      {
+        buttons(isWin, onMinimize, onMaximize, onClose).map((b) => {
+          return (
+            <WindowButton key={b.type} close={b.type === 'close'} onClick={b.onClick} controls={{ ...controls }}>
+              {b.icon}
+            </WindowButton>
+          )
+        })
+      }
     </div>
   );
 };

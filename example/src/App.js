@@ -13,7 +13,6 @@ import {
 } from '@material-ui/core'
 import { withTheme } from '@material-ui/core/styles'
 import TitleBar from 'frameless-titlebar'
-import Dropdown from './components/dropdown'
 import defaultMenu from './menu'
 
 const selections = [
@@ -51,9 +50,17 @@ const App = ({ theme }) => {
   })
 
   const currentTheme = {
-    ...state,
-    barBackgroundColor: theme.palette.primary.dark,
-    menuHighlightColor: theme.palette.secondary.main
+    menu: {
+      style: state.menuStyle,
+      highlight: {
+        background: theme.palette.secondary.main
+      }
+    },
+    bar: {
+      background: theme.palette.primary.dark,
+      titleAlign: state.align,
+      borderBottom: ''
+    }
   }
   const classes = useStyles()
   const handleChange = (type) => (event) => {

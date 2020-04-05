@@ -50,13 +50,6 @@ const useAccessibility = (
         })
       }
       return;
-    } else {
-      if (altKey) {
-        dispatch({
-          type: 'alt',
-          altKey: false
-        });
-      }
     }
 
     const current = selectedPath[depth];
@@ -117,7 +110,8 @@ const useAccessibility = (
           });
           break;
         }
-        const next = validNext(menu, current, overflow && overflow.hide ? menu.length - 1 : menu.length);
+        console.log(overflow);
+        const next = validNext(menu, current, overflow && overflow.hide ? menu.length - 1 : menu.length - 2);
         // const maxIndex =
         //  overflow && overflow.hide ? menu.length - 2 : menu.length - 1;
         // const next = current < maxIndex ? current + 1 : 0;
@@ -135,7 +129,7 @@ const useAccessibility = (
       }
       case 37 /* left */:
         if (selectedPath.length <= 2) {
-          const prev = validPrevious(menu, current, overflow && overflow.hide ? menu.length - 1 : menu.length);
+          const prev = validPrevious(menu, current, overflow && overflow.hide ? menu.length - 1 : menu.length - 2);
           dispatch({ type: 'button-set', depth, selected: prev });
           break;
         }

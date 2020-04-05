@@ -29,10 +29,7 @@ export const toggleCheckedState = (menu, index, radio = false) => {
 
 export const calcMaximums = (bounds, theme) => {
   return [
-    /* Max Height */ Math.max(
-    10,
-    window.innerHeight - bounds.top - theme.menuMarginBottom
-  ),
+    /* Max Height */ Math.max(0, window.innerHeight - bounds.top - theme.menu.list.marginBottom),
     /* Max Width */ Math.min(window.innerWidth, window.innerWidth - bounds.left)
   ];
 };

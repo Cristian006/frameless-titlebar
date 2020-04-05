@@ -29,7 +29,7 @@ const MenuList = ({
   const handleScroll = useMenuScroll(scrollRef);
   useScrollFocus(
     currentSelected(selectedPath, depth),
-    theme.menuItemHeight,
+    theme.menu.item.height,
     parentBounds,
     scrollRef
   );
@@ -38,7 +38,7 @@ const MenuList = ({
     <div
       className={styles.MenuListContainer}
       style={{
-        color: theme.menuActiveTextColor,
+        color: theme.menu.item.color,
         top: layout.top,
         left: layout.left
       }}
@@ -47,8 +47,8 @@ const MenuList = ({
       <div
         className={styles.MenuListScrollView}
         style={{
-          background: theme.menuBackgroundColor,
-          boxShadow: theme.menuShowBoxShadow ? theme.menuBoxShadow : ''
+          background: theme.menu.list.background,
+          boxShadow: theme.menu.list.boxShadow
         }}
       >
         <div

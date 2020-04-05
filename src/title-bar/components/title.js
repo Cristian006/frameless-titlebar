@@ -22,27 +22,28 @@ const Title = ({
   hasIcon
 }) => {
   const {
-    align,
-    winBarHeight,
-    barHeight,
-    inActiveOpacity,
-    barTitleColor,
-    titleFontFamily,
-    titleFontWeight
+    bar: {
+      height,
+      titleColor,
+      titleAlign,
+      titleFontFamily,
+      titleFontWeight,
+      inActiveOpacity
+    }
   } = useContext(ThemeContext);
-  const marginLeft = getMargin('left', align);
-  const marginRight = getMargin('right', align);
+  const marginLeft = getMargin('left', titleAlign);
+  const marginRight = getMargin('right', titleAlign);
   const padding = (isWin || (!hasIcon && marginLeft === '0px')) ? '0px 8px' : 0;
   return (
     <div
       className={styles.Title}
       style={{
         padding: padding,
-        lineHeight: isWin ? winBarHeight : barHeight,
+        lineHeight: height,
         opacity: focused ? 1 : inActiveOpacity,
         marginLeft: marginLeft,
         marginRight: marginRight,
-        color: barTitleColor,
+        color: titleColor,
         fontFamily: titleFontFamily,
         fontWeight: titleFontWeight
       }}

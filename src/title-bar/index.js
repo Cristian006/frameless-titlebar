@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import WindowControls from './window-controls';
@@ -25,13 +25,13 @@ const TitleBar = ({
   currentWindow
 }) => {
   const focused = useWindowFocus();
-  const currentTheme = useTheme(theme);
+  const currentTheme = useTheme(theme, platform);
   const isWin = platform === 'win32';
   const stacked = currentTheme.menuStyle === 'stacked';
   const vertical = currentTheme.menuStyle === 'vertical';
   return (
     <ThemeContext.Provider value={currentTheme}>
-      <>
+      <Fragment>
         <Bar isWin={isWin} onDoubleClick={onDoubleClick}>
           <div className={cx(styles.ResizeHandle, styles.Top)} />
           <div className={cx(styles.ResizeHandle, styles.Left)} />
@@ -72,9 +72,13 @@ const TitleBar = ({
             />
           </Bar>
         )}
-      </>
+      </Fragment>
     </ThemeContext.Provider>
   );
+};
+
+TitleBar.defaultProps = {
+  platform: 'win32'
 };
 
 TitleBar.propTypes = {

@@ -2,9 +2,6 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { ThemeContext } from '../theme';
 import styles from '../style.css';
-import classNames from 'classnames/bind';
-
-const cx = classNames.bind(styles);
 
 const Bar = ({
   isWin,
@@ -12,21 +9,26 @@ const Bar = ({
   children,
   bottomBar
 }) => {
-  const theme = useContext(ThemeContext);
-  const height = isWin ? theme.winBarHeight : theme.barHeight;
-  const isStacked = theme.menuStyle === 'stacked';
-  const showBorder =
-    ((isStacked && bottomBar) || !isStacked) && theme.barShowBorder;
-
+  const {
+    bar: {
+      height,
+      borderBottom,
+      background,
+      color
+    },
+    menu: {
+      style
+    }
+  } = useContext(ThemeContext);
   return (
     <div
-      className={cx(styles.Bar)}
+      className={styles.Bar}
       style={{
         padding: !isWin ? '0 70px' : 0,
-        borderBottom: showBorder ? theme.barBorderBottom : '',
-        backgroundColor: theme.barBackgroundColor,
-        color: theme.barColor,
-        height: height
+        borderBottom: (style === 'stacked' && !bottomBar) ? '' : borderBottom,
+        background,
+        color,
+        height
       }}
       onDoubleClick={onDoubleClick}
     >

@@ -15,35 +15,31 @@ import styles from '../style.css';
 const getBackgroundColor = (item, selected, hovering, theme) => {
   if (!item.disabled) {
     if (selected) {
-      return theme.menuButtonActiveBackground ?? theme.menuBackgroundColor;
+      return theme.button.background.active ?? theme.list.background;
     }
 
     if (hovering) {
-      return theme.menuItemHoverBackground;
+      return theme.button.background.hover;
     }
   }
 
-  return 'transparent';
-};
-
-const getBorderColor = (open, theme) => {
-  return open ? theme.menuBackgroundColor : '';
+  return theme.button.background.default;
 };
 
 const getColor = (item, open, theme) => {
   if (open && !item.disabled) {
-    return theme.menuActiveTextColor;
+    return theme.button.color.active;
   }
-  return theme.menuItemTextColor;
+  return theme.button.color.default;
 };
 
-const getOpacity = (item, focused, theme) => {
+const getOpacity = (item, focused, theme, inActiveOpacity) => {
   if (!focused) {
-    return theme.inActiveOpacity;
+    return inActiveOpacity;
   }
 
   if (item.disabled) {
-    return theme.menuDisabledOpacity;
+    return theme.disabled.opacity;
   }
 
   return 1;
@@ -78,7 +74,10 @@ const MenuButton = ({
   dispatch,
   icon
 }) => {
-  const theme = useContext(ThemeContext);
+  const {
+    bar: { inActiveOpacity },
+    menu: theme
+  } = useContext(ThemeContext);
   // eslint-disable-next-line no-unused-vars
   const [hoverRef, hovering] = useHover();
   const bounds = useRect(hoverRef);
@@ -104,9 +103,8 @@ const MenuButton = ({
     selected && currentSelected(selectedPath, depth + 1) !== null;
 
   const backgroundColor = getBackgroundColor(item, selected, hovering, theme);
-  const borderColor = getBorderColor(selected, theme);
   const color = getColor(item, selected, theme);
-  const opacity = getOpacity(item, focused, theme);
+  const opacity = getOpacity(item, focused, theme, inActiveOpacity);
   const isSubMenu = isItemSubMenu(item);
   const textDecoration = !item.disabled && altKey ? 'underline' : 'none';
 
@@ -136,8 +134,8 @@ const MenuButton = ({
         <div
           className={styles.MenuOverlay}
           style={{
-            background: theme.menuOverlayBackground,
-            opacity: theme.menuDimOpacity,
+            background: theme.overlay.background,
+            opacity: theme.overlay.opacity,
             top: bounds.bottom
           }}
           onClick={onClose}
@@ -148,7 +146,6 @@ const MenuButton = ({
           ref={hoverRef}
           className={styles.MenuButton}
           style={{
-            borderColor,
             color
           }}
           onClick={onClick}

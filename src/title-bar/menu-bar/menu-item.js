@@ -35,27 +35,27 @@ const getStatusIcon = item => {
 
 const getTextColor = (item, hovering, theme) => {
   if (hovering && !item.disabled) {
-    return theme.menuTextHighlightColor;
+    return theme.menu.item.highlight.color;
   }
-  return theme.menuActiveTextColor;
+  return theme.menu.item.color;
 };
 
 const getIconColor = (item, hovering, theme) => {
   if (hovering && !item.disabled) {
-    return theme.menuTextHighlightColor;
+    return theme.menu.item.highlight.color;
   }
-  if (theme.accentStatusIcon) {
-    return theme.menuHighlightColor;
+  if (theme.menu.icon.highlight) {
+    return theme.menu.item.highlight.color;
   }
-  return theme.menuActiveTextColor;
+  return theme.menu.item.color;
 };
 
 const getAcceleratorColor = (item, hovering, theme) => {
-  return hovering && !item.disabled ? theme.menuTextHighlightColor : theme.menuAcceleratorColor;
+  return hovering && !item.disabled ? theme.menu.item.highlight.color : theme.menu.accelerator.color;
 };
 
 const getBackgroundColor = (hovering, item, theme) => {
-  return hovering && !item.disabled ? theme.menuHighlightColor : '';
+  return hovering && !item.disabled ? theme.menu.item.highlight.background : '';
 };
 
 const MenuItem = ({
@@ -76,7 +76,7 @@ const MenuItem = ({
     return (
       <hr
         className={styles.Separator}
-        style={{ borderBottom: `1px solid ${theme.menuSeparatorColor}` }}
+        style={{ borderBottom: `1px solid ${theme.menu.separator.color}` }}
       />
     );
   }
@@ -111,7 +111,7 @@ const MenuItem = ({
       <a
         className={styles.MenuItemWrapper}
         style={{
-          height: theme.menuItemHeight,
+          height: theme.menu.item.height,
           maxWidth
         }}
       >
