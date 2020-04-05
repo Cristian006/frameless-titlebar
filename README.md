@@ -10,7 +10,7 @@
 
 The demo application can be found in the [example](./example) folder along with more images of the different titlebar styles:
 
-* [Overflow Menu](./example/public/overflow.png): When menu buttons don't fit in the given titlebar space items are moved into an overflowed submenu.
+* [Overflow Menu](./example/public/overflow.jpg): When menu buttons don't fit in the given titlebar space items are moved into an overflowed submenu.
 * [Stacked Menu](./example/public/stacked.png): Titlebar stacked above menu bar.
 * [Vertical Menu](./example/public/vertical.png): All menu items moved into a vertical submenu.
 
