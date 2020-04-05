@@ -15,31 +15,31 @@ import styles from '../style.css';
 const getBackgroundColor = (item, selected, hovering, theme) => {
   if (!item.disabled) {
     if (selected) {
-      return theme.button.background.active ?? theme.list.background;
+      return theme.menu.button.background.active ?? theme.menu.list.background;
     }
 
     if (hovering) {
-      return theme.button.background.hover;
+      return theme.bar.button.background.hover;
     }
   }
 
-  return theme.button.background.default;
+  return theme.bar.button.background.default;
 };
 
 const getColor = (item, open, theme) => {
   if (open && !item.disabled) {
-    return theme.button.color.active;
+    return theme.menu.button.color.active;
   }
-  return theme.button.color.default;
+  return theme.bar.button.color;
 };
 
-const getOpacity = (item, focused, theme, inActiveOpacity) => {
+const getOpacity = (item, focused, theme) => {
   if (!focused) {
-    return inActiveOpacity;
+    return theme.bar.inActiveOpacity;
   }
 
   if (item.disabled) {
-    return theme.disabled.opacity;
+    return theme.menu.disabled.opacity;
   }
 
   return 1;
@@ -74,10 +74,7 @@ const MenuButton = ({
   dispatch,
   icon
 }) => {
-  const {
-    bar: { inActiveOpacity },
-    menu: theme
-  } = useContext(ThemeContext);
+  const theme = useContext(ThemeContext);
   // eslint-disable-next-line no-unused-vars
   const [hoverRef, hovering] = useHover();
   const bounds = useRect(hoverRef);
@@ -104,7 +101,7 @@ const MenuButton = ({
 
   const backgroundColor = getBackgroundColor(item, selected, hovering, theme);
   const color = getColor(item, selected, theme);
-  const opacity = getOpacity(item, focused, theme, inActiveOpacity);
+  const opacity = getOpacity(item, focused, theme);
   const isSubMenu = isItemSubMenu(item);
   const textDecoration = !item.disabled && altKey ? 'underline' : 'none';
 
@@ -134,8 +131,8 @@ const MenuButton = ({
         <div
           className={styles.MenuOverlay}
           style={{
-            background: theme.overlay.background,
-            opacity: theme.overlay.opacity,
+            background: theme.menu.overlay.background,
+            opacity: theme.menu.overlay.opacity,
             top: bounds.bottom
           }}
           onClick={onClose}

@@ -251,34 +251,27 @@
   display: flex;
   flex-shrink: 0;
   flex-direction: row;
-  width: 146px;
   height: 100%;
   -webkit-app-region: no-drag;
   line-height: inherit;
 }
 
-.ControlsButton {
-  flex: 1;
-  flex-shrink: 0;
-  height: 100%;
-  background: 'rgba(0,0,0,0)';
+.Control {
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+.Control > div {
+  background: transparent;
+  display: flex;
   justify-content: center;
   align-content: center;
   align-items: center;
   text-align: center;
-  flex-direction: row;
   line-height: inherit;
-  display: flex;
   color: inherit;
   fill: currentColor;
-}
-
-.ControlsButton:hover {
-  background: rgba(255, 255, 255, 0.3);
-  color: black;
-}
-
-.ControlsButton.Close:hover {
-  background: red;
-  color: white;
 }

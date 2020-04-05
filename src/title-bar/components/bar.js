@@ -4,12 +4,12 @@ import { ThemeContext } from '../theme';
 import styles from '../style.css';
 
 const Bar = ({
-  isWin,
   onDoubleClick,
   children,
   bottomBar
 }) => {
   const {
+    platform,
     bar: {
       height,
       borderBottom,
@@ -20,11 +20,12 @@ const Bar = ({
       style
     }
   } = useContext(ThemeContext);
+  const isDarwin = platform === 'darwin';
   return (
     <div
       className={styles.Bar}
       style={{
-        padding: !isWin ? '0 70px' : 0,
+        padding: isDarwin ? '0 70px' : 0,
         borderBottom: (style === 'stacked' && !bottomBar) ? '' : borderBottom,
         background,
         color,

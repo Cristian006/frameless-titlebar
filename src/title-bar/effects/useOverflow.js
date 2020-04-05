@@ -64,14 +64,6 @@ const calcMenuOverflow = (menu, menuBar, refs, overflowRef) => {
       });
     }
 
-    // console.log({
-    //   availableSize,
-    //   currentSize,
-    //   full,
-    //   prevMenusShown,
-    //   numMenusShown
-    // });
-
     activeMenus.current = numMenusShown;
   }, [menuBarRect.width, refs]);
 

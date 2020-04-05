@@ -207,9 +207,9 @@
     },
     "divider": "rgba(0, 0, 0, 0.12)",
     "secondary": {
-      "main": "#e84545",
-      "light": "rgb(236, 106, 106)",
-      "dark": "rgb(162, 48, 48)",
+      "main": "#ee7738",
+      "light": "#f59d2a",
+      "dark": "#bd6e00",
       "contrastText": "#fff"
     },
     "common": {
@@ -232,9 +232,9 @@
       "active": "rgba(0, 0, 0, 0.54)"
     },
     "primary": {
-      "main": "#3b6978",
-      "light": "rgb(98, 135, 147)",
-      "dark": "rgb(41, 73, 84)",
+      "main": "#34495d",
+      "light": "#56677b",
+      "dark": "#2c3d4f",
       "contrastText": "#fff"
     }
   },

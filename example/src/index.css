@@ -12,11 +12,18 @@ body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.Scroll {
+  flex: 1;
+  overflow-y: auto;
 }
 
 .Content {
   max-width: 400px;
-  margin: 36px auto;
+  margin: 12px auto;
   display: flex;
   flex-direction: column;
 }
@@ -65,4 +72,9 @@ body {
   font-size: 12px;
   text-transform: uppercase;
   display: block;
+}
+
+code {
+  border-radius: 4px;
+  padding: 0px 8px;
 }

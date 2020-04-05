@@ -37,15 +37,20 @@ const WindowControls = ({
     controls
   } = useContext(ThemeContext);
   const isWin = platform === 'win32';
+  const width = platform === 'win32' ? '146px' : '120px';
   return (
     <div
       className={styles.ControlsWrapper}
-      style={{ opacity: focused ? 1 : inActiveOpacity, color: controls.color }}
+      style={{
+        opacity: focused ? 1 : inActiveOpacity,
+        color: controls.color,
+        width
+      }}
     >
       {
         buttons(isWin, onMinimize, onMaximize, onClose).map((b) => {
           return (
-            <WindowButton key={b.type} close={b.type === 'close'} onClick={b.onClick} controls={{ ...controls }}>
+            <WindowButton platform={platform} key={b.type} close={b.type === 'close'} onClick={b.onClick} controls={{ ...controls }}>
               {b.icon}
             </WindowButton>
           )

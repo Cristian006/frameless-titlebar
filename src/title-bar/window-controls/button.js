@@ -1,26 +1,34 @@
 import React from 'react';
-import cx from 'classnames';
 import { useHover } from '../effects';
 import styles from '../style.css';
 
-const WindowButton = ({ children, onClick, close, controls }) => {
+const WindowButton = ({ children, onClick, close, controls, platform }) => {
   const [ref, hovering] = useHover();
   const config = close ? controls.close : controls.default;
   const color = hovering ? config.hoverColor : config.color;
   const background = hovering ? config.hoverBackground : 'transparent';
+
+  const width = platform === 'win32' ? '100%' : '20px';
+  const height = platform === 'win32' ? '100%' : '20px';
+
   return (
     <div
       ref={ref}
-      className={cx(styles.ControlsButton, {
-        [styles.Close]: close
-      })}
-      onClick={onClick}
-      style={{
-        color,
-        background
-      }}
+      className={styles.Control}
     >
-      {children}
+      <div
+        style={{
+          width,
+          height,
+          color,
+          background,
+          borderRadius: controls.borderRadius,
+          border: controls.border
+        }}
+        onClick={onClick}
+      >
+        {children}
+      </div>
     </div>
   )
 };

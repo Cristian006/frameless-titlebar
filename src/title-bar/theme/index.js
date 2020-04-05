@@ -10,16 +10,10 @@ const menuTheme = {
     },
     button: {
       color: {
-        default: 'inherit',
-        active: '#fff'
+        active: '#fff',
       },
       background: {
-        default: 'transparent',
         active: 'rgb(48, 48, 48)',
-        hover: 'rgba(255,255,255,0.3)'
-      },
-      hover: {
-        background: 'rgba(255,255,255,0.3)'
       }
     },
     item: {
@@ -58,16 +52,19 @@ const menuTheme = {
   },
   light: {
     palette: 'light',
-    menuBackgroundColor: '#fff',
-    menuButtonActiveBackground: '#fff',
     button: {
       color: {
-        default: '#24292e',
-        active: '#fff'
+        active: '#24292e',
       },
-      hover: {
-        background: 'rgba(0, 0, 0, 0.1)'
-      }
+      background: {
+        active: '#fff',
+      },
+    },
+    item: {
+      color: '#24292e'
+    },
+    list: {
+      background: '#fff',
     }
   },
   vertical: {
@@ -86,6 +83,8 @@ const controlsTheme = {
     color: '#fff',
     border: 'none',
     layout: 'right',
+    borderRadius: 0,
+    border: '',
     default: {
       color: 'inherit',
       hoverColor: '#fff',
@@ -104,9 +103,9 @@ const controlsTheme = {
     },
   },
   linux: {
+    borderRadius: '50%',
     border: '1px solid rgba(0,0,0,0.06)',
     close: {
-      color: '#3b383d',
       hoverBackground: '#c85458'
     }
   }
@@ -115,7 +114,7 @@ const controlsTheme = {
 const barTheme = {
   dark: {
     palette: 'dark', // light, dark
-    height: '22px',
+    height: '28px',
     color: '#fff',
     background: '#24292e',
     borderBottom: '1px solid #000',
@@ -124,15 +123,27 @@ const barTheme = {
     titleFontFamily: 'inherit',
     titleFontWeight: 'normal',
     inActiveOpacity: 0.6, // dim menu bar & title color when window is not in focus
+    button: {
+      color: 'inherit',
+      background: {
+        default: 'transparent',
+        hover: 'rgba(255,255,255,0.3)'
+      }
+    },
   },
   light: {
     palette: 'light',
     color: '#24292e',
     background: '#e8e8e8',
     borderBottom: '1px solid #d3d4d5',
+    button: {
+      background: {
+        hover: 'rgba(0, 0, 0, 0.1)'
+      }
+    }
   },
-  win32: {
-    height: '28px',
+  darwin: {
+    height: '22px',
   },
 };
 
@@ -142,7 +153,6 @@ const getMenuTheme = (palette, menuStyle = 'default') => {
     menu = merge(menu, menuTheme['light'])
   }
   if (menuStyle !== 'default') {
-    console.log(menuStyle)
     menu = merge(menu, menuTheme[menuStyle])
   }
   return menu;
@@ -164,8 +174,8 @@ const getBarTheme = (palette, platform) => {
   if (palette === 'light') {
     bar = merge(bar, barTheme['light'])
   }
-  if (platform === 'win32') {
-    bar = merge(bar, barTheme['win32'])
+  if (platform === 'darwin') {
+    bar = merge(bar, barTheme['darwin'])
   }
   return bar
 }

@@ -24,12 +24,12 @@ const useAccessibility = (
   dispatch,
   altKey
 ) => {
-  const resetKeys = useCallback(e => {
+  const resetKeys = useCallback(() => {
     dispatch({
       type: 'alt',
       altKey: false
     });
-  }, []);
+  }, [dispatch]);
 
   const callback = useCallback(e => {
     if (e.altKey) {
@@ -40,14 +40,17 @@ const useAccessibility = (
           altKey: true
         });
       }
-      let firstIndex = menu.findIndex(x => (!x.disabled && altKeyCodeMatch(e, x.label)));
-      if (firstIndex >= 0) {
-        const maxIndex = Math.min(firstIndex, overflow && overflow.hide ? menu.length - 1 : menu.length)
-        dispatch({
-          type: 'button-set',
-          depth,
-          selected: maxIndex
-        })
+      // if the keycode is not alt
+      if (e.keyCode !== 18) {
+        let firstIndex = menu.findIndex(x => (!x.disabled && altKeyCodeMatch(e, x.label)));
+        if (firstIndex >= 0) {
+          const maxIndex = Math.min(firstIndex, overflow && overflow.hide ? menu.length - 1 : menu.length)
+          dispatch({
+            type: 'button-set',
+            depth,
+            selected: maxIndex
+          })
+        }
       }
       return;
     }
@@ -110,11 +113,7 @@ const useAccessibility = (
           });
           break;
         }
-        console.log(overflow);
         const next = validNext(menu, current, overflow && overflow.hide ? menu.length - 1 : menu.length - 2);
-        // const maxIndex =
-        //  overflow && overflow.hide ? menu.length - 2 : menu.length - 1;
-        // const next = current < maxIndex ? current + 1 : 0;
         dispatch({ type: 'button-set', depth, selected: next });
         break;
       }

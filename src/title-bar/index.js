@@ -27,18 +27,30 @@ const TitleBar = ({
   const focused = useWindowFocus();
   const currentTheme = useTheme(theme, platform);
   const isWin = platform === 'win32';
-  const stacked = currentTheme.menuStyle === 'stacked';
-  const vertical = currentTheme.menuStyle === 'vertical';
+  const isDarwin = platform === 'darwin';
+  const stacked = currentTheme.menu.style === 'stacked';
+  const vertical = currentTheme.menu.style === 'vertical';
+  const controlsRight = currentTheme.controls.layout === 'right';
   return (
     <ThemeContext.Provider value={currentTheme}>
       <Fragment>
-        <Bar isWin={isWin} onDoubleClick={onDoubleClick}>
+        <Bar onDoubleClick={onDoubleClick}>
           <div className={cx(styles.ResizeHandle, styles.Top)} />
           <div className={cx(styles.ResizeHandle, styles.Left)} />
+          {!isDarwin && !controlsRight && (
+            <WindowControls
+              focused={focused}
+              disableMaximize={disableMaximize}
+              disableMinimize={disableMinimize}
+              onMinimize={onMinimize}
+              onMaximize={onMaximize}
+              onClose={onClose}
+            />
+          )}
           {
             !vertical && icon && <img className={styles.Logo} src={icon} />
           }
-          {isWin && !stacked && (
+          {!isDarwin && !stacked && (
             <MenuBar
               focused={focused}
               menu={menu}
@@ -52,7 +64,7 @@ const TitleBar = ({
             {title}
           </Title>
           {children}
-          {isWin && (
+          {!isDarwin && controlsRight && (
             <WindowControls
               focused={focused}
               disableMaximize={disableMaximize}
@@ -63,8 +75,8 @@ const TitleBar = ({
             />
           )}
         </Bar>
-        {isWin && stacked && (
-          <Bar isWin={isWin} bottomBar>
+        {!isDarwin && stacked && (
+          <Bar bottomBar>
             <MenuBar
               focused={focused}
               menu={menu}
