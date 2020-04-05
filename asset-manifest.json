@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/frameless-titlebar/static/css/main.6d0092c7.chunk.css",
+    "main.js": "/frameless-titlebar/static/js/main.4a48290e.chunk.js",
+    "main.js.map": "/frameless-titlebar/static/js/main.4a48290e.chunk.js.map",
+    "runtime-main.js": "/frameless-titlebar/static/js/runtime-main.6487eead.js",
+    "runtime-main.js.map": "/frameless-titlebar/static/js/runtime-main.6487eead.js.map",
+    "static/js/2.41b7d487.chunk.js": "/frameless-titlebar/static/js/2.41b7d487.chunk.js",
+    "static/js/2.41b7d487.chunk.js.map": "/frameless-titlebar/static/js/2.41b7d487.chunk.js.map",
+    "index.html": "/frameless-titlebar/index.html",
+    "precache-manifest.2da835f23fcfa4a692e7c33cb59f04b6.js": "/frameless-titlebar/precache-manifest.2da835f23fcfa4a692e7c33cb59f04b6.js",
+    "service-worker.js": "/frameless-titlebar/service-worker.js",
+    "static/css/main.6d0092c7.chunk.css.map": "/frameless-titlebar/static/css/main.6d0092c7.chunk.css.map",
+    "static/js/2.41b7d487.chunk.js.LICENSE.txt": "/frameless-titlebar/static/js/2.41b7d487.chunk.js.LICENSE.txt",
+    "static/js/main.4a48290e.chunk.js.LICENSE.txt": "/frameless-titlebar/static/js/main.4a48290e.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6487eead.js",
+    "static/js/2.41b7d487.chunk.js",
+    "static/css/main.6d0092c7.chunk.css",
+    "static/js/main.4a48290e.chunk.js"
+  ]
+}
