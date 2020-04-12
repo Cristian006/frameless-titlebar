@@ -60,7 +60,6 @@ const getBackgroundColor = (hovering: boolean, item: MenuItem, theme: Required<T
 
 const MenuItemComponent = ({
   item,
-  maxWidth,
   onClick,
   currentWindow,
   depth,
@@ -112,7 +111,8 @@ const MenuItemComponent = ({
         className={styles.MenuItemWrapper}
         style={{
           height: theme.menu.item!.height,
-          maxWidth
+          maxWidth: theme.menu.list?.maxWidth,
+          minWidth: theme.menu.list?.minWidth
         }}
       >
         <div className={styles.StatusIcon} style={{ color: iconColor }}>

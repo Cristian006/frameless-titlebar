@@ -141,7 +141,8 @@ const createMenu = (queueSnack) => {
           click
         },
         {
-          label: 'Test Two',
+          label: 'Lorem Ipsum cupcake ipsum dolor sit amet. Pastry jelly-o chupa chups. Sweet chocolate pie jujubes bear claw. Chocolate cake danish tootsie roll bonbon jelly tiramisu cookie fruitcake.',
+          accelerator: 'Alt+7',
           click
         },
         {

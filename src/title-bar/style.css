@@ -191,8 +191,6 @@
   align-items: center;
   text-decoration: none;
   cursor: default;
-  min-width: 200px;
-  max-width: 500px;
   overflow: hidden;
 }
 

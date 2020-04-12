@@ -84,7 +84,6 @@ const MenuList = ({
                     key={`${item.label}-${depth}-${idx}`}
                     idx={idx}
                     item={item}
-                    maxWidth={theme.menu.list!.maxWidth!}
                     currentWindow={currentWindow}
                     depth={depth}
                     selectedPath={selectedPath}

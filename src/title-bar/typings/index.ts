@@ -155,7 +155,6 @@ export interface MenuBarProps {
 
 export interface MenuItemProps {
   item: MenuItem;
-  maxWidth: number;
   onClick: (e: any) => void;
   currentWindow?: object;
   depth: number;
