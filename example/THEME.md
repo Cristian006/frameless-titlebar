@@ -10,53 +10,64 @@
     "color": "#fff",
     "background": "rgb(36, 51, 65)",
     "borderBottom": "",
-    "titleColor": "inherit",
-    "titleAlign": "center",
-    "titleFontFamily": "inherit",
-    "titleFontWeight": "normal",
     "inActiveOpacity": 0.6,
-    "button": {
+    "title": {
       "color": "inherit",
-      "background": {
-        "default": "transparent",
-        "hover": "rgba(255,255,255,0.3)"
+      "align": "center",
+      "fontFamily": "inherit",
+      "fontWeight": "normal"
+    },
+    "button": {
+      "active": {
+        "color": "#fff",
+        "background": "#303030"
+      },
+      "default": {
+        "color": "inherit",
+        "background": "transparent"
+      },
+      "hover": {
+        "color": "inherit",
+        "background": "rgba(255,255,255,0.3)"
       }
     }
   },
   "controls": {
-    "color": "#fff",
-    "border": "",
+    "border": "none",
     "layout": "right",
     "borderRadius": 0,
-    "default": {
-      "color": "inherit",
-      "hoverColor": "#fff",
-      "hoverBackground": "rgba(255,255,255,0.3)"
+    "normal": {
+      "default": {
+        "color": "inherit",
+        "background": "transparent"
+      },
+      "hover": {
+        "color": "#fff",
+        "background": "rgba(255,255,255,0.3)"
+      }
     },
     "close": {
-      "color": "inherit",
-      "hoverColor": "#fff",
-      "hoverBackground": "#e81123"
+      "default": {
+        "color": "inherit",
+        "background": "transparent"
+      },
+      "hover": {
+        "color": "#fff",
+        "background": "#e81123"
+      }
     }
   },
   "menu": {
     "palette": "dark",
     "style": "default",
-    "disabled": {
-      "opacity": 0.3
-    },
-    "button": {
-      "color": {
-        "active": "#fff"
-      },
-      "background": {
-        "active": "#303030"
-      }
-    },
     "item": {
       "height": 30,
-      "color": "inherit",
-      "highlight": {
+      "disabledOpacity": 0.3,
+      "default": {
+        "color": "inherit",
+        "background": "transparent"
+      },
+      "active": {
         "color": "#fff",
         "background": "rgb(241, 146, 95)"
       }
@@ -78,14 +89,16 @@
       "minWidth": 200,
       "maxWidth": 400,
       "marginBottom": 10,
-      "marginRight": 0,
       "background": "#303030",
-      "boxShadow": "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)"
+      "boxShadow": "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
+      "zIndex": 2001
     },
     "overlay": {
       "background": "black",
-      "opacity": 0.4
-    }
+      "opacity": 0.4,
+      "zIndex": 2000
+    },
+    "marginRight": 0
   }
 }
 ```
