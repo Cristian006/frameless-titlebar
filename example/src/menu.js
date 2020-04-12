@@ -1,7 +1,16 @@
 import { useEffect, useState } from 'react'
 
 const enqueue = (queueSnack) => (item, currentWindow, e) => {
-  queueSnack(`${item.label} clicked!`, { variant: 'info' })
+  var label = `Item Clicked: ${item.label}!`
+  var variant = 'info'
+  if (item.type === 'radio') {
+    label = `Radio Selected: ${item.label}!`
+    variant = 'success'
+  } else if (item.type === 'checkbox') {
+    label = `${item.checked ? 'Checked' : 'Unchecked'} Item: ${item.label}!`
+    variant = item.checked ? 'success' : 'error'
+  }
+  queueSnack(label, { variant })
 }
 
 const createMenu = (queueSnack) => {
@@ -29,8 +38,39 @@ const createMenu = (queueSnack) => {
           click
         },
         {
+          label: 'Resizeable',
+          checked: true,
+          type: 'checkbox',
+          click
+        },
+        {
           label: 'Quit Application',
           accelerator: 'Ctrl+Q',
+          click
+        }
+      ]
+    },
+    {
+      label: 'Radios',
+      submenu: [
+        {
+          label: 'Option 1',
+          type: 'radio',
+          click
+        },
+        {
+          label: 'Option 2',
+          type: 'radio',
+          click
+        },
+        {
+          label: 'Option 3',
+          type: 'radio',
+          click
+        },
+        {
+          label: 'Option 4',
+          type: 'radio',
           click
         }
       ]
@@ -101,7 +141,8 @@ const createMenu = (queueSnack) => {
           click
         },
         {
-          label: 'Test Two',
+          label: 'Lorem Ipsum cupcake ipsum dolor sit amet. Pastry jelly-o chupa chups. Sweet chocolate pie jujubes bear claw. Chocolate cake danish tootsie roll bonbon jelly tiramisu cookie fruitcake.',
+          accelerator: 'Alt+7',
           click
         },
         {

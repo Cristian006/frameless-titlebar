@@ -9,9 +9,11 @@ import {
   MenuItem,
   InputLabel,
   FormControl,
+  FormControlLabel,
   IconButton,
   makeStyles,
   Tooltip,
+  Switch,
   Divider
 } from '@material-ui/core'
 import {
@@ -40,6 +42,11 @@ const selections = [
     option: 'align',
     label: 'Title Align',
     options: ['center', 'left', 'right']
+  },
+  {
+    option: 'subLabels',
+    label: 'Show Sub Menu Labels',
+    type: 'toggle'
   }
 ]
 const useStyles = makeStyles((theme) => ({
@@ -59,23 +66,22 @@ const App = ({ theme, setPalette }) => {
   const [state, setState] = useState({
     platform: 'win32',
     menuStyle: 'default',
-    align: 'center'
+    align: 'center',
+    subLabels: true,
   })
 
   const currentTheme = {
     menu: {
       palette: theme.palette.type,
       style: state.menuStyle,
-      button: {
-        background: {
-          active: theme.palette.background.default
-        }
+      header: {
+        show: state.subLabels,
       },
       list: {
         background: theme.palette.background.default
       },
       item: {
-        highlight: {
+        active: {
           background: theme.palette.secondary.light
         }
       }
@@ -83,13 +89,21 @@ const App = ({ theme, setPalette }) => {
     bar: {
       palette: 'dark',
       background: theme.palette.primary.dark,
-      titleAlign: state.align,
-      borderBottom: ''
+      borderBottom: '',
+      button: {
+        active: {
+          color: theme.palette.type === 'dark' ? '#fff' : '#000',
+          background: theme.palette.background.default
+        }
+      },
+      title: {
+        align: state.align
+      }
     }
   }
 
   const classes = useStyles()
-  const handleChange = (type) => (event) => {
+  const handleChange = (type) => (event, checked) => {
     let { value } = event.target
     let newState = {}
     if (type === 'menuStyle') {
@@ -97,6 +111,8 @@ const App = ({ theme, setPalette }) => {
       if (value === 'stacked') {
         newState['align'] = 'left'
       }
+    } else if (type === 'subLabels') {
+      value = checked;
     }
     setState({ ...state, ...newState, [type]: value })
   }
@@ -148,21 +164,37 @@ const App = ({ theme, setPalette }) => {
                 Just a few of the styling options for the titlebar.
               </Typography>
               {selections.map((item) => {
+                if (!item.type) {
+                  return (
+                    <FormControl key={`${item.option}-key`} className={classes.formControl}>
+                      <InputLabel color='secondary' id={`${item.option}-label`}>{item.label}</InputLabel>
+                      <Select
+                        labelId={`${item.option}-label`}
+                        id={item.option}
+                        value={state[item.option]}
+                        onChange={handleChange(item.option)}
+                        variant='outlined'
+                        color='secondary'
+                      >
+                        {
+                          item.options.map((opt) => <MenuItem key={opt} value={opt}>{opt}</MenuItem>)
+                        }
+                      </Select>
+                    </FormControl>
+                  )
+                }
                 return (
-                  <FormControl key={`${item.option}-key`} className={classes.formControl}>
-                    <InputLabel color='secondary' id={`${item.option}-label`}>{item.label}</InputLabel>
-                    <Select
-                      labelId={`${item.option}-label`}
-                      id={item.option}
-                      value={state[item.option]}
-                      onChange={handleChange(item.option)}
-                      variant='outlined'
-                      color='secondary'
-                    >
-                      {
-                        item.options.map((opt) => <MenuItem key={opt} value={opt}>{opt}</MenuItem>)
-                      }
-                    </Select>
+                  <FormControl style={{ margin: '5px 0px 0px 0px' }}>
+                    <FormControlLabel
+                      style={{ padding: 0, margin: 0 }}
+                      control={<Switch
+                        checked={state[item.option]}
+                        onChange={handleChange(item.option)}
+                        color="secondary"
+                      />}
+                      label={item.label}
+                      labelPlacement="start"
+                    />
                   </FormControl>
                 )
               })}
