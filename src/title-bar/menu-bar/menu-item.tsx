@@ -45,7 +45,7 @@ const getIconColor = (item: MenuItem, hovering: boolean, theme: Required<TitleBa
     return theme.menu.item!.active!.color;
   }
   if (theme.menu.icon!.highlight) {
-    return theme.menu.item!.active!.color;
+    return theme.menu.item!.active!.background;
   }
   return theme.menu.item!.default!.color;
 };
