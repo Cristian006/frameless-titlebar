@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a80ea23d3f7ac5849558ee69a98dd506",
+    "revision": "d008cb37a80e9327a90a61eddea2fe85",
     "url": "/frameless-titlebar/index.html"
   },
   {
-    "revision": "601f495ce1398e0f2318",
+    "revision": "b32feeba2a4e76f4a732",
     "url": "/frameless-titlebar/static/css/main.5306eb8c.chunk.css"
   },
   {
@@ -16,12 +16,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/frameless-titlebar/static/js/2.bc71ee42.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "601f495ce1398e0f2318",
-    "url": "/frameless-titlebar/static/js/main.bbc548ba.chunk.js"
+    "revision": "b32feeba2a4e76f4a732",
+    "url": "/frameless-titlebar/static/js/main.7e1d33d9.chunk.js"
   },
   {
     "revision": "af9b331aae5785209e2eaa369c7a0abf",
-    "url": "/frameless-titlebar/static/js/main.bbc548ba.chunk.js.LICENSE.txt"
+    "url": "/frameless-titlebar/static/js/main.7e1d33d9.chunk.js.LICENSE.txt"
   },
   {
     "revision": "804a2f56fab5ac795cfb",
