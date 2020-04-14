@@ -132,15 +132,20 @@ const controlsTheme = {
 
 const barTheme = {
   dark: <BarTheme>{
-    palette: 'dark', // light, dark
+    // light, dark
+    palette: 'dark',
     height: '28px',
     color: '#fff',
     background: '#24292e',
     borderBottom: '1px solid #000',
-    inActiveOpacity: 0.6, // dim menu bar & title color when window is not in focus
+    // dim menu bar & title color when window is not in focus
+    inActiveOpacity: 0.6,
+    // default fontFamily for titlebar eg: menus, menu buttons, and title
+    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif",
     title: <TitleTheme>{
       color: 'inherit',
       align: 'center',
+      // overwritable fontFamily for just the app title
       fontFamily: 'inherit',
       fontWeight: 'normal',
     },
@@ -245,6 +250,7 @@ export const useTheme = (overrides?: TitleBarTheme, platform: Platform = 'win32'
   useEffect(() => {
     setTheme(mergeTheme(overrides, platform));
   }, [overrides, platform]);
+  console.log(currentTheme);
   return currentTheme;
 };
 

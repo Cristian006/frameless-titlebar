@@ -14,10 +14,11 @@ const Bar = ({
       height,
       borderBottom,
       background,
-      color
+      fontFamily,
+      color,
     },
     menu: {
-      style
+      style,
     }
   } = useContext(ThemeContext);
   const isDarwin = platform === 'darwin';
@@ -29,7 +30,8 @@ const Bar = ({
         borderBottom: (style === 'stacked' && !bottomBar) ? '' : borderBottom,
         background,
         color,
-        height
+        height,
+        fontFamily,
       }}
       onDoubleClick={onDoubleClick}
     >
