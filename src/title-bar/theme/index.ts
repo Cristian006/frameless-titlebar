@@ -250,7 +250,6 @@ export const useTheme = (overrides?: TitleBarTheme, platform: Platform = 'win32'
   useEffect(() => {
     setTheme(mergeTheme(overrides, platform));
   }, [overrides, platform]);
-  console.log(currentTheme);
   return currentTheme;
 };
 
