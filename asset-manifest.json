@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/frameless-titlebar/static/css/main.5306eb8c.chunk.css",
-    "main.js": "/frameless-titlebar/static/js/main.a99ec7ff.chunk.js",
-    "main.js.map": "/frameless-titlebar/static/js/main.a99ec7ff.chunk.js.map",
+    "main.js": "/frameless-titlebar/static/js/main.7e92b2f2.chunk.js",
+    "main.js.map": "/frameless-titlebar/static/js/main.7e92b2f2.chunk.js.map",
     "runtime-main.js": "/frameless-titlebar/static/js/runtime-main.6487eead.js",
     "runtime-main.js.map": "/frameless-titlebar/static/js/runtime-main.6487eead.js.map",
     "static/js/2.bc71ee42.chunk.js": "/frameless-titlebar/static/js/2.bc71ee42.chunk.js",
     "static/js/2.bc71ee42.chunk.js.map": "/frameless-titlebar/static/js/2.bc71ee42.chunk.js.map",
     "index.html": "/frameless-titlebar/index.html",
-    "precache-manifest.133df49c0843f0d8383562e24080a123.js": "/frameless-titlebar/precache-manifest.133df49c0843f0d8383562e24080a123.js",
+    "precache-manifest.762f69db5ee6f6aed5d686b7680d78ec.js": "/frameless-titlebar/precache-manifest.762f69db5ee6f6aed5d686b7680d78ec.js",
     "service-worker.js": "/frameless-titlebar/service-worker.js",
     "static/css/main.5306eb8c.chunk.css.map": "/frameless-titlebar/static/css/main.5306eb8c.chunk.css.map",
     "static/js/2.bc71ee42.chunk.js.LICENSE.txt": "/frameless-titlebar/static/js/2.bc71ee42.chunk.js.LICENSE.txt",
-    "static/js/main.a99ec7ff.chunk.js.LICENSE.txt": "/frameless-titlebar/static/js/main.a99ec7ff.chunk.js.LICENSE.txt"
+    "static/js/main.7e92b2f2.chunk.js.LICENSE.txt": "/frameless-titlebar/static/js/main.7e92b2f2.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.6487eead.js",
     "static/js/2.bc71ee42.chunk.js",
     "static/css/main.5306eb8c.chunk.css",
-    "static/js/main.a99ec7ff.chunk.js"
+    "static/js/main.7e92b2f2.chunk.js"
   ]
 }
