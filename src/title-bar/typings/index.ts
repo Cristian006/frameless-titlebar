@@ -66,6 +66,7 @@ export interface BarTheme {
   background?: string;
   borderBottom?: string;
   inActiveOpacity?: number;
+  fontFamily?: string;
   title?: TitleTheme;
   button?: MenuButton;
 }
