@@ -25,7 +25,6 @@ import { withTheme } from '@material-ui/core/styles'
 import TitleBar from 'frameless-titlebar'
 import { useMenu } from './menu'
 import { useSnackbar } from 'notistack'
-import SearchBar from './components/search';
 
 const homepage = 'https://github.com/Cristian006/frameless-titlebar'
 const selections = [
@@ -66,10 +65,10 @@ const useStyles = makeStyles((theme) => ({
 const App = ({ theme, setPalette }) => {
   const [state, setState] = useState({
     platform: 'win32',
-    menuStyle: 'vertical',
-    align: 'left',
+    menuStyle: 'default',
+    align: 'center',
     subLabels: true,
-    appTitle: '',
+    appTitle: 'example-app',
   })
 
   const currentTheme = {
