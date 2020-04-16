@@ -44,7 +44,7 @@ const Title = ({
       className={styles.Title}
       style={{
         padding: padding,
-        lineHeight: height,
+        lineHeight: `${height}px`,
         opacity: focused ? 1 : inActiveOpacity,
         marginLeft: marginLeft,
         marginRight: marginRight,

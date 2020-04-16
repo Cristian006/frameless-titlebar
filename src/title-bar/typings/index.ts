@@ -33,7 +33,8 @@ export interface TitleBarProps extends ControlProps {
   children?: React.ReactNode;
   menu?: MenuItem[];
   theme?: TitleBarTheme;
-  icon?: string;
+  icon?: React.ReactNode;
+  iconSrc?: string;
   title?: string;
   currentWindow?: object;
 }
@@ -67,6 +68,7 @@ export interface BarTheme {
   borderBottom?: string;
   inActiveOpacity?: number;
   fontFamily?: string;
+  icon?: IconTheme;
   title?: TitleTheme;
   button?: MenuButton;
 }
@@ -107,6 +109,12 @@ export interface AcceleratorTheme {
 }
 
 export interface IconTheme {
+  color?: string;
+  width?: number;
+  height?: number;
+}
+
+export interface StatusIconTheme {
   highlight?: boolean;
 }
 
@@ -134,7 +142,7 @@ export interface MenuTheme {
   separator?: SeparatorTheme;
   header?: MenuHeaderTheme;
   accelerator?: AcceleratorTheme;
-  icon?: IconTheme;
+  icon?: StatusIconTheme;
   list?: ListTheme;
   overlay?: OverlayTheme;
   marginRight?: number;

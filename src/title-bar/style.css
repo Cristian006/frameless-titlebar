@@ -24,10 +24,10 @@
 .Logo {
   background-size: cover;
   background-position: center;
-  width: 20px;
-  height: 20px;
-  margin-right: 6px;
-  margin-left: 12px;
+}
+
+.Logo.Vertical {
+  margin-left: 6px;
 }
 
 .ResizeHandle {

@@ -8,6 +8,7 @@ import { useTheme, ThemeContext } from './theme';
 import Title from './components/title';
 import Bar from './components/bar';
 import { TitleBarProps } from './typings';
+import Logo from './components/logo';
 
 const TitleBar = ({
   onMinimize,
@@ -21,6 +22,7 @@ const TitleBar = ({
   theme,
   menu,
   icon,
+  iconSrc,
   title,
   currentWindow
 }: TitleBarProps) => {
@@ -30,12 +32,13 @@ const TitleBar = ({
   const stacked = currentTheme?.menu?.style === 'stacked';
   const vertical = currentTheme?.menu?.style === 'vertical';
   const controlsRight = currentTheme?.controls?.layout === 'right';
+
   return (
     <ThemeContext.Provider value={currentTheme}>
       <Fragment>
         <Bar onDoubleClick={onDoubleClick}>
           <div className={cx(styles.ResizeHandle, styles.Top)} />
-          <div className={cx(styles.ResizeHandle, styles.Left)} />
+          <div className={cx(styles.ResizeHandle, styles.Left)} style={{ height: theme?.bar?.height }} />
           {!isDarwin && !controlsRight && (
             <WindowControls
               focused={focused}
@@ -47,7 +50,7 @@ const TitleBar = ({
             />
           )}
           {
-            !vertical && icon && <img className={styles.Logo} src={icon} />
+            !vertical && <Logo src={iconSrc}>{icon}</Logo>
           }
           {!isDarwin && !stacked && (
             <MenuBar
@@ -57,7 +60,7 @@ const TitleBar = ({
             />
           )}
           {
-            vertical && icon && <img className={styles.Logo} src={icon} />
+            vertical && <Logo src={iconSrc}>{icon}</Logo>
           }
           <Title focused={focused} hasIcon={!!icon}>
             {title}

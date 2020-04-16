@@ -25,6 +25,7 @@ import { withTheme } from '@material-ui/core/styles'
 import TitleBar from 'frameless-titlebar'
 import { useMenu } from './menu'
 import { useSnackbar } from 'notistack'
+import SearchBar from './components/search';
 
 const homepage = 'https://github.com/Cristian006/frameless-titlebar'
 const selections = [
@@ -65,9 +66,10 @@ const useStyles = makeStyles((theme) => ({
 const App = ({ theme, setPalette }) => {
   const [state, setState] = useState({
     platform: 'win32',
-    menuStyle: 'default',
-    align: 'center',
+    menuStyle: 'vertical',
+    align: 'left',
     subLabels: true,
+    appTitle: '',
   })
 
   const currentTheme = {
@@ -90,6 +92,7 @@ const App = ({ theme, setPalette }) => {
       palette: 'dark',
       background: theme.palette.primary.dark,
       borderBottom: '',
+      height: 36,
       button: {
         active: {
           color: theme.palette.type === 'dark' ? '#fff' : '#000',
@@ -101,6 +104,7 @@ const App = ({ theme, setPalette }) => {
       }
     }
   }
+
 
   const classes = useStyles()
   const handleChange = (type) => (event, checked) => {
@@ -129,12 +133,29 @@ const App = ({ theme, setPalette }) => {
       <TitleBar
         menu={defaultMenu}
         theme={{ ...currentTheme }}
+        icon={(
+          <div style={{
+            borderRadius: '50%',
+            background: theme.palette.secondary.light,
+            height: '100%',
+            color: theme.palette.primary.dark,
+            fontWeight: 'bolder',
+            display: 'flex',
+            justifyContent: 'center',
+            alignContent: 'center',
+            alignItems: 'center',
+            fontSize: 10
+          }}>
+            FT
+          </div>
+        )}
         platform={state.platform}
-        title='frameless-titlebar'
+        title={state.appTitle}
         onClose={() => { enqueueSnackbar('close clicked', { variant: 'error' }) }}
         onMinimize={() => { enqueueSnackbar('minimized clicked', { variant: 'success' }) }}
         onMaximize={() => { enqueueSnackbar('maximized clicked', { variant: 'success' }) }}
-      />
+      >
+      </TitleBar>
       <AppBar position='static'>
         <Toolbar className={classes.appBar} >
           <Typography variant='h6' className={classes.title}>

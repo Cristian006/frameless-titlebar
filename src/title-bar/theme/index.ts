@@ -18,7 +18,8 @@ import {
   OverlayTheme,
   BarTheme,
   TitleTheme,
-  MenuButton
+  MenuButton,
+  StatusIconTheme
 } from '../typings';
 
 const menuTheme = {
@@ -47,7 +48,7 @@ const menuTheme = {
     accelerator: <AcceleratorTheme>{
       color: '#6a737d',
     },
-    icon: <IconTheme>{
+    icon: <StatusIconTheme>{
       highlight: true
     },
     list: <ListTheme>{
@@ -142,6 +143,11 @@ const barTheme = {
     inActiveOpacity: 0.6,
     // default fontFamily for titlebar eg: menus, menu buttons, and title
     fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif",
+    icon: <IconTheme>{
+      color: '#0372ef',
+      width: 20,
+      height: 20
+    },
     title: <TitleTheme>{
       color: 'inherit',
       align: 'center',
