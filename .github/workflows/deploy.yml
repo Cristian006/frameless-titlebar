@@ -18,9 +18,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: yarn && yarn build && yarn link
-      - run: cd example && yarn install && yarn link frameless-titlebar
-      - run: yarn run build
+        run: |
+          yarn && yarn build && yarn link
+          cd example && yarn install && yarn link frameless-titlebar
+          yarn run build && cd ..
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v3
