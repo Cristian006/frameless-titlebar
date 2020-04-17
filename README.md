@@ -1,6 +1,6 @@
 # frameless-titlebar
 
-[![NPM](https://img.shields.io/npm/v/frameless-titlebar.svg)](https://www.npmjs.com/package/frameless-titlebar) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/frameless-titlebar.svg)](https://www.npmjs.com/package/frameless-titlebar) ![Build and Deploy](https://github.com/Cristian006/frameless-titlebar/workflows/Build%20and%20Deploy/badge.svg) ![NPM](https://img.shields.io/npm/l/frameless-titlebar)
 
 > Customizable titlebar for frameless electron windows built with React
 
