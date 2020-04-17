@@ -55,7 +55,7 @@ const Example = () => {
   return (
     <div>
       <TitleBar
-        icon={icon} // app icon
+        iconSrc={icon} // app icon
         currentWindow={currentWindow} // electron window instance
         platform={process.platform} // win32, darwin, linux
         menu={menu}
