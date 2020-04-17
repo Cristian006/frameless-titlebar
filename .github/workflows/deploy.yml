@@ -18,9 +18,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: npm ci && npm build && npm link
-      - run: cd example && npm ci && npm link frameless-titlebar
-      - run: npm run build
+      - run: yarn && yarn build && yarn link
+      - run: cd example && yarn install && yarn link frameless-titlebar
+      - run: yarn run build
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v3
