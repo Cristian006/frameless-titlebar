@@ -2,6 +2,7 @@ declare const styles: {
   readonly "Bar": string;
   readonly "Title": string;
   readonly "Logo": string;
+  readonly "Vertical": string;
   readonly "ResizeHandle": string;
   readonly "Top": string;
   readonly "Left": string;

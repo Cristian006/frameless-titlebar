@@ -10,6 +10,7 @@ import useMenuScroll from './useMenuScroll';
 import useLayoutBounds from './useLayoutBounds';
 import useScrollFocus from './useScrollFocus';
 import useAccessibility from './useAccessibility';
+import useClickAway from './useClickAway';
 
 export {
   useChildRefs,
@@ -23,5 +24,6 @@ export {
   useMenuScroll,
   useLayoutBounds,
   useScrollFocus,
-  useAccessibility
+  useAccessibility,
+  useClickAway
 };

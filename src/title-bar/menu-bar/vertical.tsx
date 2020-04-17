@@ -49,6 +49,10 @@ const VerticalMenu = ({ menu, focused, currentWindow }: VerticalMenuProps) => {
     currentWindow,
   );
 
+  if ((fixedMenu[0].submenu?.length ?? 0) === 0) {
+    return null;
+  }
+
   return (
     <MenuButton
       ref={childRefs[0]}

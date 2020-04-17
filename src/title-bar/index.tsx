@@ -8,6 +8,7 @@ import { useTheme, ThemeContext } from './theme';
 import Title from './components/title';
 import Bar from './components/bar';
 import { TitleBarProps } from './typings';
+import Logo from './components/logo';
 
 const TitleBar = ({
   onMinimize,
@@ -21,6 +22,7 @@ const TitleBar = ({
   theme,
   menu,
   icon,
+  iconSrc,
   title,
   currentWindow
 }: TitleBarProps) => {
@@ -30,12 +32,15 @@ const TitleBar = ({
   const stacked = currentTheme?.menu?.style === 'stacked';
   const vertical = currentTheme?.menu?.style === 'vertical';
   const controlsRight = currentTheme?.controls?.layout === 'right';
+  const hasIcon = !!icon || !!iconSrc;
+  const hasMenu = !isDarwin && ((menu?.length ?? 0) > 0);
+  const hasTitle = !!(title && title !== '');
   return (
     <ThemeContext.Provider value={currentTheme}>
       <Fragment>
         <Bar onDoubleClick={onDoubleClick}>
           <div className={cx(styles.ResizeHandle, styles.Top)} />
-          <div className={cx(styles.ResizeHandle, styles.Left)} />
+          <div className={cx(styles.ResizeHandle, styles.Left)} style={{ height: theme?.bar?.height }} />
           {!isDarwin && !controlsRight && (
             <WindowControls
               focused={focused}
@@ -47,9 +52,9 @@ const TitleBar = ({
             />
           )}
           {
-            !vertical && icon && <img className={styles.Logo} src={icon} />
+            !vertical && hasIcon && <Logo src={iconSrc} hasTitle={hasTitle}>{icon}</Logo>
           }
-          {!isDarwin && !stacked && (
+          {!isDarwin && !stacked && hasMenu && (
             <MenuBar
               focused={focused}
               menu={menu}
@@ -57,9 +62,13 @@ const TitleBar = ({
             />
           )}
           {
-            vertical && icon && <img className={styles.Logo} src={icon} />
+            vertical && hasIcon && <Logo src={iconSrc} hasTitle={hasTitle}>{icon}</Logo>
           }
-          <Title focused={focused} hasIcon={!!icon}>
+          <Title
+            focused={focused}
+            hasIcon={hasIcon}
+            hasMenu={hasMenu}
+          >
             {title}
           </Title>
           {children}
@@ -76,11 +85,14 @@ const TitleBar = ({
         </Bar>
         {!isDarwin && stacked && (
           <Bar bottomBar>
-            <MenuBar
-              focused={focused}
-              menu={menu}
-              currentWindow={currentWindow}
-            />
+            {
+              hasMenu &&
+              <MenuBar
+                focused={focused}
+                menu={menu}
+                currentWindow={currentWindow}
+              />
+            }
           </Bar>
         )}
       </Fragment>

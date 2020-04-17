@@ -26,6 +26,11 @@ npm start
     "borderBottom": "",
     "inActiveOpacity": 0.6,
     "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif",
+    "icon": {
+      "color": "#0372ef",
+      "width": 18,
+      "height": 18
+    },
     "title": {
       "color": "inherit",
       "align": "center",
@@ -33,6 +38,8 @@ npm start
       "fontWeight": "normal"
     },
     "button": {
+      "maxWidth": 100,
+      "disabledOpacity": 0.3,
       "active": {
         "color": "#fff",
         "background": "#303030"

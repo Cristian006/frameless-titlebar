@@ -119,7 +119,7 @@ const createMenu = (queueSnack) => {
       ]
     },
     {
-      label: 'View',
+      label: 'View Long Label Truncation',
       submenu: [
         {
           label: 'Toggle Full Screen',

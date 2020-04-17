@@ -117,7 +117,7 @@ const useAccessibility = (
           });
           break;
         }
-        const next = validNext(menu, current, overflow && overflow.hide ? menu.length - 1 : menu.length - 2);
+        const next = validNext(menu, current, overflow && overflow.hide ? menu.length - 1 : overflow!.index + 1);
         dispatch({ type: 'button-set', depth, selected: next });
         break;
       }
@@ -134,7 +134,7 @@ const useAccessibility = (
       case 37 /* left */:
         e.preventDefault();
         if (selectedPath.length <= 2) {
-          const prev = validPrevious(menu, current, overflow && overflow.hide ? menu.length - 1 : menu.length - 2);
+          const prev = validPrevious(menu, current, overflow && overflow.hide ? menu.length - 1 : overflow!.index + 1);
           dispatch({ type: 'button-set', depth, selected: prev });
           break;
         }

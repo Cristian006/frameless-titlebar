@@ -91,15 +91,3 @@ const HorizontalMenu = ({ menu, focused, currentWindow, menuBar }: HorizontalMen
 };
 
 export default HorizontalMenu;
-/*
-const Component = React.forwardRef((props, ref: React.RefObject<any>) => (
-  <HorizontalMenu
-    menu={props.menu}
-    focused={props.focused}
-    currentWindow={props.currentWindow}
-    menuBar={ref}
-  />
-));
-
-export default Component;
-*/

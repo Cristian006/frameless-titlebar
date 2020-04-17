@@ -1,6 +1,6 @@
 import { MenuItem, TitleBarTheme, RectResult, OverflowState } from "./typings";
 
-export const isItemSubMenu = (item?: MenuItem) => item && item.submenu && Array.isArray(item.submenu);
+export const isItemSubMenu = (item?: MenuItem): boolean => (item?.submenu ?? false) && Array.isArray(item!.submenu);
 
 export const isItemSeparator = (item?: MenuItem) => item && item.type && item.type.toLowerCase() === 'separator';
 
@@ -76,7 +76,7 @@ export const currentSelected = (selectedPath: number[], depth: number): number =
   if (depth < selectedPath.length) {
     return selectedPath[depth];
   }
-  return -1;
+  return -2;
 };
 
 export const getSelectedMenu = (menu: MenuItem[], selected: number[]): [MenuItem[], number] => {
