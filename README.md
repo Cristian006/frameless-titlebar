@@ -69,13 +69,46 @@ const Example = () => {
         onMaximize={() => currentWindow.maximize()}
         // when the titlebar is double clicked
         onDoubleClick={() => currentWindow.maximize()}
-      />
+      >
+        {/* custom titlebar items */}
+      </TitleBar>
     </div>
   )
 }
 ```
 
-> Example of all of the overridable theme properties can be found in the example folder [here](./example/THEME.md)
+> Example of all of the overridable theme properties can be found in the example folder [here](./example/README.md)
+
+Use titlebar theme in children
+
+```jsx
+import { useContext } from 'react';
+import { TitlebarThemeContext } from 'frameless-titlebar';
+
+const CustomItem = () => {
+  // access all of the current theme properties in this
+  // child component
+  const theme = useContext(TitlebarThemeContext);
+  return (
+    <div style={{ height: theme.bar.height }}>
+      {/* ... */}
+    </div>
+  )
+}
+
+const App = () => {
+  return (
+    <div>
+      <TitleBar>
+        <CustomItem>
+      </TitleBar>
+    </div>
+  )
+}
+
+```
+
+> Example of a custom TitleBarButton can be seen [here](./example/src/components.js)
 
 ## Supported Menu Item Properties
 

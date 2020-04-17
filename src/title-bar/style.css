@@ -19,11 +19,16 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  pointer-events: none;
+  user-select: none;
 }
 
 .Logo {
   background-size: cover;
   background-position: center;
+  flex-shrink: 0;
+  margin-left: 12px;
+  margin-right: 6px;
 }
 
 .Logo.Vertical {
@@ -64,7 +69,7 @@
   outline: none;
   border: none;
   box-shadow: none;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
@@ -76,23 +81,27 @@
   height: 100%;
   box-sizing: content-box;
   outline: none;
-  position: static;
+  position: relative;
   -webkit-app-region: no-drag;
 }
 
 .MenuButtonLabel {
   white-space: nowrap;
-  max-width: 100px;
+  user-select: none;
+  outline: none;
+}
+
+.MenuButtonLabelWrapper {
+  white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
   outline: none;
   color: inherit;
+  user-select: none;
 }
 
 .MenuButtonLabelWrapper > svg {
   fill: currentColor;
-  width: 20px;
-  height: 20px;
 }
 
 .MenuButton {

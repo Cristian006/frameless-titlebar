@@ -40,10 +40,10 @@ export interface TitleBarProps extends ControlProps {
 }
 
 export type Palette = 'light' | 'dark';
-
+export type Align = 'left' | 'center' | 'right';
 export interface TitleTheme {
   color?: string;
-  align?: string;
+  align?: Align;
   fontFamily?: string;
   fontWeight?: number | "-moz-initial" | "inherit" | "initial" | "revert" | "unset" | "normal" | "bold" | "bolder" | "lighter";
 }
@@ -53,7 +53,8 @@ export interface ColorMap {
   background?: string;
 }
 
-export interface MenuButton {
+export interface MenuButtonTheme {
+  maxWidth?: number;
   default?: ColorMap;
   hover?: ColorMap;
   active?: ColorMap;
@@ -62,7 +63,7 @@ export interface MenuButton {
 
 export interface BarTheme {
   palette?: Palette;
-  height?: string;
+  height?: number | string;
   color?: string;
   background?: string;
   borderBottom?: string;
@@ -70,7 +71,7 @@ export interface BarTheme {
   fontFamily?: string;
   icon?: IconTheme;
   title?: TitleTheme;
-  button?: MenuButton;
+  button?: MenuButtonTheme;
 }
 
 export interface ControlButton {
@@ -233,6 +234,7 @@ export interface FullMenuBottonProps extends MenuButtonProps {
 export interface TitleProps {
   focused: boolean;
   hasIcon: boolean;
+  hasMenu: boolean;
   children?: React.ReactNode;
 }
 

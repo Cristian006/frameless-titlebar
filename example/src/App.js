@@ -25,6 +25,7 @@ import { withTheme } from '@material-ui/core/styles'
 import TitleBar from 'frameless-titlebar'
 import { useMenu } from './menu'
 import { useSnackbar } from 'notistack'
+import Notification from './components/notification';
 
 const homepage = 'https://github.com/Cristian006/frameless-titlebar'
 const selections = [
@@ -44,11 +45,30 @@ const selections = [
     options: ['center', 'left', 'right']
   },
   {
+    type: 'divider',
+  },
+  {
+    option: 'showTitle',
+    label: 'Show Title',
+    type: 'toggle'
+  },
+  {
+    option: 'showIcon',
+    label: 'Show Logo Icon',
+    type: 'toggle'
+  },
+  {
     option: 'subLabels',
     label: 'Show Sub Menu Labels',
     type: 'toggle'
-  }
+  },
+  {
+    option: 'showCustom',
+    label: 'Show Custom Titlebar Button',
+    type: 'toggle'
+  },
 ]
+
 const useStyles = makeStyles((theme) => ({
   formControl: {
     marginTop: '12px',
@@ -68,7 +88,9 @@ const App = ({ theme, setPalette }) => {
     menuStyle: 'default',
     align: 'center',
     subLabels: true,
-    appTitle: 'example-app',
+    showIcon: true,
+    showTitle: true,
+    showCustom: true
   })
 
   const currentTheme = {
@@ -91,7 +113,10 @@ const App = ({ theme, setPalette }) => {
       palette: 'dark',
       background: theme.palette.primary.dark,
       borderBottom: '',
-      height: 36,
+      icon: {
+        width: 18,
+        height: 18
+      },
       button: {
         active: {
           color: theme.palette.type === 'dark' ? '#fff' : '#000',
@@ -106,18 +131,17 @@ const App = ({ theme, setPalette }) => {
 
 
   const classes = useStyles()
-  const handleChange = (type) => (event, checked) => {
-    let { value } = event.target
-    let newState = {}
-    if (type === 'menuStyle') {
-      newState['platform'] = 'win32'
-      if (value === 'stacked') {
-        newState['align'] = 'left'
-      }
-    } else if (type === 'subLabels') {
-      value = checked;
+  const handleChange = (option, type) => (event) => {
+    let value;
+    switch (type) {
+      case 'toggle':
+        value = !state[option];
+        break;
+      default:
+        value = event.target.value;
+        break;
     }
-    setState({ ...state, ...newState, [type]: value })
+    setState({ ...state, [option]: value })
   }
 
   const togglePalette = () => {
@@ -132,7 +156,7 @@ const App = ({ theme, setPalette }) => {
       <TitleBar
         menu={defaultMenu}
         theme={{ ...currentTheme }}
-        icon={(
+        icon={state.showIcon && (
           <div style={{
             borderRadius: '50%',
             background: theme.palette.secondary.light,
@@ -149,18 +173,22 @@ const App = ({ theme, setPalette }) => {
           </div>
         )}
         platform={state.platform}
-        title={state.appTitle}
+        title={state.showTitle && 'example-app'}
         onClose={() => { enqueueSnackbar('close clicked', { variant: 'error' }) }}
         onMinimize={() => { enqueueSnackbar('minimized clicked', { variant: 'success' }) }}
         onMaximize={() => { enqueueSnackbar('maximized clicked', { variant: 'success' }) }}
+        onDoubleClick={() => { enqueueSnackbar('double clicked', { variant: 'success' }) }}
       >
+        {state.showCustom && (
+          <Notification onNotificationClick={(idx) => enqueueSnackbar(`Notification Item ${idx} Clicked!`, { variant: 'info' })} />
+        )}
       </TitleBar>
       <AppBar position='static'>
         <Toolbar className={classes.appBar} >
           <Typography variant='h6' className={classes.title}>
             Frameless Titlebar
             <Typography style={{ marginLeft: 12, fontWeight: 'bolder' }} component='span' variant='h6' color='secondary'>
-              v2.0.0 <span role='img'>🥳</span>
+              v2.1.3 <span role='img'>🥳</span>
             </Typography>
           </Typography>
           <Tooltip title='Toggle Dark/Light Mode' >
@@ -184,39 +212,47 @@ const App = ({ theme, setPalette }) => {
                 Just a few of the styling options for the titlebar.
               </Typography>
               {selections.map((item) => {
-                if (!item.type) {
-                  return (
-                    <FormControl key={`${item.option}-key`} className={classes.formControl}>
-                      <InputLabel color='secondary' id={`${item.option}-label`}>{item.label}</InputLabel>
-                      <Select
-                        labelId={`${item.option}-label`}
-                        id={item.option}
-                        value={state[item.option]}
-                        onChange={handleChange(item.option)}
-                        variant='outlined'
-                        color='secondary'
-                      >
-                        {
-                          item.options.map((opt) => <MenuItem key={opt} value={opt}>{opt}</MenuItem>)
-                        }
-                      </Select>
-                    </FormControl>
-                  )
+
+                switch (item.type) {
+                  case 'toggle': {
+                    return (
+                      <FormControl key={`${item.option}-key`} style={{ display: 'block' }}>
+                        <FormControlLabel
+                          style={{ padding: 0, margin: 0 }}
+                          control={<Switch
+                            checked={state[item.option]}
+                            onChange={handleChange(item.option, item.type)}
+                            color="secondary"
+                          />}
+                          label={item.label}
+                          labelPlacement="start"
+                        />
+                      </FormControl>
+                    )
+                  }
+                  case 'divider': {
+                    return <Divider style={{ margin: '24px 0px 12px 0px' }} />
+                  }
+                  default: {
+                    return (
+                      <FormControl key={`${item.option}-key`} className={classes.formControl}>
+                        <InputLabel color='secondary' id={`${item.option}-label`}>{item.label}</InputLabel>
+                        <Select
+                          labelId={`${item.option}-label`}
+                          id={item.option}
+                          value={state[item.option]}
+                          onChange={handleChange(item.option, item.type)}
+                          variant='outlined'
+                          color='secondary'
+                        >
+                          {
+                            item.options.map((opt) => <MenuItem key={opt} value={opt}>{opt}</MenuItem>)
+                          }
+                        </Select>
+                      </FormControl>
+                    )
+                  }
                 }
-                return (
-                  <FormControl style={{ margin: '5px 0px 0px 0px' }}>
-                    <FormControlLabel
-                      style={{ padding: 0, margin: 0 }}
-                      control={<Switch
-                        checked={state[item.option]}
-                        onChange={handleChange(item.option)}
-                        color="secondary"
-                      />}
-                      label={item.label}
-                      labelPlacement="start"
-                    />
-                  </FormControl>
-                )
               })}
             </CardContent>
           </Card>

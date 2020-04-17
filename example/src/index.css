@@ -78,3 +78,27 @@ code {
   border-radius: 4px;
   padding: 0px 8px;
 }
+
+
+
+.NotificationPopOut::-webkit-scrollbar {
+  background: rgba(0,0,0,0.1);
+}
+
+.NotificationPopOut::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.4);
+}
+
+.NotificationPopOut > .Header {
+  position: fixed;
+  height: 32px;
+  display: flex;
+  top: 0;
+  left: 0;
+  right: 0;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  background: black;
+}

@@ -90,7 +90,7 @@ const MenuItemComponent = ({
 
   const selected = currentSelected(selectedPath, depth) === idx;
   const selectedSub =
-    selected && currentSelected(selectedPath, depth + 1) !== null;
+    selected && currentSelected(selectedPath, depth + 1) >= -1;
   const textColor = getTextColor(item, selected, theme);
   const iconColor = getIconColor(item, selected, theme);
   const acceleratedColor = getAcceleratorColor(item, selected, theme);

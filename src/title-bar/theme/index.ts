@@ -18,7 +18,7 @@ import {
   OverlayTheme,
   BarTheme,
   TitleTheme,
-  MenuButton,
+  MenuButtonTheme,
   StatusIconTheme
 } from '../typings';
 
@@ -155,7 +155,8 @@ const barTheme = {
       fontFamily: 'inherit',
       fontWeight: 'normal',
     },
-    button: <MenuButton>{
+    button: <MenuButtonTheme>{
+      maxWidth: 100,
       active: <ColorMap>{
         color: '#fff',
         background: 'rgb(48, 48, 48)',
@@ -167,7 +168,8 @@ const barTheme = {
       hover: <ColorMap>{
         color: 'inherit',
         background: 'rgba(255,255,255,0.3)'
-      }
+      },
+      disabledOpacity: 0.3
     },
   },
   light: <BarTheme>{
@@ -175,7 +177,7 @@ const barTheme = {
     color: '#24292e',
     background: '#e8e8e8',
     borderBottom: '1px solid #d3d4d5',
-    button: <MenuButton>{
+    button: <MenuButtonTheme>{
       active: <ColorMap>{
         color: '#24292e',
         background: '#fff',
