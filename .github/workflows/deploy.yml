@@ -14,8 +14,9 @@ jobs:
           persist-credentials: false
 
       - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
-      - run: npm ci && npm build && npm link
-      - run: cd example && npm link frameless-titlebar && npm ci && npm run build
+        run: |
+          npm ci && npm build && npm link
+          cd example && npm link frameless-titlebar && npm ci && npm run build
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v3
