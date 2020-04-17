@@ -104,7 +104,7 @@ const MenuButton = ({
     >
       <MenuList
         key={depth}
-        menu={item.submenu!}
+        menu={item.submenu ?? []}
         ref={myRef}
         currentWindow={currentWindow}
         depth={depth + 1}
