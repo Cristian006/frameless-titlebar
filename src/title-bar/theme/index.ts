@@ -99,7 +99,8 @@ const controlsTheme = {
       hover: <ColorMap>{
         color: '#fff',
         background: 'rgba(255,255,255,0.3)'
-      }
+      },
+      disabledOpacity: 0.3
     },
     close: <ControlButton>{
       default: <ColorMap>{
@@ -118,6 +119,7 @@ const controlsTheme = {
       hover: <ColorMap>{
         background: 'rgba(0, 0, 0, 0.1)'
       },
+      disabledOpacity: 0.3
     },
   },
   linux: <ControlsTheme>{

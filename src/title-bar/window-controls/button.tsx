@@ -8,7 +8,8 @@ const WindowButton = ({
   onClick,
   close,
   controls,
-  platform
+  platform,
+  isDisabled
 }: WindowButtonProps) => {
   const [ref, hovering] = useHover<HTMLDivElement>();
   let config: ColorMap;
@@ -32,9 +33,10 @@ const WindowButton = ({
           color: config.color,
           background: config.background,
           borderRadius: controls.borderRadius,
-          border: controls.border
+          border: controls.border,
+          opacity: (isDisabled && !close) ? controls.normal.disabledOpacity : 1
         }}
-        onClick={onClick}
+        onClick={!isDisabled ? onClick : () => {}}
       >
         {children}
       </div>

@@ -6,21 +6,24 @@ import { ThemeContext } from '../theme';
 import WindowButton from './button';
 import { WindowControlsProps, ControlsTheme } from '../typings';
 
-const buttons = (isWin: boolean, onMinimize: () => void, onMaximize: () => void, onClose: () => void) => ([
+const buttons = (isWin: boolean, onMinimize: () => void, onMaximize: () => void, onClose: () => void, disableMinimize: boolean, disableMaximize: boolean) => ([
   {
     type: 'minimize',
     onClick: onMinimize,
-    icon: <MinimizeIcon isWin={isWin} />
+    icon: <MinimizeIcon isWin={isWin} />,
+    disabled: disableMinimize
   },
   {
     type: 'maximize',
     onClick: onMaximize,
-    icon: <MaximizeIcon isWin={isWin} />
+    icon: <MaximizeIcon isWin={isWin} />,
+    disabled: disableMaximize
   },
   {
     type: 'close',
     onClick: onClose,
-    icon: <CloseIcon isWin={isWin} />
+    icon: <CloseIcon isWin={isWin} />,
+    disabled: false
   }
 ])
 
@@ -28,6 +31,8 @@ const WindowControls = ({
   onMinimize,
   onMaximize,
   onClose,
+  disableMinimize,
+  disableMaximize,
   focused
 }: WindowControlsProps) => {
   const {
@@ -46,13 +51,14 @@ const WindowControls = ({
       }}
     >
       {
-        buttons(isWin, onMinimize!, onMaximize!, onClose!).map((b) => {
+        buttons(isWin, onMinimize!, onMaximize!, onClose!, disableMinimize!, disableMaximize!).map((b) => {
           return (
             <WindowButton
               key={b.type}
               platform={platform}
               close={b.type === 'close'}
               onClick={b.onClick}
+              isDisabled={b.disabled}
               controls={controls as Required<ControlsTheme>}
             >
               {b.icon}

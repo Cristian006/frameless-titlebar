@@ -77,6 +77,7 @@ export interface BarTheme {
 export interface ControlButton {
   default?: ColorMap;
   hover?: ColorMap;
+  disabledOpacity?: number;
 }
 
 export type ControlsLayout = 'right' | 'left';
@@ -250,4 +251,5 @@ export interface WindowButtonProps {
   close: boolean;
   controls: Required<ControlsTheme>;
   platform: Platform;
+  isDisabled: boolean;
 }

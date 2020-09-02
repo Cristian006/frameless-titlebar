@@ -61,12 +61,13 @@ npm start
     "normal": {
       "default": {
         "color": "inherit",
-        "background": "transparent"
+        "background": "transparent",
       },
       "hover": {
         "color": "#fff",
         "background": "rgba(255,255,255,0.3)"
-      }
+      },
+      "disabledOpacity": 0.3
     },
     "close": {
       "default": {
