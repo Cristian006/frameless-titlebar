@@ -7,18 +7,17 @@ import WindowButton from './button';
 import { WindowControlsProps, ControlsTheme } from '../typings';
 
 const buttons = (isWin: boolean, onMinimize: () => void, onMaximize: () => void, onClose: () => void, disableMinimize: boolean, disableMaximize: boolean) => ([
-  {
+  ... !(disableMaximize && disableMinimize) ? [{
     type: 'minimize',
     onClick: onMinimize,
     icon: <MinimizeIcon isWin={isWin} />,
     disabled: disableMinimize
-  },
-  {
+  }, {
     type: 'maximize',
     onClick: onMaximize,
     icon: <MaximizeIcon isWin={isWin} />,
     disabled: disableMaximize
-  },
+  }] : [],
   {
     type: 'close',
     onClick: onClose,
@@ -41,7 +40,12 @@ const WindowControls = ({
     controls
   } = useContext(ThemeContext);
   const isWin = platform === 'win32';
-  const width = platform === 'win32' ? '146px' : '120px';
+  let width: string;
+  if (disableMaximize && disableMinimize) {       // hide minimize and maximize button
+    width = platform === 'win32' ? '48px' : '40px';
+  } else {
+    width = platform === 'win32' ? '146px' : '120px';
+  }
   return (
     <div
       className={styles.ControlsWrapper}
