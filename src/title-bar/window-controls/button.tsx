@@ -16,7 +16,7 @@ const WindowButton = ({
   if (close) {
     config = hovering ? controls.close.hover! : controls.close.default!;
   } else {
-    config = hovering ? controls.normal.hover! : controls.normal.default!;
+    config = (hovering && !isDisabled) ? controls.normal.hover! : controls.normal.default!;
   }
 
   const width = platform === 'win32' ? '100%' : '20px';
