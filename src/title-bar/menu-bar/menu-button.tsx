@@ -55,7 +55,7 @@ const MenuButton = ({
     if (!item.disabled) {
       dispatch({ type: 'button-set', depth, selected: idx });
     }
-  }, [idx]);
+  }, [idx, item.disabled]);
 
   const onHover = useCallback((hovering: boolean) => {
     if (currentSelected(selectedPath, depth) >= 0 && hovering) {
