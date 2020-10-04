@@ -24,6 +24,7 @@ const TitleBar = ({
   icon,
   iconSrc,
   title,
+  maximized,
   currentWindow
 }: TitleBarProps) => {
   const focused = useWindowFocus();
@@ -46,6 +47,7 @@ const TitleBar = ({
               focused={focused}
               disableMaximize={disableMaximize}
               disableMinimize={disableMinimize}
+              maximized={maximized}
               onMinimize={onMinimize}
               onMaximize={onMaximize}
               onClose={onClose}
@@ -77,6 +79,7 @@ const TitleBar = ({
               focused={focused}
               disableMaximize={disableMaximize}
               disableMinimize={disableMinimize}
+              maximized={maximized}
               onMinimize={onMinimize}
               onMaximize={onMaximize}
               onClose={onClose}

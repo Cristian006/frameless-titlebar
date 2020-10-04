@@ -67,6 +67,16 @@ const selections = [
     label: 'Show Custom Titlebar Button',
     type: 'toggle'
   },
+  {
+    option: 'disableMinimize',
+    label: 'Disable Minimize Button',
+    type: 'toggle',
+  },
+  {
+    option: 'disableMaximize',
+    label: 'Disable Maximize Button',
+    type: 'toggle',
+  }
 ]
 
 const useStyles = makeStyles((theme) => ({
@@ -87,10 +97,13 @@ const App = ({ theme, setPalette }) => {
     platform: 'win32',
     menuStyle: 'default',
     align: 'center',
+    maximized: false,
     subLabels: true,
     showIcon: true,
     showTitle: true,
-    showCustom: true
+    showCustom: true,
+    disableMinimize: false,
+    disableMaximize: false,
   })
 
   const currentTheme = {
@@ -174,9 +187,12 @@ const App = ({ theme, setPalette }) => {
         )}
         platform={state.platform}
         title={state.showTitle && 'example-app'}
+        disableMaximize={state.disableMaximize}
+        disableMinimize={state.disableMinimize}
+        maximized={state.maximized}
         onClose={() => { enqueueSnackbar('close clicked', { variant: 'error' }) }}
         onMinimize={() => { enqueueSnackbar('minimized clicked', { variant: 'success' }) }}
-        onMaximize={() => { enqueueSnackbar('maximized clicked', { variant: 'success' }) }}
+        onMaximize={() => { enqueueSnackbar(`window ${state.maximized ? 'maximized' : 'restored'}`, { variant: 'success' }); setState({ ...state, maximized: !state.maximized }); }}
         onDoubleClick={() => { enqueueSnackbar('double clicked', { variant: 'success' }) }}
       >
         {state.showCustom && (
