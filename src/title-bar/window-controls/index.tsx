@@ -6,25 +6,23 @@ import { ThemeContext } from '../theme';
 import WindowButton from './button';
 import { WindowControlsProps, ControlsTheme } from '../typings';
 
-const buttons = (isWin: boolean, maximized: boolean, onMinimize: () => void, onMaximize: () => void, onClose: () => void) => {
-  return [
-    {
-      type: 'minimize',
-      onClick: onMinimize,
-      icon: <MinimizeIcon isWin={isWin} />
-    },
-    {
-      type: 'maximize',
-      onClick: onMaximize,
-      icon: maximized ? <RestoreIcon isWin={isWin} /> : <MaximizeIcon isWin={isWin} />
-    },
-    {
-      type: 'close',
-      onClick: onClose,
-      icon: <CloseIcon isWin={isWin} />
-    }
-  ];
-}
+const buttons = (isWin: boolean, maximized: boolean, onMinimize: () => void, onMaximize: () => void, onClose: () => void) => ([
+  {
+    type: 'minimize',
+    onClick: onMinimize,
+    icon: <MinimizeIcon isWin={isWin} />
+  },
+  {
+    type: 'maximize',
+    onClick: onMaximize,
+    icon: maximized ? <RestoreIcon isWin={isWin} /> : <MaximizeIcon isWin={isWin} />
+  },
+  {
+    type: 'close',
+    onClick: onClose,
+    icon: <CloseIcon isWin={isWin} />
+  }
+]);
 
 const WindowControls = ({
   onMinimize,
