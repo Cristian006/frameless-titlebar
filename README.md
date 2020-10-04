@@ -52,7 +52,7 @@ import TitleBar from 'frameless-titlebar'
 const currentWindow = remote.getCurrentWindow();
 
 const Example = () => {
-  // manage window maximized state
+  // manage window state, default to currentWindow maximized state
   const [maximized, setMaximized] = useState(currentWindow.isMaximized());
   // add window listeners for currentWindow
   useEffect(() => {
