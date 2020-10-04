@@ -34,7 +34,6 @@ const useAccessibility = (
 
   const callback = useCallback(e => {
     if (e.altKey) {
-      e.preventDefault();
       if (!altKey) {
         dispatch({
           type: 'alt',
@@ -45,6 +44,8 @@ const useAccessibility = (
       if (e.keyCode !== 18) {
         let firstIndex = menu!.findIndex(x => (!x.disabled && altKeyCodeMatch(e, x.label)));
         if (firstIndex >= 0) {
+          // only prevent default when alt key code match is found
+          e.preventDefault();
           const maxIndex = Math.min(firstIndex, overflow && overflow.hide ? menu.length - 1 : menu.length)
           dispatch({
             type: 'button-set',
