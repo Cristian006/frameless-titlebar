@@ -204,7 +204,7 @@ const App = ({ theme, setPalette }) => {
           <Typography variant='h6' className={classes.title}>
             Frameless Titlebar
             <Typography style={{ marginLeft: 12, fontWeight: 'bolder' }} component='span' variant='h6' color='secondary'>
-              v2.1.3 <span role='img'>🥳</span>
+              v2.1.4 <span role='img'>🥳</span>
             </Typography>
           </Typography>
           <Tooltip title='Toggle Dark/Light Mode' >
