@@ -13,7 +13,7 @@ export interface MenuItem {
   click?: (menu: MenuItem, browser: object | undefined, e: Event) => void;
 }
 
-export type Platform = 'win32' | 'linux' | 'darwin';
+export type Platform = 'win32' | 'linux' | 'darwin' | NodeJS.Platform;
 
 export interface ControlProps {
   onMinimize?: () => void;
