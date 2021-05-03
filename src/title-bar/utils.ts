@@ -72,6 +72,21 @@ export const menuItemClick = (
   dispatch({ type: 'reset' });
 };
 
+export const menuClick = (
+  e: any,
+  item: MenuItem,
+  dispatch: any,
+  currentWindow?: object
+) => {
+  if (item.disabled === true || !item.click) {
+    e.stopPropagation();
+    return;
+  }
+
+  item.click(item, currentWindow, e);
+  dispatch({ type: 'reset' });
+};
+
 export const currentSelected = (selectedPath: number[], depth: number): number => {
   if (depth < selectedPath.length) {
     return selectedPath[depth];

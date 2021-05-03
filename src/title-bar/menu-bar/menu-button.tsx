@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { ThemeContext } from '../theme';
 import MenuList from './menu-list';
-import { currentSelected, isItemSubMenu } from '../utils';
+import { currentSelected, isItemSubMenu, menuClick } from '../utils';
 import styles from '../style.css';
 import { MenuButtonProps, FullMenuBottonProps, MenuButtonTheme } from '../typings';
 import Button from '../components/button';
@@ -68,6 +68,14 @@ const MenuButton = ({
   const open: boolean = !(item?.disabled ?? false) && isSubMenu && selected;
   const textDecoration = !item.disabled && altKey ? 'underline' : 'none';
 
+  const changeClick = (e: any) => {
+    if (isSubMenu) {
+      onClick();
+    } else {
+      menuClick(e, item, dispatch, currentWindow);
+    }
+  }
+
   return (
     <Button
       ref={myRef}
@@ -77,7 +85,7 @@ const MenuButton = ({
       focused={focused}
       style={style}
       inactiveOpacity={theme.bar.inActiveOpacity!}
-      onClick={onClick}
+      onClick={changeClick}
       label={icon ?? (
         <Fragment>
           <span
